@@ -21,8 +21,8 @@ sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
 
 #添加额外软件包
 #rm -rf package/lean/luci-app-dockerman
-#git clone https://github.com/lisaac/luci-app-dockerman.git package/lean/luci-app-dockerman
-git clone https://github.com/0118Add/sirpdboy-package.git package/sirpdboy-package
+git clone https://github.com/lisaac/luci-app-dockerman.git package/lean/luci-app-dockerman
+#git clone https://github.com/0118Add/sirpdboy-package.git package/sirpdboy-package
 #rm -rf package/lean/v2ray-plugin
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/brook package/brook
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/chinadns-ng package/chinadns-ng
