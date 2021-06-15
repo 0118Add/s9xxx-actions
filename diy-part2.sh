@@ -23,7 +23,7 @@ sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
 #rm -rf package/lean/luci-app-dockerman
 git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
 #git clone https://github.com/0118Add/sirpdboy-package.git package/sirpdboy-package
-#rm -rf package/lean/v2ray-plugin
+git clone https://github.com/fw876/helloworld.git package/luci-app-ssr-plus
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/brook package/brook
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/chinadns-ng package/chinadns-ng
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-go package/trojan-go
