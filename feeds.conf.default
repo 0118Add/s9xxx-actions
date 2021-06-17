@@ -1,5 +1,0 @@
-src-git packages https://github.com/coolsnowwolf/packages.git^535e360c4732d3f2e746247090f4e85ae34fcf47
-src-git luci https://github.com/coolsnowwolf/luci.git^d25a9d277c9b6308e17e7dbc3da02ee069f4d2ed
-src-git routing https://git.openwrt.org/feed/routing.git
-src-git telephony https://git.openwrt.org/feed/telephony.git
-src-git helloworld https://github.com/fw876/helloworld
