@@ -21,8 +21,8 @@ sed -i 's/192.168.1.1/192.168.1.10/g' package/base-files/files/bin/config_genera
 
 #添加额外软件包
 #rm -rf package/lean/luci-app-dockerman
-git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
-#git clone https://github.com/0118Add/sirpdboy-package.git package/sirpdboy-package
+#git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
+git clone https://github.com/0118Add/sirpdboy-package.git package/sirpdboy-package
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/brook package/brook
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/chinadns-ng package/chinadns-ng
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/trojan-go package/trojan-go
