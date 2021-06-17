@@ -31,23 +31,23 @@ svn co https://github.com/xiaorouji/openwrt-passwall/trunk/ssocks package/ssocks
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/naiveproxy package/naiveproxy
 #svn co https://github.com/xiaorouji/openwrt-passwall/trunk/v2ray-plugin package/v2ray-plugin
 svn co https://github.com/xiaorouji/openwrt-passwall/trunk/luci-app-passwall package/luci-app-passwall
-svn co https://github.com/fw876/helloworld/trunk/xray-core package/xray-core
-svn co https://github.com/fw876/helloworld/trunk/xray-plugin package/xray-plugin
-svn co https://github.com/fw876/helloworld/trunk/shadowsocks-rust package/shadowsocks-rust
-svn co https://github.com/fw876/helloworld/trunk/shadowsocksr-libev package/shadowsocksr-libev
-svn co https://github.com/fw876/helloworld/trunk/v2ray-plugin package/v2ray-plugin
-svn co https://github.com/fw876/helloworld/trunk/tcping package/tcping
-svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
-svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
+svn co https://github.com/0118Add/helloworld/trunk/xray-core package/xray-core
+svn co https://github.com/0118Add/helloworld/trunk/xray-plugin package/xray-plugin
+svn co https://github.com/0118Add/helloworld/trunk/shadowsocks-rust package/shadowsocks-rust
+svn co https://github.com/0118Add/helloworld/trunk/shadowsocksr-libev package/shadowsocksr-libev
+svn co https://github.com/0118Add/helloworld/trunk/v2ray-plugin package/v2ray-plugin
+svn co https://github.com/0118Add/helloworld/trunk/tcping package/tcping
+svn co https://github.com/0118Add/helloworld/trunk/naiveproxy package/naiveproxy
+svn co https://github.com/0118Add/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
 #svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/smartdns-le
 #git clone https://github.com/garypang13/luci-app-bypass.git package/luci-app-bypass
 #git clone https://github.com/xiaorouji/openwrt-passwall.git package/openwrt-passwall
-git clone https://github.com/Lienol/openwrt-package.git package/openwrt-package
+#git clone https://github.com/Lienol/openwrt-package.git package/openwrt-package
 #git clone https://github.com/Mattraks/helloworld.git package/luci-app-ssr-plus
 #svn co https://github.com/siropboy/mypackages/trunk/luci-app-control-timewol package/openwrt-packages/luci-app-control-timewol
 #git clone https://github.com/tty228/luci-app-serverchan.git package/openwrt-packages/luci-app-serverchan
-rm -rf package/lean/luci-app-jd-dailybonus
-git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/lean/luci-app-jd-dailybonus
+#rm -rf package/lean/luci-app-jd-dailybonus
+#git clone https://github.com/jerrykuku/luci-app-jd-dailybonus.git package/lean/luci-app-jd-dailybonus
 #git clone https://github.com/Leo-Jo-My/luci-theme-opentomcat.git package/openwrt-packages/luci-theme-opentomcat
 #git clone https://github.com/bin20088/luci-theme-butongwifi.git package/openwrt-packages/luci-theme-butongwifi
 #git clone https://github.com/openwrt-develop/luci-theme-atmaterial.git package/openwrt-packages/luci-theme-atmaterial
