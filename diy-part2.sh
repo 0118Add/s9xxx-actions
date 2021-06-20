@@ -43,7 +43,7 @@ svn co https://github.com/0118Add/helloworld/trunk/luci-app-ssr-plus package/luc
 #svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/smartdns-le
 #git clone https://github.com/garypang13/luci-app-bypass.git package/luci-app-bypass
 #git clone https://github.com/xiaorouji/openwrt-passwall.git package/openwrt-passwall
-#git clone https://github.com/Lienol/openwrt-package.git package/openwrt-package
+git clone https://github.com/Lienol/openwrt-package.git package/openwrt-package
 #git clone https://github.com/Mattraks/helloworld.git package/luci-app-ssr-plus
 #svn co https://github.com/siropboy/mypackages/trunk/luci-app-control-timewol package/openwrt-packages/luci-app-control-timewol
 #git clone https://github.com/tty228/luci-app-serverchan.git package/openwrt-packages/luci-app-serverchan
