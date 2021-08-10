@@ -1,4 +1,4 @@
-name: ARMv8_FOL
+name: ARMv8_Test
 
 on:
   repository_dispatch:
@@ -13,7 +13,7 @@ env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: aarch64/ceshi.config
+  CONFIG_FILE: ceshi.config
   DIY_P1_SH: diy-part1.sh
   DIY_P2_SH: diy-part2.sh
   MRG_ADD_SH: aarch64/ARMv8.sh
@@ -25,7 +25,7 @@ env:
   UPLOAD_FIRMWARE: false
   TZ: Asia/Shanghai
   FILE_NAME: Files4Build
-  PRODUCT_NAME: ARMv8_FOL
+  PRODUCT_NAME: ARMv8_Test
 jobs:
   build:
     runs-on: ubuntu-18.04
