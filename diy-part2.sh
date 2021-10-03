@@ -70,7 +70,7 @@ git clone https://github.com/vernesong/OpenClash.git package/luci-app-openclash
 rm -rf package/lean/luci-app-frpc
 git clone https://github.com/8688Add/luci-app-frpc-mod.git package/lean/luci-app-frpc
 chmod 0755 package/lean/luci-app-frpc/root/etc/init.d/frp
-#svn co https://github.com/ophub/luci-app-amlogic/trunk/luci-app-amlogic package/luci-app-amlogic
+git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
 #svn co https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
 #git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
 git clone https://github.com/0118Add/luci-app-unblockneteasemusic-mini.git package/luci-app-unblockneteasemusic-mini
