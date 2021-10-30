@@ -14,9 +14,9 @@ name: Update Checker
 env:
   REPO_URL_LEDE: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
-  REPO_URL_SSRPLUS: https://github.com/fw876/helloworld
-  REPO_URL_PASSWALL: https://github.com/xiaorouji/openwrt-passwall
-  REPO_BRANCH_PASSWALL: main
+  #REPO_URL_SSRPLUS: https://github.com/fw876/helloworld
+  #REPO_URL_PASSWALL: https://github.com/xiaorouji/openwrt-passwall
+  #REPO_BRANCH_PASSWALL: main
 
 on:
   workflow_dispatch:
