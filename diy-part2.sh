@@ -66,7 +66,7 @@ git clone https://github.com/jerrykuku/luci-app-argon-config.git package/luci-ap
 #git clone https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
 #git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 #git clone https://github.com/bin20088/luci-app-koolddns.git package/luci-app-koolddns
-git clone https://github.com/QiuSimons/openwrt-mos package/luci-app-mosdns
+#git clone https://github.com/QiuSimons/openwrt-mos package/luci-app-mosdns
 git clone https://github.com/small-5/luci-app-adblock-plus.git package/luci-app-adblock-plus
 git clone https://github.com/vernesong/OpenClash.git package/luci-app-openclash
 rm -rf package/lean/luci-app-frpc
