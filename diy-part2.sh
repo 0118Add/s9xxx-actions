@@ -22,6 +22,7 @@ sed -i '$a src-git helloworld https://github.com/fw876/helloworld' feeds.conf.de
 
 #添加额外软件包
 rm -rf package/lean/luci-lib-docker
+rm -rf package/lean/luci-app-dockerman
 git clone https://github.com/lisaac/luci-lib-docker.git package/luci-lib-docker
 git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
 #git clone https://github.com/0118Add/sirpdboy-package.git package/sirpdboy-package
@@ -94,6 +95,8 @@ echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> package/network/c
 
 # 替换banner
 wget -O ./package/base-files/files/etc/banner https://raw.githubusercontent.com/0118Add/Armbian/main/router/Openwrt_N1/diy/n1_lede/banner
+
+sed -i '175i\  --with-sandbox=rlimit \\' feeds/packages/net/openssh//Makefile
 
 # runc
 #sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.0.2/g' feeds/packages/utils/runc/Makefile
