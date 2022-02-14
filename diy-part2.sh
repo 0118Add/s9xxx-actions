@@ -20,6 +20,13 @@ sed -i '$a src-git helloworld https://github.com/fw876/helloworld' feeds.conf.de
 # 设置密码为空（安装固件时无需密码登陆，然后自己修改想要的密码）
 #sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
 
+# TIME b "修改 系统文件..."
+curl -fsSL https://raw.githubusercontent.com/0118Add/patch/main/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
+curl -fsSL https://raw.githubusercontent.com/0118Add/patch/main/n1_index.htm > ./feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
+
+# TIME y "更新固件 编译日期"
+sed -i "s/2022.02.02/$(TZ=UTC-8 date "+%Y.%m.%d")/g" feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
+
 #添加额外软件包
 rm -rf package/lean/luci-lib-docker
 rm -rf package/lean/luci-app-dockerman
