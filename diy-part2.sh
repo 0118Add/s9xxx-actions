@@ -105,6 +105,8 @@ wget -O ./package/base-files/files/etc/banner https://raw.githubusercontent.com/
 
 sed -i '175i\  --with-sandbox=rlimit \\' feeds/packages/net/openssh//Makefile
 
+wget -P feeds/packages/utils/btrfs-progs/patches https://github.com/kdave/btrfs-progs/commit/431dc7021c43e43658af436208182f8680e15fe2.patch
+
 # runc
 #sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.0.2/g' feeds/packages/utils/runc/Makefile
 #sed -i 's/PKG_HASH:=.*/PKG_HASH:=6c3cca4bbeb5d9b2f5e3c0c401c9d27bc8a5d2a0db8a2f6a06efd03ad3c38a33/g' feeds/packages/utils/runc/Makefile
