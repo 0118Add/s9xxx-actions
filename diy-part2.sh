@@ -28,8 +28,8 @@ curl -fsSL https://raw.githubusercontent.com/0118Add/patch/main/n1_index.htm > .
 sed -i "s/2022.02.02/$(TZ=UTC-8 date "+%Y.%m.%d")/g" feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
 
 #添加额外软件包
-rm -rf package/lean/luci-lib-docker
-rm -rf package/lean/luci-app-dockerman
+rm -rf package/luci/applications/luci-lib-docker
+rm -rf package/luci/applications/luci-app-dockerman
 git clone https://github.com/lisaac/luci-lib-docker.git package/luci-lib-docker
 git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
 #git clone https://github.com/0118Add/sirpdboy-package.git package/sirpdboy-package
