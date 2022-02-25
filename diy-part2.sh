@@ -122,7 +122,6 @@ sed -i '175i\  --with-sandbox=rlimit \\' feeds/packages/net/openssh//Makefile
 #chmod 0755 package/luci-app-koolddns/root/etc/init.d/koolddns
 #chmod 0755 package/luci-app-koolddns/root/usr/share/koolddns/aliddns
 
-sed -i '175i\  --with-sandbox=rlimit \\' feeds/packages/net/openssh//Makefile
 #find package/*/ feeds/*/ -maxdepth 2 -path "*luci-app-vssr/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-alt/shadowsocksr-libev-ssr-redir/g' {}
 #find package/*/ feeds/*/ -maxdepth 2 -path "*luci-app-vssr/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-server/shadowsocksr-libev-ssr-server/g' {}
 
