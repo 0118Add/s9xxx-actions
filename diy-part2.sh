@@ -71,6 +71,7 @@ git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dock
 #git clone https://github.com/8688Add/luci-app-adbyby-plus-special.git package/luci-app-adbyby-plus-ram_edition-special
 #rm -rf package/lean/luci-theme-argon
 git clone https://github.com/0118Add/luci-theme-neobird.git package/luci-theme-neobird
+git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
 git clone -b revert-271-18.06_bing https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon-18.06
 git clone https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
 #git clone https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
