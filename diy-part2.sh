@@ -15,7 +15,9 @@ sed -i 's/192.168.1.1/192.168.1.10/g' package/base-files/files/bin/config_genera
 
 #使用源码自带ShadowSocksR Plus+出国软件
 #sed -i 's/#src-git helloworld/src-git helloworld/g' ./feeds.conf.default
-sed -i '$a src-git helloworld https://github.com/fw876/helloworld' feeds.conf.default
+#sed -i '$a src-git helloworld https://github.com/fw876/helloworld' feeds.conf.default
+git clone https://github.com/fw876/helloworld.git package/helloworld
+sed -i 's/ShadowSocksR Plus+/SSR Plus+/g' package/helloworld/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
 
 # 设置密码为空（安装固件时无需密码登陆，然后自己修改想要的密码）
 #sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
@@ -25,7 +27,7 @@ curl -fsSL https://raw.githubusercontent.com/0118Add/Actions-Shangyou/main/zzz-d
 curl -fsSL https://raw.githubusercontent.com/0118Add/Actions-Shangyou/main/n1_index.htm > ./feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
 
 # 更新固件编译日期
-sed -i "s/2022.02.02/$(TZ=UTC-8 date "+%Y.%m.%d")/g" feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
+sed -i "s/2022-02-02/$(TZ=UTC-8 date "+%Y.%m.%d")/g" feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
 
 #添加额外软件包
 rm -rf package/luci/applications/luci-lib-docker
@@ -56,8 +58,8 @@ git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dock
 #svn co https://github.com/fw876/helloworld/trunk/naiveproxy package/naiveproxy
 #svn co https://github.com/fw876/helloworld/trunk/luci-app-ssr-plus package/luci-app-ssr-plus
 #svn co https://github.com/garypang13/openwrt-packages/trunk/smartdns-le package/smartdns-le
-#git clone https://github.com/garypang13/luci-app-bypass.git package/luci-app-bypass
-#git clone https://github.com/xiaorouji/openwrt-passwall.git package/openwrt-passwall
+git clone https://github.com/kiddin9/openwrt-bypass.git package/bypass
+git clone https://github.com/xiaorouji/openwrt-passwall.git package/openwrt-passwall
 #git clone https://github.com/Lienol/openwrt-package.git package/openwrt-package
 #git clone https://github.com/Mattraks/helloworld.git package/luci-app-ssr-plus
 #svn co https://github.com/siropboy/mypackages/trunk/luci-app-control-timewol package/openwrt-packages/luci-app-control-timewol
@@ -70,22 +72,24 @@ git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dock
 #git clone https://github.com/bin20088/luci-app-koolproxy.git package/openwrt-packages/luci-app-koolproxy
 #git clone https://github.com/8688Add/luci-app-adbyby-plus-special.git package/luci-app-adbyby-plus-ram_edition-special
 #rm -rf package/lean/luci-theme-argon
-git clone https://github.com/0118Add/luci-theme-neobird.git package/luci-theme-neobird
+#git clone https://github.com/0118Add/luci-theme-neobird.git package/luci-theme-neobird
+git clone https://github.com/leshanydy2022/luci-theme-bootstrap-mod.git package/luci-theme-bootstrap-mod
 git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
 git clone -b revert-271-18.06_bing https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon-18.06
 git clone https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
-#git clone https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
-#git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
+git clone https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
+git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
 #git clone https://github.com/bin20088/luci-app-koolddns.git package/luci-app-koolddns
 #git clone https://github.com/QiuSimons/openwrt-mos package/luci-app-mosdns
 #git clone -b 18.06 https://github.com/small-5/luci-app-adblock-plus.git package/luci-app-adblock-plus
 git clone https://github.com/vernesong/OpenClash.git package/OpenClash
-rm -rf package/lean/luci-app-frpc
-git clone https://github.com/8688Add/luci-app-frpc-mod.git package/lean/luci-app-frpc
-chmod 0755 package/lean/luci-app-frpc/root/etc/init.d/frp
+#rm -rf package/lean/luci-app-frpc
+#git clone https://github.com/8688Add/luci-app-frpc-mod.git package/lean/luci-app-frpc
+#chmod 0755 package/lean/luci-app-frpc/root/etc/init.d/frp
 git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
 #svn co https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
 git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
+sed -i 's/解除网易云音乐播放限制/Unblock Netease Music/g' package/luci-app-unblockneteasemusic/luasrc/controller/unblockneteasemusic.lua
 #git clone https://github.com/0118Add/luci-app-unblockneteasemusic-mini.git package/luci-app-unblockneteasemusic-mini
 #svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/luci-app-gost package/lean/luci-app-gost
 #svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/gost package/lean/gost
