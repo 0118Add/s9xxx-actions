@@ -27,7 +27,7 @@ curl -fsSL https://raw.githubusercontent.com/0118Add/Actions-Shangyou/main/zzz-d
 curl -fsSL https://raw.githubusercontent.com/0118Add/Actions-Shangyou/main/n1_index.htm > ./feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
 
 # 更新固件编译日期
-sed -i "s/2022-02-02/$(TZ=UTC-8 date "+%Y.%m.%d")/g" feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
+sed -i "s/2022-3-13/$(TZ=UTC-8 date "+%Y.%m.%d")/g" feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
 
 #添加额外软件包
 rm -rf package/luci/applications/luci-lib-docker
