@@ -61,7 +61,6 @@ git clone https://github.com/kiddin9/openwrt-bypass.git package/bypass
 git clone https://github.com/xiaorouji/openwrt-passwall.git package/openwrt-passwall
 #git clone https://github.com/Lienol/openwrt-package.git package/openwrt-package
 #git clone https://github.com/Mattraks/helloworld.git package/luci-app-ssr-plus
-#rm -rf package/lean/luci-theme-argon
 #git clone https://github.com/0118Add/luci-theme-neobird.git package/luci-theme-neobird
 #git clone https://github.com/leshanydy2022/luci-theme-bootstrap-mod.git package/luci-theme-bootstrap-mod
 git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
@@ -108,13 +107,6 @@ sed -i '175i\  --with-sandbox=rlimit \\' feeds/packages/net/openssh//Makefile
 #sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.0.2/g' feeds/packages/utils/runc/Makefile
 #sed -i 's/PKG_HASH:=.*/PKG_HASH:=6c3cca4bbeb5d9b2f5e3c0c401c9d27bc8a5d2a0db8a2f6a06efd03ad3c38a33/g' feeds/packages/utils/runc/Makefile
 #sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=52b36a2dd837e8462de8e01458bf02cf9eea47dd/g' feeds/packages/utils/runc/Makefile
-
-#调整 Dockerman 到 服务菜单
-sed -i 's/"admin",/"admin","services",/g' package/luci-app-dockerman/luasrc/controller/*.lua
-sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/luasrc/model/*.lua
-sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/luasrc/model/cbi/dockerman/*.lua
-sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/luasrc/view/dockerman/*.htm
-sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/luasrc/view/dockerman/cbi/*.htm
 
 #赋予koolddns权限
 #chmod 0755 package/luci-app-koolddns/root/etc/init.d/koolddns
