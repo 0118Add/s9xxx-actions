@@ -26,9 +26,8 @@ sed -i 's/ShadowSocksR Plus+/SSR Plus+/g' package/helloworld/luci-app-ssr-plus/l
 #curl -fsSL https://raw.githubusercontent.com/0118Add/Actions-Shangyou/main/zzz-default-settings > ./package/lean/default-settings/files/zzz-default-settings
 #curl -fsSL https://raw.githubusercontent.com/0118Add/Actions-Shangyou/main/n1_index.htm > ./feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
 
-# 替换index.htm文件 X86
+# 替换index.htm文件
 wget -O ./package/lean/autocore/files/arm/index.htm https://raw.githubusercontent.com/0118Add/Actions-Shangyou/main/n1_index.htm
-#wget -O ./package/lean/autocore/files/x86/index.htm https://raw.githubusercontent.com/0118Add/OpenWrt-CI/main/x86/index_x86.htm
 
 # 更新固件编译日期
 sed -i "s/2022-3-13/$(TZ=UTC-8 date "+%Y.%m.%d")/g" feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
