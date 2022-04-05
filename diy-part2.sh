@@ -66,7 +66,7 @@ git clone https://github.com/xiaorouji/openwrt-passwall.git package/openwrt-pass
 #git clone https://github.com/Mattraks/helloworld.git package/luci-app-ssr-plus
 #git clone https://github.com/0118Add/luci-theme-neobird.git package/luci-theme-neobird
 #git clone https://github.com/leshanydy2022/luci-theme-bootstrap-mod.git package/luci-theme-bootstrap-mod
-git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
+#git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
 rm -rf feeds/luci/themes/luci-theme-argon
 git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
 git clone https://github.com/jerrykuku/luci-app-argon-config.git package/luci-app-argon-config
@@ -80,11 +80,11 @@ git clone https://github.com/vernesong/OpenClash.git package/OpenClash
 #git clone https://github.com/8688Add/luci-app-frpc-mod.git package/lean/luci-app-frpc
 #chmod 0755 package/lean/luci-app-frpc/root/etc/init.d/frp
 git clone https://github.com/ophub/luci-app-amlogic.git package/luci-app-amlogic
-#svn co https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
+svn co https://github.com/xiaoqingfengATGH/luci-theme-infinityfreedom/trunk/luci-theme-infinityfreedom package/luci-theme-infinityfreedom
 git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
-sed -i 's/解除网易云音乐播放限制/音乐解锁/g' package/luci-app-unblockneteasemusic/luasrc/controller/unblockneteasemusic.lua
+sed -i 's/解除网易云音乐播放限制/解锁音乐限制/g' package/luci-app-unblockneteasemusic/luasrc/controller/unblockneteasemusic.lua
 sed -i 's/Docker CE 容器/Docker容器/g' feeds/luci/applications/luci-app-docker/po/zh-cn/docker.po
-sed -i 's/Frp 内网穿透/Frp内网穿透/g' feeds/luci/applications/luci-app-frpc/po/zh-cn/frp.po
+#sed -i 's/Frp 内网穿透/Frp内网穿透/g' feeds/luci/applications/luci-app-frpc/po/zh-cn/frp.po
 #git clone https://github.com/0118Add/luci-app-unblockneteasemusic-mini.git package/luci-app-unblockneteasemusic-mini
 #svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/luci-app-gost package/lean/luci-app-gost
 #svn co https://github.com/project-openwrt/openwrt/trunk/package/ctcgfw/gost package/lean/gost
@@ -108,7 +108,7 @@ echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> package/network/c
 # 替换banner
 wget -O ./package/base-files/files/etc/banner https://raw.githubusercontent.com/0118Add/Armbian/main/router/Openwrt_N1/diy/n1_lede/banner
 
-sed -i '175i\  --with-sandbox=rlimit \\' feeds/packages/net/openssh//Makefile
+#sed -i '175i\  --with-sandbox=rlimit \\' feeds/packages/net/openssh//Makefile
 
 #wget -P feeds/packages/utils/btrfs-progs/patches https://github.com/kdave/btrfs-progs/commit/431dc7021c43e43658af436208182f8680e15fe2.patch
 
