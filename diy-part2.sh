@@ -112,6 +112,12 @@ wget -O ./package/base-files/files/etc/banner https://raw.githubusercontent.com/
 
 #wget -P feeds/packages/utils/btrfs-progs/patches https://github.com/kdave/btrfs-progs/commit/431dc7021c43e43658af436208182f8680e15fe2.patch
 
+# containerd
+#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.5.11/g' feeds/packages/utils/containerd/Makefile
+sed -i 's/PKG_HASH:=.*/PKG_HASH:=skip/g' feeds/packages/utils/containerd/Makefile
+#sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=3df54a852345ae127d1fa3092b95168e4a88e2f8/g' feeds/packages/utils/containerd/Makefile
+#cp -f $GITHUB_WORKSPACE/general/containerd/Makefile feeds/packages/utils/containerd
+
 # runc
 #sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.0.2/g' feeds/packages/utils/runc/Makefile
 #sed -i 's/PKG_HASH:=.*/PKG_HASH:=6c3cca4bbeb5d9b2f5e3c0c401c9d27bc8a5d2a0db8a2f6a06efd03ad3c38a33/g' feeds/packages/utils/runc/Makefile
