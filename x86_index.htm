@@ -731,7 +731,7 @@
 		<tr><td width="33%"><%:Hostname%></td><td><%=luci.sys.hostname() or "?"%></td></tr>
 		<tr><td width="33%"><%:Model%></td><td><%=pcdata(boardinfo.model or "?")%> <%=luci.sys.exec("cat /etc/bench.log") or " "%></td></tr>
 		<tr><td width="33%"><%:CPU Info%></td><td id="cpuinfo">-</td></tr>
-        <tr><td width="33%"><%:内存大小%></td><td id="ramsize">-</td></tr>
+        <tr><td width="33%"><%:运行内存%></td><td id="ramsize">-</td></tr>
 		<tr><td width="33%"><%:Firmware Version%></td><td>
 			<%=pcdata(ver.distname)%> <%=pcdata(ver.distversion)%> /
 			<%=pcdata(ver.luciname)%> (<%=pcdata(ver.luciversion)%>)
@@ -741,8 +741,8 @@
 		<tr><td width="33%"><%:Uptime%></td><td id="uptime">-</td></tr>
 		<tr><td width="33%"><%:Load Average%></td><td id="loadavg">-</td></tr>
 		<tr><td width="33%"><%:CPU usage (%)%></td><td id="cpuusage">-</td></tr>
-                <tr><td width="33%"><%:固件编译日期%></td><td id="cpuusage">BGG 2022-02-02 编译</td></tr>
-                </table>
+                </td></tr>
+         </table>
 </fieldset>
 
 
