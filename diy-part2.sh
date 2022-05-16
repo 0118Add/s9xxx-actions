@@ -93,6 +93,7 @@ git clone https://github.com/immortalwrt/luci-app-unblockneteasemusic.git packag
 sed -i 's/解除网易云音乐播放限制/音乐解锁/g' package/luci-app-unblockneteasemusic/luasrc/controller/unblockneteasemusic.lua
 #sed -i 's/Docker CE 容器/Docker容器/g' feeds/luci/applications/luci-app-docker/po/zh-cn/docker.po
 #sed -i 's/Frp 内网穿透/Frp内网穿透/g' feeds/luci/applications/luci-app-frpc/po/zh-cn/frp.po
+sed -i 's/firstchild(), "VPN"/firstchild(), "ZeroTier"/g' feeds/luci/applications/luci-app-zerotier/luasrc/controller/zerotier.lua
 
 
 # TIME b "调整 Dockerman 到 服务 菜单"
