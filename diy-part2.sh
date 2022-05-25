@@ -39,7 +39,7 @@ echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> package/network/c
 #sed -i "s/2022-5-1/$(TZ=UTC-8 date "+%Y.%m.%d")/g" feeds/luci/modules/luci-mod-admin-full/luasrc/view/admin_status/index.htm
 
 #添加额外软件包
-rm -rf feeds/luci/applications/luci-lib-docker
+rm -rf feeds/luci/collections/luci-lib-docker
 rm -rf feeds/luci/applications/luci-app-dockerman
 rm -rf feeds/luci/applications/luci-app-netdata
 git clone https://github.com/lisaac/luci-lib-docker.git package/luci-lib-docker
