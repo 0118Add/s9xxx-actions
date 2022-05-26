@@ -104,7 +104,6 @@ sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/applications/luc
 sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/view/dockerman/cbi/*.htm
 
 # TIME b "调整 Zerotier 到 服务 菜单"
-# TIME b "调整 Zerotier 到 服务 菜单"
 sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/controller/*.lua
 sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/model/cbi/zerotier/*.lua
 sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/*.htm
