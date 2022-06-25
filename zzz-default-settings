@@ -31,7 +31,7 @@ sed -i 's/\"system\"/\"control\"/g' /usr/lib/lua/luci/controller/autopoweroff.lu
 sed -i 's/\"network\"/\"control\"/g' /usr/lib/lua/luci/controller/eqos.lua
 
 ln -sf /sbin/ip /usr/bin/ip
-ln -sf /proc/self/fd /dev/fd
+# ln -sf /proc/self/fd /dev/fd
 
 sed -i 's#downloads.openwrt.org#mirrors.cloud.tencent.com/lede#g' /etc/opkg/distfeeds.conf
 sed -i 's/root::0:0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999:7:::/g' /etc/shadow
@@ -51,7 +51,7 @@ sed -i '/option disabled/d' /etc/config/wireless
 sed -i '/set wireless.radio${devidx}.disabled/d' /lib/wifi/mac80211.sh
 
 sed -i '/DISTRIB_REVISION/d' /etc/openwrt_release
-echo "DISTRIB_REVISION='R22.5.5'" >> /etc/openwrt_release
+echo "DISTRIB_REVISION='R22.6.16'" >> /etc/openwrt_release
 sed -i '/DISTRIB_DESCRIPTION/d' /etc/openwrt_release
 echo "DISTRIB_DESCRIPTION='OpenWrt '" >> /etc/openwrt_release
 
@@ -64,3 +64,5 @@ rm -rf /tmp/luci-modulecache/
 rm -f /tmp/luci-indexcache
 
 exit 0
+© 2022 GitHub, Inc.
+Terms
