@@ -181,14 +181,7 @@ sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/v
 #chmod 0755 package/luci-app-koolddns/root/etc/init.d/koolddns
 #chmod 0755 package/luci-app-koolddns/root/usr/share/koolddns/aliddns
 
-# fix kernel modules missing nfs_ssc.ko
-#cp -f $GITHUB_WORKSPACE/general/fs.mk package/kernel/linux/modules
-#rm -f target/linux/generic/backport-5.10/350-v5.12-NFSv4_2-SSC-helper-should-use-its-own-config.patch
-#rm -f target/linux/generic/backport-5.10/351-v5.13-NFSv4_2-Remove-ifdef-CONFIG_NFSD-from-client-SSC.patch
-#cp -f $GITHUB_WORKSPACE/general/01-export-nfs_ssc.patch target/linux/generic/backport-5.15
-#cp -f $GITHUB_WORKSPACE/general/003-add-module_supported_device-macro.patch target/linux/generic/backport-5.15
-#cp -f $GITHUB_WORKSPACE/general/crypto.mk package/kernel/linux/modules
-#cp -f $GITHUB_WORKSPACE/general/netsupport.mk package/kernel/linux/modules
+rm -f package/kernel/mac80211/patches/brcm/999-backport-to-linux-5.18.patch
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
