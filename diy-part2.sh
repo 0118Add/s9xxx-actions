@@ -181,7 +181,7 @@ sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/v
 #chmod 0755 package/luci-app-koolddns/root/etc/init.d/koolddns
 #chmod 0755 package/luci-app-koolddns/root/usr/share/koolddns/aliddns
 
-rm -f package/kernel/mac80211/patches/brcm/999-backport-to-linux-5.18.patch
+#rm -f package/kernel/mac80211/patches/brcm/999-backport-to-linux-5.18.patch
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
