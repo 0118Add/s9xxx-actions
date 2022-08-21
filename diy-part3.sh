@@ -25,5 +25,11 @@ git clone https://github.com/kiddin9/luci-theme-edge.git package/luci-theme-edge
 git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-argonne package/luci-theme-argonne
 svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-atmaterial_new package/luci-theme-atmaterial_new
+git clone https://github.com/ophub/luci-app-amlogic.git package/amlogic
 wget https://raw.githubusercontent.com/0118Add/patch/main/n1.sh
 bash n1.sh
+
+#luci-app-amlogic 晶晨宝盒
+sed -i "s|https.*/s9xxx-openwrt|https://github.com/0118Add/N1dabao|g" package/amlogic/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|opt/kernel|https://github.com/breakings/OpenWrt/opt/kernel|g" package/amlogic/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|ARMv8|s9xxx_lede|g" package/amlogic/luci-app-amlogic/root/etc/config/amlogic
