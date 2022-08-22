@@ -8,7 +8,7 @@
 
 
 # 更换5.4内核
-sed -i 's/KERNEL_PATCHVER:=5.10/KERNEL_PATCHVER:=5.15/g' target/linux/armvirt/Makefile
+#sed -i 's/KERNEL_PATCHVER:=5.10/KERNEL_PATCHVER:=5.15/g' target/linux/armvirt/Makefile
 
 # 更改主机名
 sed -i "s/hostname='.*'/hostname='N1'/g" package/base-files/files/bin/config_generate
