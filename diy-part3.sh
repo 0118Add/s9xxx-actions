@@ -32,6 +32,7 @@ svn co https://github.com/kenzok8/openwrt-packages/trunk/luci-theme-atmaterial_n
 #git clone https://github.com/sbwml/luci-app-alist.git package/alist
 #sed -i 's/Alist 文件列表/文件列表/g' package/alist/luci-app-alist/po/zh-cn/alist.po
 git clone https://github.com/ophub/luci-app-amlogic.git package/amlogic
+svn co https://github.com/haiibo/packages/trunk/luci-lib-ipkg package/luci-lib-ipkg
 wget https://raw.githubusercontent.com/0118Add/patch/main/n1.sh
 bash n1.sh
 
