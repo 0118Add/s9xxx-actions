@@ -41,7 +41,7 @@ sed -i "s|opt/kernel|https://github.com/breakings/OpenWrt/opt/kernel|g" package/
 sed -i "s|ARMv8|s9xxx_lede|g" package/amlogic/luci-app-amlogic/root/etc/config/amlogic
 
 # 修改 bypass 依赖
-sed -i 's/luci-lib-ipkg/luci-base/g' package/luci-app-bypass/Makefile
+sed -i 's/luci-lib-ipkg/luci-base/g' package/gd772/luci-app-bypass/Makefile
 
 # 调整 Alist 文件列表 到 系统 菜单
 #sed -i 's/nas/system/g' package/alist/luci-app-alist/luasrc/controller/*.lua
