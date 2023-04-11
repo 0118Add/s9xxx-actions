@@ -60,7 +60,7 @@ svn co https://github.com/kiddin9/openwrt-packages/trunk/lua-maxminddb package/l
 #svn co https://github.com/0118Add/openwrt-packages/trunk/luci-app-bypass package/luci-app-bypass
 git clone https://github.com/xiaorouji/openwrt-passwall.git package/openwrt-passwall
 git clone -b luci https://github.com/xiaorouji/openwrt-passwall.git package/passwall
-#git clone https://github.com/xiaorouji/openwrt-passwall2 package/passwall2
+git clone https://github.com/xiaorouji/openwrt-passwall2 package/passwall2
 #git clone https://github.com/0118Add/luci-theme-neobird.git package/luci-theme-neobird
 git clone https://github.com/sbwml/luci-app-alist.git package/alist
 #git clone https://github.com/messense/aliyundrive-webdav.git package/aliyundrive-webdav
@@ -79,7 +79,7 @@ git clone https://github.com/0118Add/luci-app-unblockneteasemusic.git package/lu
 # 修改插件名字（修改名字后不知道会不会对插件功能有影响，自己多测试）
 sed -i 's/广告屏蔽大师 Plus+/广告屏蔽/g' feeds/luci/applications/luci-app-adbyby-plus/po/zh-cn/adbyby.po
 sed -i 's/解除网易云音乐播放限制/音乐解锁/g' package/luci-app-unblockneteasemusic/luasrc/controller/unblockneteasemusic.lua
-sed -i 's/Hello World/Hi World/g' package/luci-app-vssr/luasrc/controller/vssr.lua
+#sed -i 's/Hello World/Hi World/g' package/luci-app-vssr/luasrc/controller/vssr.lua
 sed -i 's/ShadowSocksR Plus+/SSR Plus+/g' package/helloworld/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
 sed -i 's/Argon 主题设置/主题设置/g' feeds/luci/applications/luci-app-argon-config/po/zh-cn/argon-config.po
 sed -i 's/Frp 内网穿透/内网穿透/g' feeds/luci/applications/luci-app-frpc/po/zh-cn/frp.po
@@ -94,75 +94,72 @@ sed -i "s|https.*/s9xxx-openwrt|https://github.com/0118Add/s9xxx-actions|g" pack
 sed -i "s|opt/kernel|https://github.com/breakings/OpenWrt/opt/kernel|g" package/amlogic/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|ARMv8|s9xxx_lede|g" package/amlogic/luci-app-amlogic/root/etc/config/amlogic
 
-# TIME b "调整 Dockerman 到 服务 菜单"
+# 调整 Dockerman 到 服务 菜单
 #sed -i 's/"admin",/"admin","services",/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/controller/*.lua
 #sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/model/*.lua
 #sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/model/cbi/dockerman/*.lua
 #sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/view/dockerman/*.htm
 #sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/view/dockerman/cbi/*.htm
 
-# TIME b "调整 Zerotier 到 服务 菜单"
+# 调整 Zerotier 到 服务 菜单
 #sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/controller/*.lua
 #sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/model/cbi/zerotier/*.lua
 #sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/*.htm
 
-# TIME b "调整 V2ray服务 到 VPN 菜单"
+# 调整 V2ray服务 到 VPN 菜单
 #sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/controller/*.lua
 #sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/model/cbi/v2ray_server/*.lua
 #sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/view/v2ray_server/*.htm
 
-# TIME b "调整 bypass 到 GFW 菜单"
+# 调整 bypass 到 GFW 菜单
 #sed -i 's/services/vpn/g' package/bypass/luci-app-bypass/luasrc/controller/*.lua
 #sed -i 's/services/vpn/g' package/bypass/luci-app-bypass/luasrc/model/cbi/bypass/*.lua
 #sed -i 's/services/vpn/g' package/bypass/luci-app-bypass/luasrc/view/bypass/*.htm
 
-# TIME b "调整 Pass Wall 到 GFW 菜单"
-#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/controller/*.lua
-#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/model/cbi/passwall/api/*.lua
-#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/model/cbi/passwall/client/*.lua
-#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/model/cbi/passwall/server/*.lua
-#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/app_update/*.htm
-#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/global/*.htm
-#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/haproxy/*.htm
-#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/log/*.htm
-#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/node_list/*.htm
-#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/rule/*.htm
-#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/server/*.htm
+# 调整 SSRP 到 GFW 菜单
+sed -i 's/services/vpn/g' package/ssrplus/luci-app-ssr-plus/luasrc/controller/*.lua
+sed -i 's/services/vpn/g' package/ssrplus/luci-app-ssr-plus/luasrc/model/cbi/shadowsocksr/*.lua
+sed -i 's/services/vpn/g' package/ssrplus/luci-app-ssr-plus/luasrc/view/shadowsocksr/*.htm
 
-# TIME b "调整 Hello World 到 GFW 菜单"
-#sed -i 's/services/vpn/g' package/luci-app-vssr/luasrc/controller/*.lua
-#sed -i 's/services/vpn/g' package/luci-app-vssr/luasrc/model/cbi/vssr/*.lua
-#sed -i 's/services/vpn/g' package/luci-app-vssr/luasrc/view/vssr/*.htm
+# 调整 Pass Wall 到 GFW 菜单
+sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/controller/*.lua
+sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/model/cbi/passwall/client/*.lua
+sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/model/cbi/passwall/server/*.lua
+sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/app_update/*.htm
+sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/auto_switch/*.htm
+sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/global/*.htm
+sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/haproxy/*.htm
+sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/log/*.htm
+sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/node_list/*.htm
+sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/rule/*.htm
+sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/server/*.htm
 
-# TIME b "调整 Open Clash 到 GFW 菜单"
-#sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/controller/*.lua
-#sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/*.lua
-#sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/model/cbi/openclash/*.lua
-#sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/view/openclash/*.htm
+# 调整 Pass Wall 2 到 GFW 菜单
+sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/controller/*.lua
+sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/model/cbi/passwall2/client/*.lua
+sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/model/cbi/passwall2/server/*.lua
+sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/view/passwall2/app_update/*.htm
+sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/view/passwall2/auto_switch/*.htm
+sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/view/passwall2/global/*.htm
+sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/view/passwall2/log/*.htm
+sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/view/passwall2/node_list/*.htm
+sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/view/passwall2/rule/*.htm
+sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/view/passwall2/server/*.htm
 
-# Add autocore support for armvirt
-#sed -i 's/TARGET_rockchip/TARGET_rockchip\|\|TARGET_armvirt/g' package/lean/autocore/Makefile
+# 调整 Hello World 到 GFW 菜单
+sed -i 's/services/vpn/g' package/luci-app-vssr/luasrc/controller/*.lua
+sed -i 's/services/vpn/g' package/luci-app-vssr/luasrc/model/cbi/vssr/*.lua
+sed -i 's/services/vpn/g' package/luci-app-vssr/luasrc/view/vssr/*.htm
 
-# sagernet-core
-#sed -i 's|$(LN) v2ray $(1)/usr/bin/xray|#$(LN) v2ray $(1)/usr/bin/xray|g' package/sagernet-core/Makefile
-#sed -i 's|CONFLICTS:=v2ray-core xray-core|#CONFLICTS:=v2ray-core xray-core|g' package/sagernet-core/Makefile
+# 调整 Open Clash 到 GFW 菜单
+sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/controller/*.lua
+sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/*.lua
+sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/model/cbi/openclash/*.lua
+sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/view/openclash/*.htm
 
-# containerd
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.5.11/g' feeds/packages/utils/containerd/Makefile
-#sed -i 's/PKG_HASH:=.*/PKG_HASH:=skip/g' feeds/packages/utils/containerd/Makefile
-#sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=3df54a852345ae127d1fa3092b95168e4a88e2f8/g' feeds/packages/utils/containerd/Makefile
-#cp -f $GITHUB_WORKSPACE/general/containerd/Makefile feeds/packages/utils/containerd
-
-# runc
-#sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=1.0.2/g' feeds/packages/utils/runc/Makefile
-#sed -i 's/PKG_HASH:=.*/PKG_HASH:=6c3cca4bbeb5d9b2f5e3c0c401c9d27bc8a5d2a0db8a2f6a06efd03ad3c38a33/g' feeds/packages/utils/runc/Makefile
-#sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=52b36a2dd837e8462de8e01458bf02cf9eea47dd/g' feeds/packages/utils/runc/Makefile
-
-#赋予koolddns权限
+# 赋予koolddns权限
 #chmod 0755 package/luci-app-koolddns/root/etc/init.d/koolddns
 #chmod 0755 package/luci-app-koolddns/root/usr/share/koolddns/aliddns
-
-#rm -f package/kernel/mac80211/patches/brcm/999-backport-to-linux-5.18.patch
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
