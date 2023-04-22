@@ -66,7 +66,7 @@ jobs:
       env:
         SCRIPT_REPO_URL: 0118Add/openwrt_packit
         OPENWRT_ARMVIRT: https://github.com/0118Add/s9xxx-actions/releases/download/ARMv8_Lede/openwrt-armvirt-64-default-rootfs.tar.gz
-        PACKAGE_SOC: beikeyun_vplus_s905x3_s905d_s922x
+        PACKAGE_SOC: s922x-ct2000_vplus_s905x3_s905d_s922x
         WHOAMI: BGG
         #OPENWRT_VER: "R23.3.3"
         #BUILD: $(date '+%Y-%m-%d')
