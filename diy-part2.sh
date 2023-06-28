@@ -57,7 +57,7 @@ git clone https://github.com/lisaac/luci-lib-docker.git package/luci-lib-docker
 git clone https://github.com/lisaac/luci-app-dockerman.git package/luci-app-dockerman
 #svn co https://github.com/sirpdboy/sirpdboy-package/trunk/luci-app-netdata package/luci-app-netdata
 svn co https://github.com/kiddin9/openwrt-packages/trunk/lua-maxminddb package/lua-maxminddb
-#svn co https://github.com/0118Add/openwrt-packages/trunk/luci-app-bypass package/luci-app-bypass
+svn co https://github.com/0118Add/openwrt-packages/trunk/luci-app-bypass package/luci-app-bypass
 git clone https://github.com/xiaorouji/openwrt-passwall.git package/openwrt-passwall
 git clone -b luci https://github.com/xiaorouji/openwrt-passwall.git package/passwall
 git clone https://github.com/xiaorouji/openwrt-passwall2 package/passwall2
@@ -114,9 +114,9 @@ sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/vie
 #sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/view/v2ray_server/*.htm
 
 # 调整 bypass 到 GFW 菜单
-#sed -i 's/services/vpn/g' package/bypass/luci-app-bypass/luasrc/controller/*.lua
-#sed -i 's/services/vpn/g' package/bypass/luci-app-bypass/luasrc/model/cbi/bypass/*.lua
-#sed -i 's/services/vpn/g' package/bypass/luci-app-bypass/luasrc/view/bypass/*.htm
+sed -i 's/services/vpn/g' package/luci-app-bypass/luasrc/controller/*.lua
+sed -i 's/services/vpn/g' package/luci-app-bypass/luasrc/model/cbi/bypass/*.lua
+sed -i 's/services/vpn/g' package/luci-app-bypass/luasrc/view/bypass/*.htm
 
 # 调整 SSRP 到 GFW 菜单
 sed -i 's/services/vpn/g' package/helloworld/luci-app-ssr-plus/luasrc/controller/*.lua
@@ -161,9 +161,8 @@ sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/*.lua
 sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/model/cbi/openclash/*.lua
 sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/view/openclash/*.htm
 
-# 赋予koolddns权限
-#chmod 0755 package/luci-app-koolddns/root/etc/init.d/koolddns
-#chmod 0755 package/luci-app-koolddns/root/usr/share/koolddns/aliddns
+# 赋予权限
+chmod 0755 package/luci-app-bypass/root/etc/init.d/bypass
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
