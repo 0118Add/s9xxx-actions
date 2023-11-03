@@ -58,7 +58,7 @@ svn co https://github.com/kiddin9/openwrt-packages/trunk/lua-maxminddb package/l
 #svn co https://github.com/0118Add/openwrt-packages/trunk/luci-app-bypass package/luci-app-bypass
 git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
-git clone https://github.com/fw876/helloworld.git package/helloworld
+git clone -b main https://github.com/fw876/helloworld.git package/helloworld
 #svn co https://github.com/fw876/helloworld/trunk/redsocks2 package/redsocks2
 #svn co https://github.com/fw876/helloworld/trunk/shadow-tls package/shadow-tls
 #svn co https://github.com/fw876/helloworld/trunk/lua-neturl package/lua-neturl
