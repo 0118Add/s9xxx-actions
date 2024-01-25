@@ -163,5 +163,8 @@ sed -i 's/services/vpn/g' package/luci-app-openclash/luci-app-openclash/luasrc/v
 # 赋予权限
 #chmod 0755 package/luci-app-bypass/root/etc/init.d/bypass
 
+# fix xfsprogs
+sed -i 's,TARGET_CFLAGS += -DHAVE_MAP_SYNC,& -D_LARGEFILE64_SOURCE,' feeds/packages/utils/xfsprogs/Makefil
+
 ./scripts/feeds update -a
 ./scripts/feeds install -a
