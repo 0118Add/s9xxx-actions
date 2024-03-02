@@ -38,7 +38,7 @@ echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> package/network/c
 
 # node - prebuilt
 rm -rf feeds/packages/lang/node
-git clone https://github.com/sbwml/feeds_packages_lang_node-prebuilt feeds/packages/lang/node
+git clone https://github.com/8688Add/feeds_packages_lang_node feeds/packages/lang/node
 
 # 添加额外软件包
 #rm -rf package/lean/autocore
