@@ -96,14 +96,15 @@ git clone https://github.com/sbwml/luci-app-daed-next package/luci-app-daed-next
 git clone https://github.com/jerrykuku/lua-maxminddb package/lua-maxminddb
 #git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
 git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
-merge_package https://github.com/xiaorouji/openwrt-passwall-packages openwrt-passwall-packages/sing-box
-git clone https://github.com/fw876/helloworld.git package/helloworld
+git clone https://github.com/xiaorouji/openwrt-passwall-packages package/passwall-packages
+#merge_package https://github.com/xiaorouji/openwrt-passwall-packages openwrt-passwall-packages/sing-box
+#git clone https://github.com/fw876/helloworld.git package/helloworld
+merge_package https://github.com/fw876/helloworld helloworld/luci-app-ssr-plus
+merge_package https://github.com/fw876/helloworld helloworld/lua-neturl
+merge_package https://github.com/fw876/helloworld helloworld/mosdns
+merge_package https://github.com/fw876/helloworld helloworld/shadow-tls
+merge_package https://github.com/fw876/helloworld helloworld/redsocks2
 #git clone https://github.com/xiaorouji/openwrt-passwall2 package/passwall2
-#git clone https://github.com/0118Add/luci-theme-neobird.git package/luci-theme-neobird
-#git clone https://github.com/sbwml/luci-app-alist.git package/alist
-#git clone https://github.com/messense/aliyundrive-webdav.git package/aliyundrive-webdav
-#git clone https://github.com/sirpdboy/netspeedtest.git package/netspeedtest
-#git clone https://github.com/sirpdboy/luci-app-advanced.git package/luci-app-advanced
 git clone https://github.com/sirpdboy/luci-app-partexp package/luci-app-partexp
 git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
 git clone -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush package/luci-app-wechatpush
