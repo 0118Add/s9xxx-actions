@@ -47,7 +47,7 @@ git clone https://github.com/morytyann/OpenWrt-mihomo  package/openwrt-mihomo
 
 # luci-app-filemanager
 rm -rf feeds/luci/applications/luci-app-filemanager
-git clone https://$github/sbwml/luci-app-filemanager package/luci-app-filemanager
+git clone https://github.com/sbwml/luci-app-filemanager package/luci-app-filemanager
 
 # amlogic
 git clone https://github.com/ophub/luci-app-amlogic.git package/amlogic
