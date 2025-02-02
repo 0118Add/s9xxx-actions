@@ -40,10 +40,6 @@ sed -i 's/<%:Down%>/<%:Move down%>/g' feeds/luci/modules/luci-compat/luasrc/view
 # 修复procps-ng-top导致首页cpu使用率无法获取
 sed -i 's#top -n1#\/bin\/busybox top -n1#g' feeds/luci/modules/luci-base/root/usr/share/rpcd/ucode/luci
 
-# coremark
-rm -rf feeds/packages/utils/coremark
-git_sparse_clone main https://github.com/sbwml/openwrt_pkgs coremark
-
 # mihomo
 git clone https://github.com/morytyann/OpenWrt-mihomo  package/openwrt-mihomo
 #sed -i 's/MihomoTProxy/Mihomo/g' package/openwrt-mihomo/luci-app-mihomo/po/zh_Hans/mihomo.po
