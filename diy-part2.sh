@@ -94,10 +94,10 @@ git clone https://github.com/xiaorouji/openwrt-passwall-packages package/passwal
 git clone https://github.com/siropboy/luci-app-bypass package/luci-app-bypass
 #git clone https://github.com/fw876/helloworld.git package/helloworld
 #merge_package https://github.com/fw876/helloworld helloworld/luci-app-ssr-plus
-#merge_package https://github.com/fw876/helloworld helloworld/lua-neturl
+merge_package https://github.com/fw876/helloworld helloworld/lua-neturl
 #merge_package https://github.com/fw876/helloworld helloworld/mosdns
 #merge_package https://github.com/fw876/helloworld helloworld/shadow-tls
-#merge_package https://github.com/fw876/helloworld helloworld/redsocks2
+merge_package https://github.com/fw876/helloworld helloworld/redsocks2
 #git clone https://github.com/xiaorouji/openwrt-passwall2 package/passwall2
 git clone https://github.com/sirpdboy/luci-app-partexp package/luci-app-partexp
 #git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
