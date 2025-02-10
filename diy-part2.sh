@@ -47,7 +47,7 @@ sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
 #sed -i 's/KERNEL_PATCHVER:=5.10/KERNEL_PATCHVER:=5.15/g' target/linux/armvirt/Makefile
 
 # 修改系统文件
-curl -fsSL https://raw.githubusercontent.com/0118Add/patch/main/flippyn1_index.htm > ./package/lean/autocore/files/arm/index.htm
+curl -fsSL https://raw.githubusercontent.com/0118Add/s9xxx-actions/main/patch/flippy_index.htm > ./package/lean/autocore/files/arm/index.htm
 
 # 替换文件
 wget -O ./package/kernel/linux/modules/netsupport.mk https://raw.githubusercontent.com/0118Add/X86-N1-Actions/main/general/netsupport.mk
@@ -60,9 +60,9 @@ sed -i 's/DEPENDS:=@(.*/DEPENDS:=@(TARGET_bcm27xx||TARGET_bcm53xx||TARGET_ipq40x
 wget -O ./package/base-files/files/etc/banner https://raw.githubusercontent.com/0118Add/OpenWrt-CI/main/x86/diy/x86_lede/banner
 
 # 修改版本为编译日期
-date_version=$(date +"%y.%m.%d")
-orig_version=$(cat "package/lean/default-settings/files/zzz-default-settings" | grep DISTRIB_REVISION= | awk -F "'" '{print $2}')
-sed -i "s/${orig_version}/R${date_version} (by flippy)/g" package/lean/default-settings/files/zzz-default-settings
+#date_version=$(date +"%y.%m.%d")
+#orig_version=$(cat "package/lean/default-settings/files/zzz-default-settings" | grep DISTRIB_REVISION= | awk -F "'" '{print $2}')
+#sed -i "s/${orig_version}/R${date_version} (by flippy)/g" package/lean/default-settings/files/zzz-default-settings
 
 # 修改连接数
 sed -i 's/net.netfilter.nf_conntrack_max=.*/net.netfilter.nf_conntrack_max=65535/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
