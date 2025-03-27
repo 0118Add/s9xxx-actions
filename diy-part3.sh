@@ -42,8 +42,7 @@ sed -i 's#top -n1#\/bin\/busybox top -n1#g' feeds/luci/modules/luci-base/root/us
 
 # mihomo
 git clone https://github.com/nikkinikki-org/OpenWrt-nikki  package/OpenWrt-nikki
-#sed -i 's/MihomoTProxy/Mihomo/g' package/openwrt-mihomo/luci-app-mihomo/po/zh_Hans/mihomo.po
-#sed -i 's/MihomoTProxy/Mihomo/g' package/openwrt-mihomo/luci-app-mihomo/root/usr/share/luci/menu.d/luci-app-mihomo.json
+git clone https://github.com/zutzo/OpenWrt-mihomo package/OpenWrt-mihomo
 
 # luci-app-filemanager
 rm -rf feeds/luci/applications/luci-app-filemanager
