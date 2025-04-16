@@ -1,27 +1,19 @@
-                                                                
-                          _ooOoo_                               
-                         o8888888o                              
-                         88" . "88                              
-                         (| ^_^ |)                              
-                         O\  =  /O                              
-                      ____/`---'\____                           
-                    .'  \\|     |//  `.                         
-                   /  \\|||  :  |||//  \                        
-                  /  _||||| -:- |||||_  \                       
-                  |   | \\\  -  /// |   |                       
-                  | \_|  ''\---/''  |   |                       
-                  \  .-\__  `-`  ___/-. /                       
-                ___`. .'  /--.--\  `. .' ___                    
-              [36m."" '<  `.__\_<|>_/___.'  >' "".[0m                  
-            [35m| | :  `- \`.;`\ _ /`;.`/ - ` : | |[0m                 
-            [33m\  \ `-.   \_ __\ /__ _/   .-` /  /[0m                 
-      [33m========`-.____`-.__\_____/___.-`____.-'========         
-                          `=---='[0m                              
-                                                               
-        .----..----..----..-. .-..-. . .-..----. .---.         
-       /  {}  \ {}  } {_  |  `| || |/ \| || {}  |_   _}        
-       \      / .--'| {__ | |\  ||  .'.  || .-. \ | |          
-        `----'`-'   `----'`-' `-'`-'   `-'`-' `-' `-'          
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
-[31m      %D %V, %C/OpenWrt By BGG[0m
-  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
+NAME="ImmortalWrt"
+VERSION="24.10.1"
+ID="immortalwrt"
+ID_LIKE="lede openwrt"
+PRETTY_NAME="ImmortalWrt 24.10.1"
+VERSION_ID="24.10-snapshot"
+HOME_URL="https://immortalwrt.org/"
+BUG_URL="https://github.com/immortalwrt/immortalwrt/issues"
+SUPPORT_URL="https://github.com/immortalwrt/immortalwrt/discussions"
+BUILD_ID="r32803-b3b143104a"
+OPENWRT_BOARD="armsr/armv8"
+OPENWRT_ARCH="aarch64_generic"
+OPENWRT_TAINTS=""
+OPENWRT_DEVICE_MANUFACTURER="ImmortalWrt"
+OPENWRT_DEVICE_MANUFACTURER_URL="https://immortalwrt.org/"
+OPENWRT_DEVICE_PRODUCT="Generic"
+OPENWRT_DEVICE_REVISION="v0"
+OPENWRT_RELEASE="ImmortalWrt 24.10.1"
+OPENWRT_BUILD_DATE="1737975790"
