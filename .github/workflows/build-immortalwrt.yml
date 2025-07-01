@@ -49,9 +49,6 @@ jobs:
         echo -e "Total CPU cores\t: $(nproc)"
         cat /proc/cpuinfo | grep 'model name'    
     
-    - name: Free Disk Space
-      uses: jlumbroso/free-disk-space@main    
-    
     - name: Initialization environment
       id: init
       env:
