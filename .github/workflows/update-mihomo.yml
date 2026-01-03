@@ -122,5 +122,6 @@ jobs:
           body: |
             更新 [mihomo Meta 版](https://github.com/MetaCubeX/mihomo/tree/Meta)至 ${{ env.meta_version }}，发布于 ${{ env.meta_time }}
             更新 [mihomo Alpha 版](https://github.com/MetaCubeX/mihomo/tree/Alpha)至 ${{ env.alpha_version }}，发布于 ${{ env.alpha_time }}
+            更新 [mihomo Alpha 版](https://github.com/vernesong/mihomo/tree/Alpha)至 ${{ env.alpha_version }}，发布于 ${{ env.alpha_time }}
           file_glob: true
           file: ./mihomo/*
