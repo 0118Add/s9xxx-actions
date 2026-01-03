@@ -23,13 +23,10 @@ jobs:
       - name: Set variables
         run: |
           echo "download_url=https://github.com/MetaCubeX/mihomo/releases/download" >> ${GITHUB_ENV}
-          echo "download_url=https://github.com/vernesong/mihomo/releases/download" >> ${GITHUB_ENV}
           echo "meta_version=$(curl -sSL https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.tag_name')" >> ${GITHUB_ENV}
           echo "meta_time=$(curl -sSL https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.created_at' | xargs -I {} date -d '{} +8 hours' '+%Y-%m-%d')" >> ${GITHUB_ENV}
           echo "alpha_version=$(curl -sSL https://api.github.com/repos/MetaCubeX/mihomo/releases | jq -r '[.[] | select(.tag_name=="Prerelease-Alpha")][0].assets[].name' | perl -ne '/(alpha\-)([^.]+)/ && print "$1$2\n"' | head -n 1)" >> ${GITHUB_ENV}
           echo "alpha_time=$(curl -sSL https://api.github.com/repos/MetaCubeX/mihomo/releases | jq -r '[.[] | select(.tag_name=="Prerelease-Alpha")][0].created_at' | xargs -I {} date -d '{} +8 hours' '+%Y-%m-%d')" >> ${GITHUB_ENV}
-          echo "alpha_version=$(curl -sSL https://api.github.com/repos/vernesong/mihomo/releases | jq -r '[.[] | select(.tag_name=="Prerelease-Alpha")][0].assets[].name' | perl -ne '/(alpha\-)([^.]+)/ && print "$1$2\n"' | head -n 1)" >> ${GITHUB_ENV}
-          echo "alpha_time=$(curl -sSL https://api.github.com/repos/vernesong/mihomo/releases | jq -r '[.[] | select(.tag_name=="Prerelease-Alpha")][0].created_at' | xargs -I {} date -d '{} +8 hours' '+%Y-%m-%d')" >> ${GITHUB_ENV}
         shell: bash
 
       - name: Compare `mihomo` versions with current release
@@ -122,6 +119,5 @@ jobs:
           body: |
             更新 [mihomo Meta 版](https://github.com/MetaCubeX/mihomo/tree/Meta)至 ${{ env.meta_version }}，发布于 ${{ env.meta_time }}
             更新 [mihomo Alpha 版](https://github.com/MetaCubeX/mihomo/tree/Alpha)至 ${{ env.alpha_version }}，发布于 ${{ env.alpha_time }}
-            更新 [mihomo Alpha 版](https://github.com/vernesong/mihomo/tree/Alpha)至 ${{ env.alpha_version }}，发布于 ${{ env.alpha_time }}
           file_glob: true
           file: ./mihomo/*
