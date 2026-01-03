@@ -1,4 +1,4 @@
-name: Build
+name: update mihomo smart
 on:
   workflow_dispatch:
     inputs:
