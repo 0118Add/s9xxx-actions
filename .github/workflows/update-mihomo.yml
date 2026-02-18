@@ -1,4 +1,4 @@
-name: Update mihomo
+name: mihomo
 on:
   repository_dispatch:
   workflow_dispatch:
