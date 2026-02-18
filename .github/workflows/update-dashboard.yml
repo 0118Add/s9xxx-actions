@@ -1,12 +1,11 @@
 name: Update Dashboard
 on:
-  repository_dispatch:
   workflow_dispatch:
-    inputs:
-  push:
-    branches:
-      - main
-    paths-ignore:
+    #inputs:
+  #push:
+    #branches:
+      #- main
+    #paths-ignore:
       #- "README.md"
       #- ".github/workflows/delete-old-workflows.yml"
       #- ".github/workflows/update-adguardhome.yml"
