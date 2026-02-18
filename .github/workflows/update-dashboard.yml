@@ -1,16 +1,17 @@
-name: Update Dashboard
+name: Dashboard
 on:
+  repository_dispatch:
   workflow_dispatch:
-    #inputs:
-  #push:
-    #branches:
-      #- main
-    #paths-ignore:
-      #- "README.md"
-      #- ".github/workflows/delete-old-workflows.yml"
-      #- ".github/workflows/update-adguardhome.yml"
-      #- ".github/workflows/update-mihomo.yml"
-      #- ".github/workflows/update-singbox.yml"
+    inputs:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "README.md"
+      - ".github/workflows/delete-old-workflows.yml"
+      - ".github/workflows/update-adguardhome.yml"
+      - ".github/workflows/update-dashboard.yml"
+      - ".github/workflows/update-mihomo.yml"
 
 jobs:
   Update:
