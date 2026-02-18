@@ -1,4 +1,4 @@
-name: Update sing-box
+name: sing-box
 on:
   repository_dispatch:
   workflow_dispatch:
@@ -7,11 +7,11 @@ on:
     branches:
       - main
     paths-ignore:
-      #- "README.md"
-      #- ".github/workflows/delete-old-workflows.yml"
-      #- ".github/workflows/update-adguardhome.yml"
-      #- ".github/workflows/update-dashboard.yml"
-      #- ".github/workflows/update-mihomo.yml"
+      - "README.md"
+      - ".github/workflows/delete-old-workflows.yml"
+      - ".github/workflows/update-adguardhome.yml"
+      - ".github/workflows/update-dashboard.yml"
+      - ".github/workflows/update-mihomo.yml"
 
 jobs:
   go:
