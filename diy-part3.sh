@@ -12,11 +12,13 @@ function git_sparse_clone() {
 }
 
 # 更改主机名
-#sed -i "s/hostname='.*'/hostname='OpenWrt'/g" package/base-files/files/bin/config_generate
+sed -i "s/hostname='.*'/hostname='OpenWrt'/g" package/base-files/files/bin/config_generate
 
 # 更改固件版本信息
 #sed -i "s|DISTRIB_REVISION='.*'|DISTRIB_REVISION=''|g" package/base-files/files/etc/openwrt_release
 #sed -i "s|DISTRIB_DESCRIPTION='.*'|DISTRIB_DESCRIPTION='OpenWrt %V'|g" package/base-files/files/etc/openwrt_release
+sed -i 's/%D/OpenWrt/g' package/base-files/files/usr/lib/os-release
+sed -i 's/%d/OpenWrt/g' package/base-files/files/usr/lib/os-release
 
 # 修改x86内核到6.6版
 #sed -i 's/KERNEL_PATCHVER:=.*/KERNEL_PATCHVER:=6.6/g' ./target/linux/x86/Makefile
@@ -51,64 +53,121 @@ git clone https://github.com/sbwml/luci-app-filemanager package/luci-app-fileman
 # amlogic
 git clone https://github.com/ophub/luci-app-amlogic.git package/amlogic
 
-# 防火墙4添加自定义nft命令支持
-# curl -s https://$mirror/openwrt/patch/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch | patch -p1
-patch -p1 < ${GITHUB_WORKSPACE}/patch/firewall4/100-openwrt-firewall4-add-custom-nft-command-support.patch
+# 设置root用户密码为password
+sed -i 's/root:::0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.::0:99999:7:::/g' package/base-files/files/etc/shadow
 
-pushd feeds/luci
-	# 防火墙4添加自定义nft命令选项卡
-	# curl -s https://$mirror/openwrt/patch/firewall4/luci-24.10/0004-luci-add-firewall-add-custom-nft-rule-support.patch | patch -p1
-	patch -p1 < ${GITHUB_WORKSPACE}/patch/firewall4/0004-luci-add-firewall-add-custom-nft-rule-support.patch
-	# 状态-防火墙页面去掉iptables警告，并添加nftables、iptables标签页
-	# curl -s https://$mirror/openwrt/patch/luci/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch | patch -p1
-	patch -p1 < ${GITHUB_WORKSPACE}/patch/firewall4/0004-luci-mod-status-firewall-disable-legacy-firewall-rul.patch
-popd
+# 设置密码为空（安装固件时无需密码登陆，然后自己修改想要的密码）
+#sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
 
-# 补充 firewall4 luci 中文翻译
-cat >> "feeds/luci/applications/luci-app-firewall/po/zh_Hans/firewall.po" <<-EOF
-	
-	msgid ""
-	"Custom rules allow you to execute arbitrary nft commands which are not "
-	"otherwise covered by the firewall framework. The rules are executed after "
-	"each firewall restart, right after the default ruleset has been loaded."
-	msgstr ""
-	"自定义规则允许您执行不属于防火墙框架的任意 nft 命令。每次重启防火墙时，"
-	"这些规则在默认的规则运行后立即执行。"
-	
-	msgid ""
-	"Applicable to internet environments where the router is not assigned an IPv6 prefix, "
-	"such as when using an upstream optical modem for dial-up."
-	msgstr ""
-	"适用于路由器未分配 IPv6 前缀的互联网环境，例如上游使用光猫拨号时。"
+#添加额外软件包
+rm -rf feeds/packages/net/{xray-core,sing-box}
+#git clone --depth=1 -b openwrt-23.05 https://github.com/openwrt/openwrt openwrt-openwrt 
+#cp -rf openwrt-openwrt/package/libs/mbedtls package/libs/mbedtls
+#rm -rf feeds/luci/applications/luci-app-dockerman
+#rm -rf feeds/luci/applications/luci-app-daed
+rm -rf feeds/luci/applications/luci-app-passwall
+rm -rf feeds/luci/applications/luci-app-openclash
+#rm -rf feeds/luci/applications/luci-app-wechatpush
+#rm -rf feeds/luci/applications/luci-app-unblockneteasemusic
+#git clone https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
+#git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
+#git clone https://github.com/UnblockNeteaseMusic/luci-app-unblockneteasemusic.git package/luci-app-unblockneteasemusic
+git clone https://github.com/sirpdboy/luci-app-partexp package/luci-app-partexp
+#git clone https://github.com/Openwrt-Passwall/openwrt-passwall package/passwall
+git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/passwall-packages
+#git clone https://github.com/EasyTier/luci-app-easytier package/luci-app-easytier
+#git clone https://github.com/Jaykwok2999/luci-app-tailscale  package/luci-app-tailscale
+#git clone https://github.com/QiuSimons/luci-app-daed-next package/luci-app-daed-next
+git clone --depth=1 -b dev https://github.com/vernesong/openclash package/openclash
 
-	msgid "NFtables Firewall"
-	msgstr "NFtables 防火墙"
+# homeproxy
+#rm -rf feeds/luci/applications/luci-app-homeproxy
+sed -i "s/ImmortalWrt/OpenWrt/g" feeds/luci/applications/luci-app-homeproxy/po/zh_Hans/homeproxy.po
+sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" feeds/luci/applications/luci-app-homeproxy/htdocs/luci-static/resources/view/homeproxy/{client.js,server.js}
 
-	msgid "IPtables Firewall"
-	msgstr "IPtables 防火墙"
-EOF
+# 修改插件名字
+#sed -i 's/Frp 内网穿透/内网穿透/g' package/luci-app-frpc/po/zh-cn/frp.po
+#sed -i 's/Alist 文件列表/云盘/g' package/luci-app-alist/po/zh-cn/alist.po
+#sed -i 's/ShadowSocksR Plus+/SSR Plus+/g' package/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
+#sed -i 's/"阿里云盘 WebDAV"/"阿里云盘"/g' package/aliyundrive-webdav/openwrt/luci-app-aliyundrive-webdav/po/zh-cn/aliyundrive-webdav.po
+#sed -i 's/解除网易云音乐播放限制/音乐解锁/g' package/luci-app-unblockneteasemusic/luasrc/controller/unblockneteasemusic.lua
+#sed -i 's/解除网易云音乐播放限制/音乐解锁/g' package/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 
-# 精简 UPnP 菜单名称
-sed -i 's#\"title\": \"UPnP IGD \& PCP/NAT-PMP\"#\"title\": \"UPnP\"#g' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
-# 移动 UPnP 到 “网络” 子菜单
-#sed -i 's/services/network/g' feeds/luci/applications/luci-app-upnp/root/usr/share/luci/menu.d/luci-app-upnp.json
+# 调整 V2ray服务 到 VPN 菜单
+#sed -i 's/services/vpn/g' package/openwrt_packages/luci-app-v2ray-server/luasrc/controller/*.lua
+#sed -i 's/services/vpn/g' package/openwrt_packages/luci-app-v2ray-server/luasrc/model/cbi/v2ray_server/*.lua
+#sed -i 's/services/vpn/g' package/openwrt_packages/luci-app-v2ray-server/luasrc/view/v2ray_server/*.htm
 
-# vim - fix E1187: Failed to source defaults.vim
-pushd feeds/packages
-	vim_ver=$(cat utils/vim/Makefile | grep -i "PKG_VERSION:=" | awk 'BEGIN{FS="="};{print $2}' | awk 'BEGIN{FS=".";OFS="."};{print $1,$2}')
-	[ "$vim_ver" = "9.0" ] && {
-		echo "修复 vim E1187 的错误"
-		# curl -s https://github.com/openwrt/packages/commit/699d3fbee266b676e21b7ed310471c0ed74012c9.patch | patch -p1
-		patch -p1 < ${GITHUB_WORKSPACE}/patch/vim/0001-vim-fix-renamed-defaults-config-file.patch
-	}
-popd
+# 调整 zerotier 到 服务菜单
+sed -i 's/vpn/services/g' feeds/luci/applications/luci-app-zerotier/root/usr/share/luci/menu.d/luci-app-zerotier.json
 
-# 调整 Dockerman 到 服务 菜单
+# 音乐解锁
+sed -i 's/解除网易云音乐播放限制/音乐解锁/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
+
+# 调整Dockerman到服务菜单
+rm -rf feeds/luci/applications/luci-app-dockerman
+git clone https://github.com/sbwml/luci-app-dockerman feeds/luci/applications/luci-app-dockerman
+git clone --depth=1 -b openwrt-25.12 https://github.com/coolsnowwolf/luci.git coolsnowwolf-luci
+cp -rf coolsnowwolf-luci/collections/luci-lib-docker feeds/luci/collections/luci-lib-docker
+ln -sf ../../../feeds/luci/collections/luci-lib-docker ./package/feeds/luci/luci-lib-docker
+rm -rf feeds/packages/utils/{docker,dockerd,containerd,runc}
+git clone https://github.com/sbwml/packages_utils_docker feeds/packages/utils/docker
+git clone https://github.com/sbwml/packages_utils_dockerd feeds/packages/utils/dockerd
+git clone https://github.com/sbwml/packages_utils_containerd feeds/packages/utils/containerd
+git clone https://github.com/sbwml/packages_utils_runc feeds/packages/utils/runc
 sed -i 's/"admin",/"admin","services",/g' feeds/luci/applications/luci-app-dockerman/luasrc/controller/*.lua
 sed -i 's/"admin/"admin\/services/g' feeds/luci/applications/luci-app-dockerman/luasrc/model/*.lua
 sed -i 's/"admin/"admin\/services/g' feeds/luci/applications/luci-app-dockerman/luasrc/model/cbi/dockerman/*.lua
 sed -i 's/"admin/"admin\/services/g' feeds/luci/applications/luci-app-dockerman/luasrc/view/dockerman/*.htm
 sed -i 's/"admin/"admin\/services/g' feeds/luci/applications/luci-app-dockerman/luasrc/view/dockerman/cbi/*.htm
+
+# 调整 bypass 到 GFW 菜单
+#sed -i 's/services/vpn/g' package/luci-app-bypass/luasrc/controller/*.lua
+#sed -i 's/services/vpn/g' package/luci-app-bypass/luasrc/model/cbi/bypass/*.lua
+#sed -i 's/services/vpn/g' package/luci-app-bypass/luasrc/view/bypass/*.htm
+
+# 调整 SSRP 到 GFW 菜单
+#sed -i 's/services/vpn/g' package/luci-app-ssr-plus/luasrc/controller/*.lua
+#sed -i 's/services/vpn/g' package/luci-app-ssr-plus/luasrc/model/cbi/shadowsocksr/*.lua
+#sed -i 's/services/vpn/g' package/luci-app-ssr-plus/luasrc/view/shadowsocksr/*.htm
+
+# 调整 Pass Wall 到 GFW 菜单
+#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/controller/*.lua
+#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/model/cbi/passwall/client/*.lua
+#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/model/cbi/passwall/server/*.lua
+#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/passwall/*.lua
+#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/app_update/*.htm
+#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/auto_switch/*.htm
+#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/global/*.htm
+#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/haproxy/*.htm
+#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/log/*.htm
+#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/node_list/*.htm
+#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/rule/*.htm
+#sed -i 's/services/vpn/g' package/passwall/luci-app-passwall/luasrc/view/passwall/server/*.htm
+
+# 调整 Pass Wall 2 到 GFW 菜单
+#sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/controller/*.lua
+#sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/model/cbi/passwall2/client/*.lua
+#sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/model/cbi/passwall2/server/*.lua
+#sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/passwall2/*.lua
+#sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/view/passwall2/app_update/*.htm
+#sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/view/passwall2/auto_switch/*.htm
+#sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/view/passwall2/global/*.htm
+#sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/view/passwall2/log/*.htm
+#sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/view/passwall2/node_list/*.htm
+#sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/view/passwall2/rule/*.htm
+#sed -i 's/services/vpn/g' package/passwall2/luci-app-passwall2/luasrc/view/passwall2/server/*.htm
+
+# 调整 Hello World 到 GFW 菜单
+#sed -i 's/services/vpn/g' package/luci-app-vssr/luasrc/controller/*.lua
+#sed -i 's/services/vpn/g' package/luci-app-vssr/luasrc/model/cbi/vssr/*.lua
+#sed -i 's/services/vpn/g' package/luci-app-vssr/luasrc/view/vssr/*.htm
+
+# 调整 Open Clash 到 GFW 菜单
+#sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/controller/*.lua
+#sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/*.lua
+#sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/model/cbi/openclash/*.lua
+#sed -i 's/services/vpn/g' package/luci-app-openclash/luasrc/view/openclash/*.htm
 
 # 修正部分从第三方仓库拉取的软件 Makefile 路径问题
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
@@ -119,23 +178,25 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 
 # 自定义默认配置
 sed -i '/exit 0$/d' package/emortal/default-settings/files/99-default-settings
-cat ${GITHUB_WORKSPACE}/immortalwrt/default-settings >> package/emortal/default-settings/files/99-default-settings
-curl -fsSL https://raw.githubusercontent.com/0118Add/Openwrt-CI/main/patch/10_system.js > ./feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
-#curl -fsSL https://raw.githubusercontent.com/0118Add/Cloudbuild/main/patches/29_ports.js > ./feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/29_ports.js
+cat ${GITHUB_WORKSPACE}/general/default-settings >> package/emortal/default-settings/files/99-default-settings
+curl -fsSL https://raw.githubusercontent.com/0118Add/X86-N1-Actions/main/general/1_system.js > ./feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+curl -fsSL https://raw.githubusercontent.com/0118Add/X86-N1-Actions/main/general/25_storage.js > ./feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/25_storage.js
+#curl -fsSL https://raw.githubusercontent.com/0118Add/Openwrt-CI/main/immortalwrt/29_ports.js > ./feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/29_ports.js
 
 # comment out the following line to restore the full description
 #sed -i '/# timezone/i grep -q '\''/tmp/sysinfo/model'\'' /etc/rc.local || sudo sed -i '\''/exit 0/i [ "$(cat /sys\\/class\\/dmi\\/id\\/sys_vendor 2>\\/dev\\/null)" = "Default string" ] \&\& echo "x86_64" > \\/tmp\\/sysinfo\\/model'\'' /etc/rc.local\n' package/emortal/default-settings/files/99-default-settings
-sed -i '/# timezone/i sed -i "s/\\(DISTRIB_DESCRIPTION=\\).*/\\1'\''ImmortalWrt $(sed -n "s/DISTRIB_DESCRIPTION='\''ImmortalWrt \\([^ ]*\\) .*/\\1/p" /etc/openwrt_release)'\'',/" /etc/openwrt_release\nsource /etc/openwrt_release \&\& sed -i -e "s/distversion\\s=\\s\\".*\\"/distversion = \\"$DISTRIB_ID $DISTRIB_RELEASE ($DISTRIB_REVISION)\\"/g" -e '\''s/distname    = .*$/distname    = ""/g'\'' /usr/lib/lua/luci/version.lua\nsed -i "s/luciname    = \\".*\\"/luciname    = \\"LuCI openwrt-24.10\\"/g" /usr/lib/lua/luci/version.lua\nsed -i "s/luciversion = \\".*\\"/luciversion = \\"\\"/g" /usr/lib/lua/luci/version.lua\necho "export const revision = '\''\'\'', branch = '\''LuCI openwrt-24.10'\'';" > /usr/share/ucode/luci/version.uc\n/etc/init.d/rpcd restart\n' package/emortal/default-settings/files/99-default-settings
-#sed -i '/# timezone/i sed -i "s/\\(DISTRIB_DESCRIPTION=\\).*/\\1'\''ImmortalWrt $(sed -n "s/DISTRIB_DESCRIPTION='\''ImmortalWrt \\([^ ]*\\) .*/\\1/p" /etc/openwrt_release)'\'',/" /etc/openwrt_release\nsource /etc/openwrt_release \&\& sed -i -e "s/distversion\\s=\\s\\".*\\"/distversion = \\"$DISTRIB_ID $DISTRIB_RELEASE ($DISTRIB_REVISION)\\"/g" -e '\''s/distname    = .*$/distname    = ""/g'\'' /usr/lib/lua/luci/version.lua\nsed -i "s/luciname    = \\".*\\"/luciname    = \\"LuCI openwrt-24.10\\"/g" /usr/lib/lua/luci/version.lua\nsed -i "s/luciversion = \\".*\\"/luciversion = \\"v'$(date +%Y%m%d)'\\"/g" /usr/lib/lua/luci/version.lua\necho "export const revision = '\''v'$(date +%Y%m%d)'\'\'', branch = '\''LuCI openwrt-24.10'\'';" > /usr/share/ucode/luci/version.uc\n/etc/init.d/rpcd restart\n' package/emortal/default-settings/files/99-default-settings
-curl -fsSL https://raw.githubusercontent.com/0118Add/s9xxx-actions/main/patch/os-release > package/base-files/files/etc/os-release
+#sed -i '/# timezone/i sed -i "s/\\(DISTRIB_DESCRIPTION=\\).*/\\1'\''ImmortalWrt $(sed -n "s/DISTRIB_DESCRIPTION='\''ImmortalWrt \\([^ ]*\\) .*/\\1/p" /etc/openwrt_release)'\'',/" /etc/openwrt_release\nsource /etc/openwrt_release \&\& sed -i -e "s/distversion\\s=\\s\\".*\\"/distversion = \\"$DISTRIB_ID $DISTRIB_RELEASE ($DISTRIB_REVISION)\\"/g" -e '\''s/distname    = .*$/distname    = ""/g'\'' /usr/lib/lua/luci/version.lua\nsed -i "s/luciname    = \\".*\\"/luciname    = \\"LuCI Master\\"/g" /usr/lib/lua/luci/version.lua\nsed -i "s/luciversion = \\".*\\"/luciversion = \\"\\"/g" /usr/lib/lua/luci/version.lua\necho "export const revision = '\''\'\'', branch = '\''LuCI Master'\'';" > /usr/share/ucode/luci/version.uc\n/etc/init.d/rpcd restart\n' package/emortal/default-settings/files/99-default-settings
+#sed -i '/# timezone/i sed -i "s/\\(DISTRIB_DESCRIPTION=\\).*/\\1'\''ImmortalWrt $(sed -n "s/DISTRIB_DESCRIPTION='\''ImmortalWrt \\([^ ]*\\) .*/\\1/p" /etc/openwrt_release)'\'',/" /etc/openwrt_release\nsource /etc/openwrt_release \&\& sed -i -e "s/distversion\\s=\\s\\".*\\"/distversion = \\"$DISTRIB_ID $DISTRIB_RELEASE ($DISTRIB_REVISION)\\"/g" -e '\''s/distname    = .*$/distname    = ""/g'\'' /usr/lib/lua/luci/version.lua\nsed -i "s/luciname    = \\".*\\"/luciname    = \\"LuCI Master\\"/g" /usr/lib/lua/luci/version.lua\nsed -i "s/luciversion = \\".*\\"/luciversion = \\"v'$(date +%Y%m%d)'\\"/g" /usr/lib/lua/luci/version.lua\necho "export const revision = '\''v'$(date +%Y%m%d)'\'\'', branch = '\''LuCI Master'\'';" > /usr/share/ucode/luci/version.uc\n/etc/init.d/rpcd restart\n' package/emortal/default-settings/files/99-default-settings
+#curl -fsSL https://raw.githubusercontent.com/0118Add/X86-N1-Actions/main/general/release > package/base-files/files/usr/lib/os-release
+#curl -fsSL https://raw.githubusercontent.com/0118Add/Openwrt-CI/main/immortalwrt/os-release > package/base-files/files/etc/os-release
+rm -rf feeds/packages/net/onionshare-cli
 
-# 拷贝自定义文件
-if [ -n "$(ls -A "${GITHUB_WORKSPACE}/immortalwrt/diy" 2>/dev/null)" ]; then
-	cp -Rf ${GITHUB_WORKSPACE}/immortalwrt/diy/* .
-fi
+# 移除 luci-app-attendedsysupgrade
+sed -i '18d' feeds/luci/collections/luci-nginx/Makefile
+sed -i '17d' feeds/luci/collections/luci/Makefile
+sed -i '16s/ \\$//' feeds/luci/collections/luci/Makefile
+
+#sed -i 's/--set=llvm\.download-ci-llvm=true/--set=llvm.download-ci-llvm=false/' feeds/packages/lang/rust/Makefile
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
-
-echo "========================="
-echo "配置完成……"
