@@ -71,7 +71,7 @@ jobs:
       uses: ophub/flippy-openwrt-actions@main
       env:
         SCRIPT_REPO_URL: unifreq/openwrt_packit
-        OPENWRT_ARMVIRT: https://github.com/0118Add/flippy-dabao/releases/download/ARMv8_immortalwrt/openwrt-armsr-armv8-generic-rootfs.tar.gz
+        OPENWRT_ARMVIRT: https://github.com/0118Add/s9xxx-actions/releases/download/ARMv8_Immortalwrt/openwrt-armsr-armv8-generic-rootfs.tar.gz
         PACKAGE_SOC: vplus_s905x3_s905d_s922x_s922x-ct2000
         WHOAMI: BGG
         #OPENWRT_VER: "R22.10.10"
