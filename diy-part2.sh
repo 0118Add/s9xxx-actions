@@ -56,7 +56,7 @@ sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
 #curl -fsSL https://raw.githubusercontent.com/0118Add/s9xxx-actions/main/patch/flippy_index.htm > ./package/lean/autocore/files/arm/index.htm
 
 # 替换文件
-wget -O ./package/kernel/linux/modules/netsupport.mk https://raw.githubusercontent.com/0118Add/X86-N1-Actions/main/general/netsupport.mk
+#wget -O ./package/kernel/linux/modules/netsupport.mk https://raw.githubusercontent.com/0118Add/X86-N1-Actions/main/general/netsupport.mk
 #wget -O ./package/base-files/files/etc/banner https://raw.githubusercontent.com/0118Add/OpenWrt-CI/main/x86/diy/x86_lede/banner
 
 # 修改autocore
@@ -83,7 +83,7 @@ echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> package/network/c
 #git clone https://github.com/8688Add/feeds_packages_lang_node feeds/packages/lang/node
 
 # 添加额外软件包
-#rm -rf package/lean/autocore
+rm -rf feeds/packages/net/{xray-core,sing-box}
 #git clone https://github.com/0118Add/X86_64-TEST.git package/myautocore
 #rm -rf feeds/luci/collections/luci-lib-docker
 #rm -rf feeds/luci/applications/luci-app-dockerman
