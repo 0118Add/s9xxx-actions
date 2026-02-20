@@ -83,8 +83,8 @@ echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> package/network/c
 # 添加额外软件包
 #rm -rf package/lean/autocore
 #git clone https://github.com/0118Add/X86_64-TEST.git package/myautocore
-rm -rf feeds/luci/collections/luci-lib-docker
-rm -rf feeds/luci/applications/luci-app-dockerman
+#rm -rf feeds/luci/collections/luci-lib-docker
+#rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf feeds/packages/net/mosdns
 #rm -rf feeds/luci/applications/luci-app-mosdns
 #svn export https://github.com/sbwml/packages_lang_golang/branches/19.x feeds/packages/lang/golang
@@ -93,18 +93,18 @@ rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf feeds/packages/multimedia/aliyundrive-webdav
 #rm -rf feeds/luci/applications/luci-app-serverchan
 
-git clone https://github.com/sirpdboy/luci-app-ddns-go package/luci-app-ddns-go
-git clone https://github.com/jerrykuku/lua-maxminddb package/lua-maxminddb
+#git clone https://github.com/sirpdboy/luci-app-ddns-go package/luci-app-ddns-go
+#git clone https://github.com/jerrykuku/lua-maxminddb package/lua-maxminddb
 #git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
-git clone https://github.com/xiaorouji/openwrt-passwall package/passwall
-git clone https://github.com/xiaorouji/openwrt-passwall-packages package/passwall-packages
-git clone https://github.com/siropboy/luci-app-bypass package/luci-app-bypass
+git clone https://github.com/Openwrt-Passwall/openwrt-passwall package/passwall
+git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/passwall-packages
+#git clone https://github.com/siropboy/luci-app-bypass package/luci-app-bypass
 #git clone https://github.com/fw876/helloworld.git package/helloworld
 #merge_package https://github.com/fw876/helloworld helloworld/luci-app-ssr-plus
-merge_package https://github.com/fw876/helloworld helloworld/lua-neturl
+#merge_package https://github.com/fw876/helloworld helloworld/lua-neturl
 #merge_package https://github.com/fw876/helloworld helloworld/mosdns
 #merge_package https://github.com/fw876/helloworld helloworld/shadow-tls
-merge_package https://github.com/fw876/helloworld helloworld/redsocks2
+#merge_package https://github.com/fw876/helloworld helloworld/redsocks2
 #git clone https://github.com/xiaorouji/openwrt-passwall2 package/passwall2
 git clone https://github.com/sirpdboy/luci-app-partexp package/luci-app-partexp
 #git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
@@ -119,8 +119,8 @@ git clone -b master https://github.com/UnblockNeteaseMusic/luci-app-unblocknetea
 # 修改插件名字（修改名字后不知道会不会对插件功能有影响，自己多测试）
 #sed -i 's/广告屏蔽大师 Plus+/广告屏蔽/g' feeds/luci/applications/luci-app-adbyby-plus/po/zh-cn/adbyby.po
 sed -i 's/解除网易云音乐播放限制/音乐解锁/g' package/luci-app-unblockneteasemusic/luasrc/controller/unblockneteasemusic.lua
-sed -i 's/Argon 主题设置/Argon设置/g' feeds/luci/applications/luci-app-argon-config/po/zh-cn/argon-config.po
-sed -i 's/Design 主题设置/Design设置/g' feeds/luci/applications/luci-app-design-config/po/zh-cn/design-config.po
+#sed -i 's/Argon 主题设置/Argon设置/g' feeds/luci/applications/luci-app-argon-config/po/zh-cn/argon-config.po
+#sed -i 's/Design 主题设置/Design设置/g' feeds/luci/applications/luci-app-design-config/po/zh-cn/design-config.po
 sed -i 's/一键分区扩容/分区扩容/g' package/luci-app-partexp/po/zh-cn/partexp.po
 #sed -i 's/ShadowSocksR Plus+/SSR Plus+/g' package/custom/luci-app-ssr-plus/luasrc/controller/shadowsocksr.lua
 #sed -i 's/Argon 主题设置/主题设置/g' feeds/luci/applications/luci-app-argon-config/po/zh-cn/argon-config.po
@@ -137,16 +137,16 @@ sed -i "s|opt/kernel|https://github.com/breakings/OpenWrt/opt/kernel|g" package/
 sed -i "s|ARMv8|s9xxx_lede|g" package/amlogic/luci-app-amlogic/root/etc/config/amlogic
 
 # 调整 Dockerman 到 服务 菜单
-#sed -i 's/"admin",/"admin","services",/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/controller/*.lua
-#sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/model/*.lua
-#sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/model/cbi/dockerman/*.lua
-#sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/view/dockerman/*.htm
-#sed -i 's/"admin/"admin\/services/g' package/luci-app-dockerman/applications/luci-app-dockerman/luasrc/view/dockerman/cbi/*.htm
+sed -i 's/"admin",/"admin","services",/g' ./feeds/luci/applications/luci-app-dockerman/luasrc/controller/*.lua
+sed -i 's/"admin/"admin\/services/g' ./feeds/luci/applications/luci-app-dockerman/luasrc/model/*.lua
+sed -i 's/"admin/"admin\/services/g' ./feeds/luci/applications/luci-app-dockerman/luasrc/model/cbi/dockerman/*.lua
+sed -i 's/"admin/"admin\/services/g' ./feeds/luci/applications/luci-app-dockerman/luasrc/view/dockerman/*.htm
+sed -i 's/"admin/"admin\/services/g' ./feeds/luci/applications/luci-app-dockerman/luasrc/view/dockerman/cbi/*.htm
 
 # 调整 Zerotier 到 服务 菜单
-sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/controller/*.lua
-sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/model/cbi/zerotier/*.lua
-sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/*.htm
+#sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/controller/*.lua
+#sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/model/cbi/zerotier/*.lua
+#sed -i 's/vpn/services/g' ./feeds/luci/applications/luci-app-zerotier/luasrc/view/zerotier/*.htm
 
 # 调整 V2ray服务 到 VPN 菜单
 #sed -i 's/services/vpn/g' feeds/luci/applications/luci-app-v2ray-server/luasrc/controller/*.lua
