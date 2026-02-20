@@ -95,8 +95,8 @@ echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> package/network/c
 
 #git clone https://github.com/sirpdboy/luci-app-ddns-go package/luci-app-ddns-go
 #git clone https://github.com/jerrykuku/lua-maxminddb package/lua-maxminddb
-#git clone https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
-git clone https://github.com/Openwrt-Passwall/openwrt-passwall package/passwall
+merge_package https://github.com/kiddin9/kwrt-packages kwrt-packages/luci-app-passwall
+#git clone https://github.com/Openwrt-Passwall/openwrt-passwall package/passwall
 git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/passwall-packages
 #git clone https://github.com/siropboy/luci-app-bypass package/luci-app-bypass
 #git clone https://github.com/fw876/helloworld.git package/helloworld
