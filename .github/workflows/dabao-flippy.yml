@@ -22,8 +22,8 @@ env:
   UPLOAD_RELEASE: true
   RECENT_LASTEST: 3
   TZ: Asia/Shanghai
-  FILE_NAME: dabao_armv8
-  PRODUCT_NAME: dabao_armv8
+  FILE_NAME: dabao_armv8-lede
+  PRODUCT_NAME: dabao_armv8-lede
 
 jobs:
   build:
