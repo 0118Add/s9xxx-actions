@@ -107,7 +107,7 @@ git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/
 #merge_package https://github.com/fw876/helloworld helloworld/mosdns
 #merge_package https://github.com/fw876/helloworld helloworld/shadow-tls
 #merge_package https://github.com/fw876/helloworld helloworld/redsocks2
-#git clone https://github.com/xiaorouji/openwrt-passwall2 package/passwall2
+#git clone https://github.com/Openwrt-Passwall/openwrt-passwall2 package/passwall2
 git clone https://github.com/sirpdboy/luci-app-partexp package/luci-app-partexp
 #git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
 #git clone -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush package/luci-app-wechatpush
