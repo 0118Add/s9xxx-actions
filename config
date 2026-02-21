@@ -159,6 +159,12 @@ CONFIG_PACKAGE_openssh-sftp-server=y
 CONFIG_PACKAGE_snmpd=y
 CONFIG_PACKAGE_vim-fuller=y
 
+# SFE
+CONFIG_PACKAGE_kmod-tcp-bbr=y
+CONFIG_PACKAGE_kmod-ipt-offload=y
+CONFIG_PACKAGE_kmod-fast-classifier=y
+CONFIG_PACKAGE_kmod-shortcut-fe-cm=y
+
 # Ipv6 Support
 CONFIG_PACKAGE_6in4=y
 CONFIG_PACKAGE_ipv6helper=y
