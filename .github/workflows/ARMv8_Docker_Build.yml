@@ -74,7 +74,7 @@ jobs:
       id: push
       run: |
         sudo wget  https://github.com/0118Add/s9xxx-actions/releases/download/ARMv8_Lede/openwrt-armsr-armv8-generic-rootfs.tar.gz
-        cp ./openwrt-armvirt-64-generic-rootfs.tar.gz $GITHUB_WORKSPACE/docker/openwrt-armvirt-64-generic-rootfs.tar.gz
+        cp ./openwrt-armsr-armv8-generic-rootfs.tar.gz $GITHUB_WORKSPACE/docker/openwrt-armsr-armv8-generic-rootfs.tar.gz
         cd $GITHUB_WORKSPACE/docker
         chmod +x $DOCKER_BUILD_SH
         ./$DOCKER_BUILD_SH
