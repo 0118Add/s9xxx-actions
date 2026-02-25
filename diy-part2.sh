@@ -35,13 +35,13 @@ function merge_feed(){
 rm -rf package/custom; mkdir package/custom
 
 # 更改主机名
-sed -i "s/hostname='.*'/hostname='OpenWrt'/g" package/base-files/files/bin/config_generate
+#sed -i "s/hostname='.*'/hostname='OpenWrt'/g" package/base-files/files/bin/config_generate
 
 # 加入信息
 #sed -i "s/DISTRIB_DESCRIPTION='*.*'/DISTRIB_DESCRIPTION='OpenWrt'/g" package/lean/default-settings/files/zzz-default-settings   
 #sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' BGG'/g" package/lean/default-settings/files/zzz-default-settings
-sed -i 's/%D/OpenWrt/g' package/base-files/files/usr/lib/os-release
-sed -i 's/%d/OpenWrt/g' package/base-files/files/usr/lib/os-release
+#sed -i 's/%D/OpenWrt/g' package/base-files/files/usr/lib/os-release
+#sed -i 's/%d/OpenWrt/g' package/base-files/files/usr/lib/os-release
 
 # Modify default IP
 sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
@@ -53,20 +53,16 @@ sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
 #sed -i 's/KERNEL_PATCHVER:=5.10/KERNEL_PATCHVER:=5.15/g' target/linux/armvirt/Makefile
 
 # 修改系统文件
-#curl -fsSL https://raw.githubusercontent.com/0118Add/s9xxx-actions/main/patch/flippy_index.htm > ./package/lean/autocore/files/arm/index.htm
+curl -fsSL https://raw.githubusercontent.com/0118Add/X86-Actions/main/general/lede.index.htm > ./package/lean/autocore/files/arm/index.htm
 
 # 替换文件
 #wget -O ./package/kernel/linux/modules/netsupport.mk https://raw.githubusercontent.com/0118Add/X86-N1-Actions/main/general/netsupport.mk
-#wget -O ./package/base-files/files/etc/banner https://raw.githubusercontent.com/0118Add/OpenWrt-CI/main/x86/diy/x86_lede/banner
-
-# 修改autocore
-#sed -i 's/DEPENDS:=@(.*/DEPENDS:=@(TARGET_bcm27xx||TARGET_bcm53xx||TARGET_ipq40xx||TARGET_ipq806x||TARGET_ipq807x||TARGET_mvebu||TARGET_rockchip||TARGET_armvirt) \\/g' package/lean/autocore/Makefile
 
 # 替换banner
-#wget -O ./package/base-files/files/etc/banner https://raw.githubusercontent.com/0118Add/OpenWrt-CI/main/x86/diy/x86_lede/banner
+wget -O ./package/base-files/files/etc/banner https://raw.githubusercontent.com/0118Add/OpenWrt-CI/main/x86/diy/x86_lede/banner
 
 # 修改概览里时间显示为中文数字
-sed -i 's/os.date()/os.date("%Y-%m-%d") .. " " .. translate(os.date("%A")) .. " " .. os.date("%X")/g' package/lean/autocore/files/arm/index.htm
+#sed -i 's/os.date()/os.date("%Y-%m-%d") .. " " .. translate(os.date("%A")) .. " " .. os.date("%X")/g' package/lean/autocore/files/arm/index.htm
 
 # 修改连接数
 sed -i 's/net.netfilter.nf_conntrack_max=.*/net.netfilter.nf_conntrack_max=65535/g' package/kernel/linux/files/sysctl-nf-conntrack.conf
@@ -202,12 +198,6 @@ sed -i 's/"admin/"admin\/services/g' ./feeds/luci/applications/luci-app-dockerma
 #sed -i 's/services/vpn/g' package/luci-app-openclash/luci-app-openclash/luasrc/*.lua
 #sed -i 's/services/vpn/g' package/luci-app-openclash/luci-app-openclash/luasrc/model/cbi/openclash/*.lua
 #sed -i 's/services/vpn/g' package/luci-app-openclash/luci-app-openclash/luasrc/view/openclash/*.htm
-
-# 赋予权限
-#chmod 0755 package/luci-app-bypass/root/etc/init.d/bypass
-
-# fix xfsprogs
-#sed -i 's,TARGET_CFLAGS += -DHAVE_MAP_SYNC,& -D_LARGEFILE64_SOURCE,' feeds/packages/utils/xfsprogs/Makefile
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
