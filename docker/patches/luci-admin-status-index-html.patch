@@ -1,5 +1,5 @@
---- a/usr/lib/lua/luci/view/admin_status/index.htm
-+++ b/usr/lib/lua/luci/view/admin_status/index.htm
+--- index.htm.orig	2020-03-12 22:49:17.000000000 +0800
++++ index.htm	2020-03-13 00:49:19.000000000 +0800
 @@ -9,10 +9,18 @@
  	local util = require "luci.util"
  	local stat = require "luci.tools.status"
