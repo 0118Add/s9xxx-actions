@@ -13,20 +13,20 @@ jobs:
         run: |
           echo "version=$(curl -sSL https://raw.githubusercontent.com/actions/go-versions/update-versions-manifest-file/versions-manifest.json | jq -r '.[0].version')" >> $GITHUB_OUTPUT
 
-  ref1nd_main:
+  ref1nd_stable_version:
     runs-on: ubuntu-latest
     needs: go
     outputs:
-      ref1nd_main_version: ${{ steps.version.outputs.ref1nd_main_version }}
-      ref1nd_main_time: ${{ steps.version.outputs.ref1nd_main_time }}
-      ref1nd_main_tags: ${{ steps.version.outputs.ref1nd_main_tags }}
-      ref1nd_main_skip_update: ${{ steps.compare.outputs.skip_update }}
+      ref1nd_stable_version: ${{ steps.version.outputs.ref1nd_stable_version }}
+      ref1nd_stable_time: ${{ steps.version.outputs.ref1nd_stable_time }}
+      ref1nd_stable_tags: ${{ steps.version.outputs.ref1nd_stable_tags }}
+      ref1nd_stable_skip_update: ${{ steps.compare.outputs.skip_update }}
     steps:
-      - name: Checkout `reF1nd-main`
+      - name: Checkout `reF1nd-stable`
         uses: actions/checkout@v6
         with:
           repository: reF1nd/sing-box
-          ref: reF1nd-main
+          ref: reF1nd-stable
           fetch-depth: 0
 
       - name: Setup `Go`
@@ -34,18 +34,18 @@ jobs:
         with:
           go-version: ${{ needs.go.outputs.go_version }}
 
-      - name: Get `sing-box reF1nd-main` version
+      - name: Get `sing-box reF1nd-Stable` version
         id: version
         run: |
-          echo "ref1nd_main_version=$(git tag -l --sort=v:refname | grep -Po '^v?\K[0-9]+\.[0-9]+\.[0-9]+-reF1nd.*' | tail -n1)" >> $GITHUB_OUTPUT
-          echo "ref1nd_main_time=$(git log -1 --format=%cd --date=format:'%Y-%m-%d' $(echo "$ref1nd_main_version" | awk -F '-' '{print $3}'))" >> $GITHUB_OUTPUT
-          echo "ref1nd_main_tags=with_gvisor,with_quic,with_dhcp,with_utls,with_clash_api" >> $GITHUB_OUTPUT
+          echo "ref1nd_stable_version=$(git tag -l --sort=v:refname | grep -Po '^v?\K[0-9]+\.[0-9]+\.[0-9]+-reF1nd.*' | tail -n1)" >> $GITHUB_OUTPUT
+          echo "ref1nd_stable_time=$(git log -1 --format=%cd --date=format:'%Y-%m-%d' $(echo "$ref1nd_stable_version" | awk -F '-' '{print $3}'))" >> $GITHUB_OUTPUT
+          echo "ref1nd_stable_tags=with_gvisor,with_quic,with_dhcp,with_utls,with_clash_api" >> $GITHUB_OUTPUT
 
-      - name: Compare `sing-box reF1nd-main` versions with current release
+      - name: Compare `sing-box reF1nd-Stable` versions with current release
         id: compare
         run: |
           current_body=$(curl -sSL "https://api.github.com/repos/${{ github.repository }}/releases/tags/sing-box" | jq -r '.body // ""')
-          arch="sing-box reF1nd-main|${{ steps.version.outputs.ref1nd_main_version }}|${{ steps.version.outputs.ref1nd_main_time }}"
+          arch="sing-box reF1nd-Stable|${{ steps.version.outputs.ref1nd_stable_version }}|${{ steps.version.outputs.ref1nd_stable_time }}"
           IFS="|" read -r name version time <<< "$arch"
           if echo "${current_body}" | grep -q "${name}.*${version}.*${time}"; then
             echo "当前 ${name} 版本已是最新版本 v${version}，无需更新"
@@ -56,13 +56,13 @@ jobs:
           fi
           echo "skip_update=$skip_update" >> $GITHUB_OUTPUT
 
-  ref1nd_main_cross:
+  ref1nd_stable_cross:
     runs-on: ubuntu-latest
-    if: ${{ needs.ref1nd_main.outputs.ref1nd_main_skip_update != 'true' }}
+    if: ${{ needs.ref1nd_stable_version.outputs.ref1nd_stable_skip_update != 'true' }}
     strategy:
       matrix:
         include:
-          # linux
+          # Linux
           - { name: linux-amd64-v1, goos: linux, goarch: amd64, goamd64: v1 }
           - { name: linux-amd64-v3, goos: linux, goarch: amd64, goamd64: v3 }
           - { name: linux-armv5, goos: linux, goarch: arm, goarm: 5 }
@@ -72,7 +72,7 @@ jobs:
           - { name: linux-mips-softfloat, goos: linux, goarch: mips, gomips: softfloat }
           - { name: linux-mipsle-softfloat, goos: linux, goarch: mipsle, gomips: softfloat }
           - { name: linux-mipsle-hardfloat, goos: linux, goarch: mipsle, gomips: hardfloat }
-          # windows
+          # Windows
           - { name: windows-amd64-v1, goos: windows, goarch: amd64, goamd64: v1 }
           - { name: windows-amd64-v3, goos: windows, goarch: amd64, goamd64: v3 }
           - { name: windows-arm64, goos: windows, goarch: arm64 }
@@ -80,7 +80,7 @@ jobs:
       fail-fast: false
     needs:
       - go
-      - ref1nd_main
+      - ref1nd_stable_version
     env:
       GOOS: ${{ matrix.goos }}
       GOARCH: ${{ matrix.goarch }}
@@ -88,44 +88,43 @@ jobs:
       GOARM: ${{ matrix.goarm }}
       GOMIPS: ${{ matrix.gomips }}
       CGO_ENABLED: 0
-      ref1nd_main_VERSION: ${{ needs.ref1nd_main.outputs.ref1nd_main_version }}
-      ref1nd_main_TAGS: ${{ needs.ref1nd_main.outputs.ref1nd_main_tags }}
+      ref1nd_stable_VERSION: ${{ needs.ref1nd_stable_version.outputs.ref1nd_stable_version }}
+      ref1nd_stable_TAGS: ${{ needs.ref1nd_stable_version.outputs.ref1nd_stable_tags }}
     steps:
-      - name: Checkout `reF1nd-main`
+      - name: Checkout `reF1nd-stable`
         uses: actions/checkout@v6
         with:
           repository: reF1nd/sing-box
-          ref: reF1nd-main
+          ref: reF1nd-stable
 
       - name: Setup `Go`
         uses: actions/setup-go@v6
         with:
           go-version: ${{ needs.go.outputs.go_version }}
 
-      - name: Build `sing-box reF1nd-main` core
-        id: build
-        run: go build -v -trimpath -ldflags "-checklinkname=0 -X 'github.com/sagernet/sing-box/constant.Version=${ref1nd_main_VERSION}' -s -w -buildid=" -tags "${ref1nd_main_TAGS}" ./cmd/sing-box
+      - name: Build `sing-box reF1nd-Stable` core
+        run: go build -v -trimpath -ldflags "-checklinkname=0 -X 'github.com/sagernet/sing-box/constant.Version=${ref1nd_stable_VERSION}' -s -w -buildid=" -tags "${ref1nd_stable_TAGS}" ./cmd/sing-box
 
       - name: Upload files to workspace
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
-          name: sing-box-ref1nd-main-${{ matrix.name }}
+          name: sing-box-ref1nd-stable-${{ matrix.name }}
           path: sing-box*
 
-  ref1nd_dev:
+  ref1nd_test_version:
     runs-on: ubuntu-latest
     needs: go
     outputs:
-      ref1nd_dev_version: ${{ steps.version.outputs.ref1nd_dev_version }}
-      ref1nd_dev_time: ${{ steps.version.outputs.ref1nd_dev_time }}
-      ref1nd_dev_tags: ${{ steps.version.outputs.ref1nd_dev_tags }}
-      ref1nd_dev_skip_update: ${{ steps.compare.outputs.skip_update }}
+      ref1nd_test_version: ${{ steps.version.outputs.ref1nd_test_version }}
+      ref1nd_test_time: ${{ steps.version.outputs.ref1nd_test_time }}
+      ref1nd_test_tags: ${{ steps.version.outputs.ref1nd_test_tags }}
+      ref1nd_test_skip_update: ${{ steps.compare.outputs.skip_update }}
     steps:
-      - name: Checkout `reF1nd-dev`
+      - name: Checkout `reF1nd-testing`
         uses: actions/checkout@v6
         with:
           repository: reF1nd/sing-box
-          ref: reF1nd-dev
+          ref: reF1nd-testing
           fetch-depth: 0
 
       - name: Setup `Go`
@@ -133,18 +132,18 @@ jobs:
         with:
           go-version: ${{ needs.go.outputs.go_version }}
 
-      - name: Get `sing-box reF1nd-dev` version
+      - name: Get `sing-box reF1nd-Test` version
         id: version
         run: |
-          echo "ref1nd_dev_version=$(git tag -l --sort=v:refname | grep -Po '^v\K.*(alpha|beta|rc).*-reF1nd.*' | tail -n1)" >> $GITHUB_OUTPUT
-          echo "ref1nd_dev_time=$(git log -1 --format=%cd --date=format:'%Y-%m-%d' $(echo "$ref1nd_dev_version" | awk -F '-' '{print $3}'))" >> $GITHUB_OUTPUT
-          echo "ref1nd_dev_tags=with_gvisor,with_quic,with_dhcp,with_utls,with_clash_api" >> $GITHUB_OUTPUT
+          echo "ref1nd_test_version=$(git tag -l --sort=v:refname | grep -Po '^v\K.*(alpha|beta|rc).*-reF1nd.*' | tail -n1)" >> $GITHUB_OUTPUT
+          echo "ref1nd_test_time=$(git log -1 --format=%cd --date=format:'%Y-%m-%d' $(echo "$ref1nd_test_version" | awk -F '-' '{print $3}'))" >> $GITHUB_OUTPUT
+          echo "ref1nd_test_tags=with_gvisor,with_quic,with_dhcp,with_utls,with_clash_api" >> $GITHUB_OUTPUT
 
-      - name: Compare `sing-box reF1nd-dev` versions with current release
+      - name: Compare `sing-box reF1nd-Test` versions with current release
         id: compare
         run: |
           current_body=$(curl -sSL "https://api.github.com/repos/${{ github.repository }}/releases/tags/sing-box" | jq -r '.body // ""')
-          arch="sing-box reF1nd-dev|${{ steps.version.outputs.ref1nd_dev_version }}|${{ steps.version.outputs.ref1nd_dev_time }}"
+          arch="sing-box reF1nd-Test|${{ steps.version.outputs.ref1nd_test_version }}|${{ steps.version.outputs.ref1nd_test_time }}"
           IFS="|" read -r name version time <<< "$arch"
           if echo "${current_body}" | grep -q "${name}.*${version}.*${time}"; then
             echo "当前 ${name} 版本已是最新版本 v${version}，无需更新"
@@ -155,13 +154,13 @@ jobs:
           fi
           echo "skip_update=$skip_update" >> $GITHUB_OUTPUT
 
-  ref1nd_dev_cross:
+  ref1nd_test_cross:
     runs-on: ubuntu-latest
-    if: ${{ needs.ref1nd_dev.outputs.ref1nd_dev_skip_update != 'true' }}
+    if: ${{ needs.ref1nd_test_version.outputs.ref1nd_test_skip_update != 'true' }}
     strategy:
       matrix:
         include:
-          # linux
+          # Linux
           - { name: linux-amd64-v1, goos: linux, goarch: amd64, goamd64: v1, variant: musl }
           - { name: linux-amd64-v3, goos: linux, goarch: amd64, goamd64: v3, variant: musl }
           - { name: linux-armv5, goos: linux, goarch: arm, goarm: 5 }
@@ -171,7 +170,7 @@ jobs:
           - { name: linux-mips-softfloat, goos: linux, goarch: mips, gomips: softfloat }
           - { name: linux-mipsle-softfloat, goos: linux, goarch: mipsle, gomips: softfloat }
           - { name: linux-mipsle-hardfloat, goos: linux, goarch: mipsle, gomips: hardfloat }
-          # windows
+          # Windows
           - { name: windows-amd64-v1, goos: windows, goarch: amd64, goamd64: v1 }
           - { name: windows-amd64-v3, goos: windows, goarch: amd64, goamd64: v3 }
           - { name: windows-arm64, goos: windows, goarch: arm64 }
@@ -179,7 +178,7 @@ jobs:
       fail-fast: false
     needs:
       - go
-      - ref1nd_dev
+      - ref1nd_test_version
     env:
       GOOS: ${{ matrix.goos }}
       GOARCH: ${{ matrix.goarch }}
@@ -187,45 +186,451 @@ jobs:
       GOARM: ${{ matrix.goarm }}
       GOMIPS: ${{ matrix.gomips }}
       CGO_ENABLED: 0
-      ref1nd_dev_VERSION: ${{ needs.ref1nd_dev.outputs.ref1nd_dev_version }}
-      ref1nd_dev_TAGS: ${{ needs.ref1nd_dev.outputs.ref1nd_dev_tags }}
+      ref1nd_test_VERSION: ${{ needs.ref1nd_test_version.outputs.ref1nd_test_version }}
+      ref1nd_test_TAGS: ${{ needs.ref1nd_test_version.outputs.ref1nd_test_tags }}
     steps:
-      - name: Checkout `reF1nd-dev`
+      - name: Checkout `reF1nd-testing`
         uses: actions/checkout@v6
         with:
           repository: reF1nd/sing-box
-          ref: reF1nd-dev
+          ref: reF1nd-testing
 
       - name: Setup `Go`
         uses: actions/setup-go@v6
         with:
           go-version: ${{ needs.go.outputs.go_version }}
 
-      - name: Build `sing-box reF1nd-dev` core
-        id: build
-        run: go build -v -trimpath -ldflags "-checklinkname=0 -X 'github.com/sagernet/sing-box/constant.Version=${ref1nd_dev_VERSION}' -s -w -buildid=" -tags "${ref1nd_dev_TAGS}" ./cmd/sing-box
+      - name: Build `sing-box reF1nd-Test` core
+        run: go build -v -trimpath -ldflags "-checklinkname=0 -X 'github.com/sagernet/sing-box/constant.Version=${ref1nd_test_VERSION}' -s -w -buildid=" -tags "${ref1nd_test_TAGS}" ./cmd/sing-box
 
       - name: Upload files to workspace
         uses: actions/upload-artifact@v6
         with:
-          name: sing-box-ref1nd-dev-${{ matrix.name }}
+          name: sing-box-ref1nd-test-${{ matrix.name }}
           path: sing-box*
 
+  ref1nd_stable_android:
+    runs-on: ubuntu-latest
+    if: ${{ needs.ref1nd_stable_version.outputs.ref1nd_stable_skip_update != 'true' }}
+    needs:
+      - go
+      - ref1nd_stable_version
+    steps:
+      - name: Checkout `reF1nd-stable`
+        uses: actions/checkout@v6
+        with:
+          repository: reF1nd/sing-box
+          ref: reF1nd-stable
+          fetch-depth: 0
+          submodules: 'recursive'
 
-  singbox_release:
+      - name: Setup `Go`
+        uses: actions/setup-go@v6
+        with:
+          go-version: ${{ needs.go.outputs.go_version }}
+
+      - name: Setup Android NDK
+        id: setup-ndk
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r29
+
+      - name: Setup OpenJDK
+        run: |-
+          sudo apt update && sudo apt install -y openjdk-17-jdk-headless
+          /usr/lib/jvm/java-17-openjdk-amd64/bin/java --version
+
+      - name: Set tag
+        run: git tag v${{ needs.ref1nd_stable_version.outputs.ref1nd_stable_version }} -f
+
+      - name: Build library
+        run: |-
+          make lib_install
+          export PATH="$PATH:$(go env GOPATH)/bin"
+          make lib_android
+        env:
+          JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+
+      - name: Gradle cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.gradle
+          key: gradle-${{ hashFiles('**/*.gradle') }}
+
+      - name: Update version
+        run: |-
+          go run -v ./cmd/internal/update_android_version --ci --nightly
+
+      - name: Decode Keystore
+        run: |-
+          echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 -d > ./clients/android/app/release.keystore
+          sed -i '/fun getProps(propName: String): String {/,/^}/c\
+          fun getProps(propName: String): String {\
+              System.getenv(propName)?.let { return it }\
+              val propsFile = rootProject.file("local.properties")\
+              if (propsFile.exists()) {\
+                  val props = Properties()\
+                  props.load(FileInputStream(propsFile))\
+                  props.getProperty(propName)?.let { return it }\
+              }\
+              return ""\
+          }' ./clients/android/app/build.gradle.kts
+
+      - name: Streamline "Update" module
+        run: |-
+          sed -i '/UpdateState.loadFromCache()/,/^        }/c\
+                  Settings.checkUpdateEnabled = false\
+                  Settings.updateCheckPrompted = true\
+                  UpdateState.clear()\
+          ' ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/MainActivity.kt
+          sed -i '/Handle update check prompt dialog/,/^        }/d' ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/MainActivity.kt
+
+          awk '
+          /containerColor = MaterialTheme\.colorScheme\.primary/ {
+              base = NR
+          }
+          {
+              lines[NR] = $0
+          }
+          END {
+              for (i = base; i >= 1; i--) {
+                  if (lines[i] ~ /trailingContent = {/) {
+                      start = i
+                      break
+                  }
+              }
+              for (i = base; i <= NR; i++) {
+                  if (lines[i] ~ /^                    },/) {
+                      end = i
+                      break
+                  }
+              }
+              for (i = 1; i <= NR; i++) {
+                  if (i < start || i > end)
+                      print lines[i]
+              }
+          }
+          ' ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/screen/settings/AppSettingsScreen.kt > ./temp-AppSettingsScreen.kt &&\
+          mv -f ./temp-AppSettingsScreen.kt ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/screen/settings/AppSettingsScreen.kt
+          awk '
+          /R\.string\.update_settings/ {
+              base = NR
+          }
+          {
+              lines[NR] = $0
+          }
+          END {
+              for (i = base; i >= 1; i--) {
+                  if (lines[i] ~ /Spacer\(modifier = Modifier\.height\(8\.dp\)\)/) {
+                      start = i
+                      break
+                  }
+              }
+              for (i = base; i <= NR; i++) {
+                  if (lines[i] ~ /^}/) {
+                      end = i
+                      break
+                  }
+              }
+              for (i = 1; i <= NR; i++) {
+                  if (i == start) {
+                      print "    }"
+                      print "}"
+                      i = end
+                      continue
+                  }
+                  print lines[i]
+              }
+          }
+          ' ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/screen/settings/AppSettingsScreen.kt > ./temp-AppSettingsScreen.kt &&\
+          mv -f ./temp-AppSettingsScreen.kt ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/screen/settings/AppSettingsScreen.kt
+
+          sed -i 's/import io.nekohasekai.sfa.update.UpdateState//; s/val hasUpdate by UpdateState.hasUpdate//' ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/screen/settings/SettingsScreen.kt
+          awk '
+          /if \(hasUpdate\)/ {
+              base = NR
+          }
+          {
+              lines[NR] = $0
+          }
+          END {
+              for (i = base; i >= 1; i--) {
+                  if (lines[i] ~ /trailingContent = {/) {
+                      start = i
+                      break
+                  }
+              }
+              for (i = base; i <= NR; i++) {
+                  if (lines[i] ~ /^                    },/) {
+                      end = i
+                      break
+                  }
+              }
+              for (i = 1; i <= NR; i++) {
+                  if (i < start || i > end)
+                      print lines[i]
+              }
+          }
+          ' ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/screen/settings/SettingsScreen.kt > ./temp-SettingsScreen.kt &&\
+          mv -f ./temp-SettingsScreen.kt ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/screen/settings/SettingsScreen.kt
+
+      - name: Build `SFA-reF1nd-Stable` apk
+        run: |-
+          mkdir -p ./clients/android/app/libs/
+          cp -f  ./*.aar ./clients/android/app/libs/
+          cd ./clients/android
+          ./gradlew :app:assembleOtherRelease
+        env:
+          JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+          KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
+          ALIAS_NAME: ${{ secrets.ALIAS_NAME }}
+          ALIAS_PASS: ${{ secrets.ALIAS_PASS }}
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+
+      - name: Prepare upload
+        run: |-
+          mkdir -p ./sfa-ref1nd-stable/
+          for file in ./clients/android/app/build/outputs/apk/other/release/*.apk; do
+            mv -f "${file}" "./sfa-ref1nd-stable/$(basename "${file/SFA-*-reF1nd/SFA-ref1nd-stable}")"
+          done
+
+      - name: Upload files to workspace
+        uses: actions/upload-artifact@v7
+        with:
+          name: sfa-ref1nd-stable-apks
+          path: ./sfa-ref1nd-stable/*
+
+  ref1nd_test_android:
+    runs-on: ubuntu-latest
+    if: ${{ needs.ref1nd_test_version.outputs.ref1nd_test_skip_update != 'true' }}
+    needs:
+      - go
+      - ref1nd_test_version
+    steps:
+      - name: Checkout `reF1nd-testing`
+        uses: actions/checkout@v6
+        with:
+          repository: reF1nd/sing-box
+          ref: reF1nd-testing
+          fetch-depth: 0
+          submodules: 'recursive'
+
+      - name: Setup `Go`
+        uses: actions/setup-go@v6
+        with:
+          go-version: ${{ needs.go.outputs.go_version }}
+
+      - name: Setup Android NDK
+        id: setup-ndk
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r29
+
+      - name: Setup OpenJDK
+        run: |-
+          sudo apt update && sudo apt install -y openjdk-17-jdk-headless
+          /usr/lib/jvm/java-17-openjdk-amd64/bin/java --version
+
+      - name: Set tag
+        run: git tag v${{ needs.ref1nd_test_version.outputs.ref1nd_test_version }} -f
+
+      - name: Build library
+        run: |-
+          make lib_install
+          export PATH="$PATH:$(go env GOPATH)/bin"
+          make lib_android
+        env:
+          JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+
+      - name: Gradle cache
+        uses: actions/cache@v5
+        with:
+          path: ~/.gradle
+          key: gradle-${{ hashFiles('**/*.gradle') }}
+
+      - name: Update version
+        run: |-
+          go run -v ./cmd/internal/update_android_version --ci --nightly
+
+      - name: Decode Keystore
+        run: |-
+          echo "${{ secrets.ANDROID_KEYSTORE }}" | base64 -d > ./clients/android/app/release.keystore
+
+          sed -i '/fun getProps(propName: String): String {/,/^}/c\
+          fun getProps(propName: String): String {\
+              System.getenv(propName)?.let { return it }\
+              val propsFile = rootProject.file("local.properties")\
+              if (propsFile.exists()) {\
+                  val props = Properties()\
+                  props.load(FileInputStream(propsFile))\
+                  props.getProperty(propName)?.let { return it }\
+              }\
+              return ""\
+          }' ./clients/android/app/build.gradle.kts
+
+          proxy="./clients/android/app/src/main/java/io/nekohasekai/sfa/bg/ProxyService.kt"
+          vpn="./clients/android/app/src/main/java/io/nekohasekai/sfa/bg/VPNService.kt"
+          sed -i '/import io.nekohasekai.libbox.Notification/a import io.nekohasekai.libbox.NeighborUpdateListener' ${proxy}
+          sed -i '/import io.nekohasekai.libbox.Notification/a import io.nekohasekai.libbox.NeighborUpdateListener' ${vpn}
+          sed -i '$i \
+          \
+              override fun registerMyInterface(name: String) {}\
+          \
+              override fun startNeighborMonitor(listener: NeighborUpdateListener) {}\
+          \
+              override fun closeNeighborMonitor(listener: NeighborUpdateListener) {}\
+          ' ${proxy}
+          sed -i '$i \
+          \
+              override fun registerMyInterface(name: String) {}\
+          \
+              override fun startNeighborMonitor(listener: NeighborUpdateListener) {}\
+          \
+              override fun closeNeighborMonitor(listener: NeighborUpdateListener) {}\
+          ' ${vpn}
+
+      - name: Streamline "Update" module
+        run: |-
+          sed -i '/UpdateState.loadFromCache()/,/^        }/c\
+                  Settings.checkUpdateEnabled = false\
+                  Settings.updateCheckPrompted = true\
+                  UpdateState.clear()\
+          ' ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/MainActivity.kt
+          sed -i '/Handle update check prompt dialog/,/^        }/d' ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/MainActivity.kt
+
+          awk '
+          /containerColor = MaterialTheme\.colorScheme\.primary/ {
+              base = NR
+          }
+          {
+              lines[NR] = $0
+          }
+          END {
+              for (i = base; i >= 1; i--) {
+                  if (lines[i] ~ /trailingContent = {/) {
+                      start = i
+                      break
+                  }
+              }
+              for (i = base; i <= NR; i++) {
+                  if (lines[i] ~ /^                    },/) {
+                      end = i
+                      break
+                  }
+              }
+              for (i = 1; i <= NR; i++) {
+                  if (i < start || i > end)
+                      print lines[i]
+              }
+          }
+          ' ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/screen/settings/AppSettingsScreen.kt > ./temp-AppSettingsScreen.kt &&\
+          mv -f ./temp-AppSettingsScreen.kt ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/screen/settings/AppSettingsScreen.kt
+          awk '
+          /R\.string\.update_settings/ {
+              base = NR
+          }
+          {
+              lines[NR] = $0
+          }
+          END {
+              for (i = base; i >= 1; i--) {
+                  if (lines[i] ~ /Spacer\(modifier = Modifier\.height\(8\.dp\)\)/) {
+                      start = i
+                      break
+                  }
+              }
+              for (i = base; i <= NR; i++) {
+                  if (lines[i] ~ /^}/) {
+                      end = i
+                      break
+                  }
+              }
+              for (i = 1; i <= NR; i++) {
+                  if (i == start) {
+                      print "    }"
+                      print "}"
+                      i = end
+                      continue
+                  }
+                  print lines[i]
+              }
+          }
+          ' ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/screen/settings/AppSettingsScreen.kt > ./temp-AppSettingsScreen.kt &&\
+          mv -f ./temp-AppSettingsScreen.kt ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/screen/settings/AppSettingsScreen.kt
+
+          sed -i 's/import io.nekohasekai.sfa.update.UpdateState//; s/val hasUpdate by UpdateState.hasUpdate//' ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/screen/settings/SettingsScreen.kt
+          awk '
+          /if \(hasUpdate\)/ {
+              base = NR
+          }
+          {
+              lines[NR] = $0
+          }
+          END {
+              for (i = base; i >= 1; i--) {
+                  if (lines[i] ~ /trailingContent = {/) {
+                      start = i
+                      break
+                  }
+              }
+              for (i = base; i <= NR; i++) {
+                  if (lines[i] ~ /^                    },/) {
+                      end = i
+                      break
+                  }
+              }
+              for (i = 1; i <= NR; i++) {
+                  if (i < start || i > end)
+                      print lines[i]
+              }
+          }
+          ' ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/screen/settings/SettingsScreen.kt > ./temp-SettingsScreen.kt &&\
+          mv -f ./temp-SettingsScreen.kt ./clients/android/app/src/main/java/io/nekohasekai/sfa/compose/screen/settings/SettingsScreen.kt
+
+      - name: Build `SFA-reF1nd-Test` apk
+        run: |-
+          mkdir -p ./clients/android/app/libs/
+          cp -f  ./*.aar ./clients/android/app/libs/
+          cd ./clients/android
+          ./gradlew :app:assembleOtherRelease
+        env:
+          JAVA_HOME: /usr/lib/jvm/java-17-openjdk-amd64
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
+          KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
+          ALIAS_NAME: ${{ secrets.ALIAS_NAME }}
+          ALIAS_PASS: ${{ secrets.ALIAS_PASS }}
+          LOCAL_PROPERTIES: ${{ secrets.LOCAL_PROPERTIES }}
+
+      - name: Prepare upload
+        run: |-
+          mkdir -p ./sfa-ref1nd-test/
+          for file in ./clients/android/app/build/outputs/apk/other/release/*.apk; do
+            mv -f "${file}" "./sfa-ref1nd-test/$(basename "${file/SFA-*-reF1nd/SFA-ref1nd-test}")"
+          done
+
+      - name: Upload files to workspace
+        uses: actions/upload-artifact@v7
+        with:
+          name: sfa-ref1nd-test-apks
+          path: ./sfa-ref1nd-test/*
+
+  singbox_stable_version:
     runs-on: ubuntu-latest
     needs: go
     outputs:
-      singbox_release_version: ${{ steps.version.outputs.singbox_release_version }}
-      singbox_release_time: ${{ steps.version.outputs.singbox_release_time }}
-      singbox_release_tags: ${{ steps.version.outputs.singbox_release_tags }}
-      singbox_release_skip_update: ${{ steps.compare.outputs.skip_update }}
+      singbox_stable_version: ${{ steps.version.outputs.singbox_stable_version }}
+      singbox_stable_time: ${{ steps.version.outputs.singbox_stable_time }}
+      singbox_stable_tags: ${{ steps.version.outputs.singbox_stable_tags }}
+      singbox_stable_skip_update: ${{ steps.compare.outputs.skip_update }}
     steps:
-      - name: Checkout `main`
+      - name: Checkout `stable`
         uses: actions/checkout@v6
         with:
           repository: SagerNet/sing-box
-          ref: main
+          ref: stable
           fetch-depth: 0
 
       - name: Setup `Go`
@@ -233,18 +638,18 @@ jobs:
         with:
           go-version: ${{ needs.go.outputs.go_version }}
 
-      - name: Get `sing-box Release` version
+      - name: Get `sing-box Stable` version
         id: version
         run: |
-          echo "singbox_release_version=$(curl -sSL https://api.github.com/repos/SagerNet/sing-box/releases/latest | jq -r '.tag_name' | sed 's/^v//')" >> $GITHUB_OUTPUT
-          echo "singbox_release_time=$(curl -sSL https://api.github.com/repos/SagerNet/sing-box/releases/latest | jq -r '.created_at' | xargs -I {} date -d '{} +8 hours' '+%Y-%m-%d')" >> $GITHUB_OUTPUT
-          echo "singbox_release_tags=with_gvisor,with_quic,with_dhcp,with_utls,with_clash_api" >> $GITHUB_OUTPUT
+          echo "singbox_stable_version=$(curl -sSL https://api.github.com/repos/SagerNet/sing-box/releases/latest | jq -r '.tag_name' | sed 's/^v//')" >> $GITHUB_OUTPUT
+          echo "singbox_stable_time=$(curl -sSL https://api.github.com/repos/SagerNet/sing-box/releases/latest | jq -r '.created_at' | xargs -I {} date -d '{} +8 hours' '+%Y-%m-%d')" >> $GITHUB_OUTPUT
+          echo "singbox_stable_tags=with_gvisor,with_quic,with_dhcp,with_utls,with_clash_api" >> $GITHUB_OUTPUT
 
-      - name: Compare `sing-box Release` versions with current release
+      - name: Compare `sing-box Stable` versions with current release
         id: compare
         run: |
           current_body=$(curl -sSL "https://api.github.com/repos/${{ github.repository }}/releases/tags/sing-box" | jq -r '.body // ""')
-          arch="sing-box Release|${{ steps.version.outputs.singbox_release_version }}|${{ steps.version.outputs.singbox_release_time }}"
+          arch="sing-box Stable|${{ steps.version.outputs.singbox_stable_version }}|${{ steps.version.outputs.singbox_stable_time }}"
           IFS="|" read -r name version time <<< "$arch"
           if echo "${current_body}" | grep -q "${name}.*${version}.*${time}"; then
             echo "当前 ${name} 版本已是最新版本 v${version}，无需更新"
@@ -255,13 +660,13 @@ jobs:
           fi
           echo "skip_update=$skip_update" >> $GITHUB_OUTPUT
 
-  singbox_release_cross:
+  singbox_stable_cross:
     runs-on: ubuntu-latest
-    if: ${{ needs.singbox_release.outputs.singbox_release_skip_update != 'true' }}
+    if: ${{ needs.singbox_stable_version.outputs.singbox_stable_skip_update != 'true' }}
     strategy:
       matrix:
         include:
-          # linux
+          # Linux
           - { name: linux-amd64-v1, goos: linux, goarch: amd64, goamd64: v1 }
           - { name: linux-amd64-v3, goos: linux, goarch: amd64, goamd64: v3 }
           - { name: linux-armv5, goos: linux, goarch: arm, goarm: 5 }
@@ -271,7 +676,7 @@ jobs:
           - { name: linux-mips-softfloat, goos: linux, goarch: mips, gomips: softfloat }
           - { name: linux-mipsle-softfloat, goos: linux, goarch: mipsle, gomips: softfloat }
           - { name: linux-mipsle-hardfloat, goos: linux, goarch: mipsle, gomips: hardfloat }
-          # windows
+          # Windows
           - { name: windows-amd64-v1, goos: windows, goarch: amd64, goamd64: v1 }
           - { name: windows-amd64-v3, goos: windows, goarch: amd64, goamd64: v3 }
           - { name: windows-arm64, goos: windows, goarch: arm64 }
@@ -279,7 +684,7 @@ jobs:
       fail-fast: false
     needs:
       - go
-      - singbox_release
+      - singbox_stable_version
     env:
       GOOS: ${{ matrix.goos }}
       GOARCH: ${{ matrix.goarch }}
@@ -287,44 +692,43 @@ jobs:
       GOARM: ${{ matrix.goarm }}
       GOMIPS: ${{ matrix.gomips }}
       CGO_ENABLED: 0
-      singbox_release_VERSION: ${{ needs.singbox_release.outputs.singbox_release_version }}
-      singbox_release_TAGS: ${{ needs.singbox_release.outputs.singbox_release_tags }}
+      singbox_stable_VERSION: ${{ needs.singbox_stable_version.outputs.singbox_stable_version }}
+      singbox_stable_TAGS: ${{ needs.singbox_stable_version.outputs.singbox_stable_tags }}
     steps:
-      - name: Checkout `main`
+      - name: Checkout `stable`
         uses: actions/checkout@v6
         with:
           repository: SagerNet/sing-box
-          ref: main
+          ref: stable
 
       - name: Setup `Go`
         uses: actions/setup-go@v6
         with:
           go-version: ${{ needs.go.outputs.go_version }}
 
-      - name: Build `sing-box Release` core
-        id: build
-        run: go build -v -trimpath -ldflags "-checklinkname=0 -X 'github.com/sagernet/sing-box/constant.Version=${singbox_release_VERSION}' -s -w -buildid=" -tags "${singbox_release_TAGS}" ./cmd/sing-box
+      - name: Build `sing-box Stable` core
+        run: go build -v -trimpath -ldflags "-checklinkname=0 -X 'github.com/sagernet/sing-box/constant.Version=${singbox_stable_VERSION}' -s -w -buildid=" -tags "${singbox_stable_TAGS}" ./cmd/sing-box
 
       - name: Upload files to workspace
         uses: actions/upload-artifact@v6
         with:
-          name: sing-box-release-${{ matrix.name }}
+          name: sing-box-stable-${{ matrix.name }}
           path: sing-box*
 
-  singbox_dev:
+  singbox_test_version:
     runs-on: ubuntu-latest
     needs: go
     outputs:
-      singbox_dev_version: ${{ steps.version.outputs.singbox_dev_version }}
-      singbox_dev_time: ${{ steps.version.outputs.singbox_dev_time }}
-      singbox_dev_tags: ${{ steps.version.outputs.singbox_dev_tags }}
-      singbox_dev_skip_update: ${{ steps.compare.outputs.skip_update }}
+      singbox_test_version: ${{ steps.version.outputs.singbox_test_version }}
+      singbox_test_time: ${{ steps.version.outputs.singbox_test_time }}
+      singbox_test_tags: ${{ steps.version.outputs.singbox_test_tags }}
+      singbox_test_skip_update: ${{ steps.compare.outputs.skip_update }}
     steps:
-      - name: Checkout `dev`
+      - name: Checkout `testing`
         uses: actions/checkout@v6
         with:
           repository: SagerNet/sing-box
-          ref: dev
+          ref: testing
           fetch-depth: 0
 
       - name: Setup `Go`
@@ -332,18 +736,18 @@ jobs:
         with:
           go-version: ${{ needs.go.outputs.go_version }}
 
-      - name: Get `sing-box Dev` version
+      - name: Get `sing-box Test` version
         id: version
         run: |
-          echo "singbox_dev_version=$(curl -sSL https://api.github.com/repos/SagerNet/sing-box/releases | jq -r '.[] | select(.tag_name | test("(alpha|beta|rc)")) | .tag_name' | head -n 1 | sed 's/^v//')" >> $GITHUB_OUTPUT
-          echo "singbox_dev_time=$(curl -sSL https://api.github.com/repos/SagerNet/sing-box/releases | jq -r '.[] | select(.tag_name | test("(alpha|beta|rc)")) | .created_at' | head -n 1 | xargs -I {} date -d '{} +8 hours' '+%Y-%m-%d')" >> $GITHUB_OUTPUT
-          echo "singbox_dev_tags=with_gvisor,with_quic,with_dhcp,with_utls,with_clash_api" >> $GITHUB_OUTPUT
+          echo "singbox_test_version=$(curl -sSL https://api.github.com/repos/SagerNet/sing-box/releases | jq -r '.[] | select(.tag_name | test("(alpha|beta|rc)")) | .tag_name' | head -n 1 | sed 's/^v//')" >> $GITHUB_OUTPUT
+          echo "singbox_test_time=$(curl -sSL https://api.github.com/repos/SagerNet/sing-box/releases | jq -r '.[] | select(.tag_name | test("(alpha|beta|rc)")) | .created_at' | head -n 1 | xargs -I {} date -d '{} +8 hours' '+%Y-%m-%d')" >> $GITHUB_OUTPUT
+          echo "singbox_test_tags=with_gvisor,with_quic,with_dhcp,with_utls,with_clash_api" >> $GITHUB_OUTPUT
 
-      - name: Compare `sing-box Dev` versions with current release
+      - name: Compare `sing-box Test` versions with current release
         id: compare
         run: |
           current_body=$(curl -sSL "https://api.github.com/repos/${{ github.repository }}/releases/tags/sing-box" | jq -r '.body // ""')
-          arch="sing-box Dev|${{ steps.version.outputs.singbox_dev_version }}|${{ steps.version.outputs.singbox_dev_time }}"
+          arch="sing-box Test|${{ steps.version.outputs.singbox_test_version }}|${{ steps.version.outputs.singbox_test_time }}"
           IFS="|" read -r name version time <<< "$arch"
           if echo "${current_body}" | grep -q "${name}.*${version}.*${time}"; then
             echo "当前 ${name} 版本已是最新版本 v${version}，无需更新"
@@ -354,13 +758,13 @@ jobs:
           fi
           echo "skip_update=$skip_update" >> $GITHUB_OUTPUT
 
-  singbox_dev_cross:
+  singbox_test_cross:
     runs-on: ubuntu-latest
-    if: ${{ needs.singbox_dev.outputs.singbox_dev_skip_update != 'true' }}
+    if: ${{ needs.singbox_test_version.outputs.singbox_test_skip_update != 'true' }}
     strategy:
       matrix:
         include:
-          # linux
+          # Linux
           - { name: linux-amd64-v1, goos: linux, goarch: amd64, goamd64: v1, variant: musl }
           - { name: linux-amd64-v3, goos: linux, goarch: amd64, goamd64: v3, variant: musl }
           - { name: linux-armv5, goos: linux, goarch: arm, goarm: 5 }
@@ -370,7 +774,7 @@ jobs:
           - { name: linux-mips-softfloat, goos: linux, goarch: mips, gomips: softfloat }
           - { name: linux-mipsle-softfloat, goos: linux, goarch: mipsle, gomips: softfloat }
           - { name: linux-mipsle-hardfloat, goos: linux, goarch: mipsle, gomips: hardfloat }
-          # windows
+          # Windows
           - { name: windows-amd64-v1, goos: windows, goarch: amd64, goamd64: v1 }
           - { name: windows-amd64-v3, goos: windows, goarch: amd64, goamd64: v3 }
           - { name: windows-arm64, goos: windows, goarch: arm64 }
@@ -378,7 +782,7 @@ jobs:
       fail-fast: false
     needs:
       - go
-      - singbox_dev
+      - singbox_test_version
     env:
       GOOS: ${{ matrix.goos }}
       GOARCH: ${{ matrix.goarch }}
@@ -386,156 +790,163 @@ jobs:
       GOARM: ${{ matrix.goarm }}
       GOMIPS: ${{ matrix.gomips }}
       CGO_ENABLED: 0
-      singbox_dev_VERSION: ${{ needs.singbox_dev.outputs.singbox_dev_version }}
-      singbox_dev_TAGS: ${{ needs.singbox_dev.outputs.singbox_dev_tags }}
+      singbox_test_VERSION: ${{ needs.singbox_test_version.outputs.singbox_test_version }}
+      singbox_test_TAGS: ${{ needs.singbox_test_version.outputs.singbox_test_tags }}
     steps:
-      - name: Checkout `dev`
+      - name: Checkout `testing`
         uses: actions/checkout@v6
         with:
           repository: SagerNet/sing-box
-          ref: dev
+          ref: testing
 
       - name: Setup `Go`
         uses: actions/setup-go@v6
         with:
           go-version: ${{ needs.go.outputs.go_version }}
 
-      - name: Build `sing-box Dev` core
-        id: build
-        run: go build -v -trimpath -ldflags "-checklinkname=0 -X 'github.com/sagernet/sing-box/constant.Version=${singbox_dev_VERSION}' -s -w -buildid=" -tags "${singbox_dev_TAGS}" ./cmd/sing-box
+      - name: Build `sing-box Test` core
+        run: go build -v -trimpath -ldflags "-checklinkname=0 -X 'github.com/sagernet/sing-box/constant.Version=${singbox_test_VERSION}' -s -w -buildid=" -tags "${singbox_test_TAGS}" ./cmd/sing-box
 
       - name: Upload files to workspace
         uses: actions/upload-artifact@v6
         with:
-          name: sing-box-dev-${{ matrix.name }}
+          name: sing-box-test-${{ matrix.name }}
           path: sing-box*
 
   push_sing-box:
     runs-on: ubuntu-latest
     if: always()
     needs:
-      - ref1nd_main
-      - ref1nd_main_cross
-      - ref1nd_dev
-      - ref1nd_dev_cross
-      - singbox_release
-      - singbox_release_cross
-      - singbox_dev
-      - singbox_dev_cross
+      - ref1nd_stable_version
+      - ref1nd_stable_cross
+      - ref1nd_stable_android
+      - ref1nd_test_version
+      - ref1nd_test_cross
+      - ref1nd_test_android
+      - singbox_stable_version
+      - singbox_stable_cross
+      - singbox_test_version
+      - singbox_test_cross
     env:
-      ref1nd_main_VERSION: ${{ needs.ref1nd_main.outputs.ref1nd_main_version }}
-      ref1nd_main_TIME: ${{ needs.ref1nd_main.outputs.ref1nd_main_time }}
-      ref1nd_dev_VERSION: ${{ needs.ref1nd_dev.outputs.ref1nd_dev_version }}
-      ref1nd_dev_TIME: ${{ needs.ref1nd_dev.outputs.ref1nd_dev_time }}
-      singbox_release_VERSION: ${{ needs.singbox_release.outputs.singbox_release_version }}
-      singbox_release_TIME: ${{ needs.singbox_release.outputs.singbox_release_time }}
-      singbox_dev_VERSION: ${{ needs.singbox_dev.outputs.singbox_dev_version }}
-      singbox_dev_TIME: ${{ needs.singbox_dev.outputs.singbox_dev_time }}
+      ref1nd_stable_VERSION: ${{ needs.ref1nd_stable_version.outputs.ref1nd_stable_version }}
+      ref1nd_stable_TIME: ${{ needs.ref1nd_stable_version.outputs.ref1nd_stable_time }}
+      ref1nd_test_VERSION: ${{ needs.ref1nd_test_version.outputs.ref1nd_test_version }}
+      ref1nd_test_TIME: ${{ needs.ref1nd_test_version.outputs.ref1nd_test_time }}
+      singbox_stable_VERSION: ${{ needs.singbox_stable_version.outputs.singbox_stable_version }}
+      singbox_stable_TIME: ${{ needs.singbox_stable_version.outputs.singbox_stable_time }}
+      singbox_test_VERSION: ${{ needs.singbox_test_version.outputs.singbox_test_version }}
+      singbox_test_TIME: ${{ needs.singbox_test_version.outputs.singbox_test_time }}
     steps:
       - name: Clone Repository
         uses: actions/checkout@v6
 
       - name: Download files from workspace
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           path: ./tmp/
 
-      - name: Move files and zip `sing-box reF1nd-main` cores by `tar`
-        if: ${{ needs.ref1nd_main.outputs.ref1nd_main_skip_update != 'true' }}
+      - name: Move files and zip `sing-box reF1nd-Stable` cores by `tar`
+        if: ${{ needs.ref1nd_stable_version.outputs.ref1nd_stable_skip_update != 'true' }}
         run: |
           # Linux
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-ref1nd-main-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
+            mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
             # Compress cores by `tar`
             chmod +x ./tmp/CrashCore
-            tar --no-same-owner -czf "./sing-box/sing-box-ref1nd-main-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
+            tar --no-same-owner -czf "./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
 
             # Ready for compress cores by `UPX`
-            mv -f ./tmp/CrashCore ./sing-box/sing-box-ref1nd-main-linux-${linux_archs[i]}.upx
-            chmod +x ./sing-box/sing-box-ref1nd-main-linux-${linux_archs[i]}.upx
+            mv -f ./tmp/CrashCore ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.upx
+            chmod +x ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.upx
           done
 
           # Windows
           windows_archs=(amd64-v1 amd64-v3 arm64)
           for j in "${!windows_archs[@]}"; do
-            mv -f "./tmp/sing-box-ref1nd-main-windows-${windows_archs[j]}/sing-box.exe" "./sing-box/sing-box-ref1nd-main-windows-${windows_archs[j]}.exe"
+            mv -f "./tmp/sing-box-ref1nd-stable-windows-${windows_archs[j]}/sing-box.exe" "./sing-box/sing-box-ref1nd-stable-windows-${windows_archs[j]}.exe"
           done
 
-      - name: Move files and zip `sing-box reF1nd-dev` cores by `tar`
-        if: ${{ needs.ref1nd_dev.outputs.ref1nd_dev_skip_update != 'true' }}
+          # Android
+          mv -f ./tmp/sfa-ref1nd-stable-apks/*.apk ./sing-box/
+
+      - name: Move files and zip `sing-box reF1nd-Test` cores by `tar`
+        if: ${{ needs.ref1nd_test_version.outputs.ref1nd_test_skip_update != 'true' }}
         run: |
           # Linux
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-ref1nd-dev-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
+            mv -f "./tmp/sing-box-ref1nd-test-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
 
             # Compress cores by `tar`
             chmod +x ./tmp/CrashCore
-            tar --no-same-owner -czf "./sing-box/sing-box-ref1nd-dev-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
+            tar --no-same-owner -czf "./sing-box/sing-box-ref1nd-test-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
 
             # Ready for compress cores by `UPX`
-            mv -f ./tmp/CrashCore ./sing-box/sing-box-ref1nd-dev-linux-${linux_archs[i]}.upx
-            chmod +x ./sing-box/sing-box-ref1nd-dev-linux-${linux_archs[i]}.upx
+            mv -f ./tmp/CrashCore ./sing-box/sing-box-ref1nd-test-linux-${linux_archs[i]}.upx
+            chmod +x ./sing-box/sing-box-ref1nd-test-linux-${linux_archs[i]}.upx
           done
 
           # Windows
           windows_archs=(amd64-v1 amd64-v3 arm64)
           for j in "${!windows_archs[@]}"; do
-            mv -f "./tmp/sing-box-ref1nd-dev-windows-${windows_archs[j]}/sing-box.exe" "./sing-box/sing-box-ref1nd-dev-windows-${windows_archs[j]}.exe"
+            mv -f "./tmp/sing-box-ref1nd-test-windows-${windows_archs[j]}/sing-box.exe" "./sing-box/sing-box-ref1nd-test-windows-${windows_archs[j]}.exe"
           done
 
-      - name: Move files and zip `sing-box Release` cores by `tar`
-        if: ${{ needs.singbox_release.outputs.singbox_release_skip_update != 'true' }}
+          # Android
+          mv -f ./tmp/sfa-ref1nd-test-apks/*.apk ./sing-box/
+
+      - name: Move files and zip `sing-box Stable` cores by `tar`
+        if: ${{ needs.singbox_stable_version.outputs.singbox_stable_skip_update != 'true' }}
         run: |
           # Linux
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-release-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
+            mv -f "./tmp/sing-box-stable-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
             # Compress cores by `tar`
             chmod +x ./tmp/CrashCore
-            tar --no-same-owner -czf "./sing-box/sing-box-release-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
+            tar --no-same-owner -czf "./sing-box/sing-box-stable-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
 
             # Ready for compress cores by `UPX`
-            mv -f ./tmp/CrashCore ./sing-box/sing-box-release-linux-${linux_archs[i]}.upx
-            chmod +x ./sing-box/sing-box-release-linux-${linux_archs[i]}.upx
+            mv -f ./tmp/CrashCore ./sing-box/sing-box-stable-linux-${linux_archs[i]}.upx
+            chmod +x ./sing-box/sing-box-stable-linux-${linux_archs[i]}.upx
           done
 
           # Windows
           windows_archs=(amd64-v1 amd64-v3 arm64)
           for j in "${!windows_archs[@]}"; do
-            mv -f "./tmp/sing-box-release-windows-${windows_archs[j]}/sing-box.exe" "./sing-box/sing-box-release-windows-${windows_archs[j]}.exe"
+            mv -f "./tmp/sing-box-stable-windows-${windows_archs[j]}/sing-box.exe" "./sing-box/sing-box-stable-windows-${windows_archs[j]}.exe"
           done
 
-      - name: Move files and zip `sing-box Dev` cores by `tar`
-        if: ${{ needs.singbox_dev.outputs.singbox_dev_skip_update != 'true' }}
+      - name: Move files and zip `sing-box Test` cores by `tar`
+        if: ${{ needs.singbox_test_version.outputs.singbox_test_skip_update != 'true' }}
         run: |
           # Linux
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-dev-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
+            mv -f "./tmp/sing-box-test-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
             # Compress cores by `tar`
             chmod +x ./tmp/CrashCore
-            tar --no-same-owner -czf "./sing-box/sing-box-dev-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
+            tar --no-same-owner -czf "./sing-box/sing-box-test-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
 
             # Ready for compress cores by `UPX`
-            mv -f ./tmp/CrashCore ./sing-box/sing-box-dev-linux-${linux_archs[i]}.upx
-            chmod +x ./sing-box/sing-box-dev-linux-${linux_archs[i]}.upx
+            mv -f ./tmp/CrashCore ./sing-box/sing-box-test-linux-${linux_archs[i]}.upx
+            chmod +x ./sing-box/sing-box-test-linux-${linux_archs[i]}.upx
           done
 
           # Windows
           windows_archs=(amd64-v1 amd64-v3 arm64)
           for j in "${!windows_archs[@]}"; do
-            mv -f "./tmp/sing-box-dev-windows-${windows_archs[j]}/sing-box.exe" "./sing-box/sing-box-dev-windows-${windows_archs[j]}.exe"
+            mv -f "./tmp/sing-box-test-windows-${windows_archs[j]}/sing-box.exe" "./sing-box/sing-box-test-windows-${windows_archs[j]}.exe"
           done
 
       - name: Setup `UPX` and compress `sing-box` files
-        if: ${{ env.ref1nd_main_skip_update != 'true' || env.ref1nd_dev_skip_update != 'true' || env.singbox_release_skip_update != 'true' || env.singbox_dev_skip_update != 'true' }}
-        uses: crazy-max/ghaction-upx@v3
+        if: ${{ env.ref1nd_stable_skip_update != 'true' || env.ref1nd_test_skip_update != 'true' || env.singbox_stable_skip_update != 'true' || env.singbox_test_skip_update != 'true' }}
+        uses: crazy-max/ghaction-upx@v4
         with:
           version: latest
           files: ./sing-box/*.upx
@@ -560,9 +971,9 @@ jobs:
           tag: sing-box
           overwrite: true
           body: |
-            更新 [sing-box reF1nd-main 版](https://github.com/reF1nd/sing-box/tree/reF1nd-main)至 v${{ env.ref1nd_main_VERSION }}，发布于 ${{ env.ref1nd_main_TIME }}
-            更新 [sing-box reF1nd-dev 版](https://github.com/reF1nd/sing-box/tree/reF1nd-dev)至 v${{ env.ref1nd_dev_VERSION }}，发布于 ${{ env.ref1nd_dev_TIME }}
-            更新 [sing-box Release 版](https://github.com/SagerNet/sing-box/tree/main)至 v${{ env.singbox_release_VERSION }}，发布于 ${{ env.singbox_release_TIME }}
-            更新 [sing-box Dev 版](https://github.com/SagerNet/sing-box/tree/dev)至 v${{ env.singbox_dev_VERSION }}，发布于 ${{ env.singbox_dev_TIME }}
+            更新 [sing-box reF1nd-Stable 版](https://github.com/reF1nd/sing-box/tree/reF1nd-stable)至 v${{ env.ref1nd_stable_VERSION }}，发布于 ${{ env.ref1nd_stable_TIME }}
+            更新 [sing-box reF1nd-Test 版](https://github.com/reF1nd/sing-box/tree/reF1nd-testing)至 v${{ env.ref1nd_test_VERSION }}，发布于 ${{ env.ref1nd_test_TIME }}
+            更新 [sing-box Stable 版](https://github.com/SagerNet/sing-box/tree/stable)至 v${{ env.singbox_stable_VERSION }}，发布于 ${{ env.singbox_stable_TIME }}
+            更新 [sing-box Test 版](https://github.com/SagerNet/sing-box/tree/testing)至 v${{ env.singbox_test_VERSION }}，发布于 ${{ env.singbox_test_TIME }}
           file_glob: true
           file: ./sing-box/*
