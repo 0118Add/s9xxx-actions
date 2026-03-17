@@ -13,5 +13,5 @@
 # Uncomment a feed source
 #sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
-# Add a feed source
-#sed -i '$a src-git lienol https://github.com/Lienol/openwrt-package' feeds.conf.default
+# 自定义默认网关
+sed -i 's/192.168.1.1/10.0.0.10/g' package/base-files/files/bin/config_generate
