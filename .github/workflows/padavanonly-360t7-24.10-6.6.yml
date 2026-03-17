@@ -15,8 +15,8 @@ env:
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: pure.config
   DIY_P1_SH: diy-part1.sh
-  DIY_P2_SH: diy-part2.sh
-  UPLOAD_FIRMWARE: true
+  DIY_P2_SH: diy-part4.sh
+  UPLOAD_FIRMWARE: false
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
 
@@ -173,11 +173,8 @@ jobs:
         - 固件版本：${{ env.FIRMWARE_VERSION }}
         
         ### 🔧 默认信息
-        - 默认网关：192.168.77.1
+        - 默认网关：10.0.0.10
         - 登录密码：无（首次登录请设置）
-        
-        ### 📦 内置组件
-        - OpenClash
         
         > ⚠️ 刷写前请备份原固件，刷机有风险，操作需谨慎
         EOF
@@ -199,18 +196,3 @@ jobs:
           ${{ env.FIRMWARE }}/*factory.bin
         draft: false
         prerelease: false
-
-    - name: 删除旧的工作流运行记录
-      uses: GitRML/delete-workflow-runs@main
-      with:
-        retain_days: 1
-        keep_minimum_runs: 3
-
-    - name: 删除旧的 releases
-      uses: dev-drprasad/delete-older-releases@v0.2.1
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
-      with:
-        keep_latest: 10
-        delete_tags: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
