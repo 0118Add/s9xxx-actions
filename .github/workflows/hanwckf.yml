@@ -166,12 +166,6 @@ jobs:
          body_path: release.txt
          files: ${{ env.FIRMWARE }}/*
 
-    - name: 删除工作流运行
-      uses: GitRML/delete-workflow-runs@main
-      with:
-        retain_days: 1
-        keep_minimum_runs: 3
-
     - name: 删除旧的releases
       uses: dev-drprasad/delete-older-releases@v0.2.1
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
