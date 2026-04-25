@@ -163,8 +163,8 @@ jobs:
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
         time=$(date +%Y.%m.%d)
-        release_tag="360T7-24.10-6.6-ImmortalWrt-$time"
-        release_name="360T7-24.10-6.6-ImmortalWrt-$time"
+        release_tag="360T7-24.10-5.4-ImmortalWrt-$time"
+        release_name="360T7-24.10-5.4-ImmortalWrt-$time"
         cat > release.txt << EOF
         ## 📦 ImmortalWrt for 360T7
         
