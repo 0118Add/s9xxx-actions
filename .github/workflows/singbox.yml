@@ -25,7 +25,7 @@ jobs:
       - name: Checkout `reF1nd-stable`
         uses: actions/checkout@v6
         with:
-          repository: 0118Add/sing-box
+          repository: reF1nd/sing-box
           ref: reF1nd-stable
           fetch-depth: 0
 
@@ -94,7 +94,7 @@ jobs:
       - name: Checkout `reF1nd-stable`
         uses: actions/checkout@v6
         with:
-          repository: 0118Add/sing-box
+          repository: reF1nd/sing-box
           ref: reF1nd-stable
 
       - name: Setup `Go`
@@ -124,7 +124,7 @@ jobs:
       - name: Checkout `reF1nd-testing`
         uses: actions/checkout@v6
         with:
-          repository: 0118Add/sing-box
+          repository: reF1nd/sing-box
           ref: reF1nd-testing
           fetch-depth: 0
 
@@ -193,7 +193,7 @@ jobs:
       - name: Checkout `reF1nd-testing`
         uses: actions/checkout@v6
         with:
-          repository: 0118Add/sing-box
+          repository: reF1nd/sing-box
           ref: reF1nd-testing
 
       - name: Setup `Go`
