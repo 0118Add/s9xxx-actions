@@ -42,17 +42,6 @@ sed -i 's/<%:Down%>/<%:Move down%>/g' feeds/luci/modules/luci-compat/luasrc/view
 # 修复procps-ng-top导致首页cpu使用率无法获取
 sed -i 's#top -n1#\/bin\/busybox top -n1#g' feeds/luci/modules/luci-base/root/usr/share/rpcd/ucode/luci
 
-# mihomo
-git clone https://github.com/nikkinikki-org/OpenWrt-nikki  package/OpenWrt-nikki
-#git clone https://github.com/zutzo/OpenWrt-mihomo package/OpenWrt-mihomo
-
-# luci-app-filemanager
-rm -rf feeds/luci/applications/luci-app-filemanager
-git clone https://github.com/sbwml/luci-app-filemanager package/luci-app-filemanager
-
-# amlogic
-git clone https://github.com/ophub/luci-app-amlogic.git package/amlogic
-
 # 设置root用户密码为password
 sed -i 's/root:::0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.::0:99999:7:::/g' package/base-files/files/etc/shadow
 
@@ -60,13 +49,12 @@ sed -i 's/root:::0:99999:7:::/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.::0:99999:7
 #sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
 
 #添加额外软件包
-rm -rf feeds/packages/net/{xray-core,sing-box}
+rm -rf feeds/luci/applications/{luci-app-daed,luci-app-passwall,luci-app-openclash}
+rm -rf feeds/packages/net/{daed,xray-core,sing-box}
 #git clone --depth=1 -b openwrt-23.05 https://github.com/openwrt/openwrt openwrt-openwrt 
 #cp -rf openwrt-openwrt/package/libs/mbedtls package/libs/mbedtls
 #rm -rf feeds/luci/applications/luci-app-dockerman
 #rm -rf feeds/luci/applications/luci-app-daed
-rm -rf feeds/luci/applications/luci-app-passwall
-rm -rf feeds/luci/applications/luci-app-openclash
 #rm -rf feeds/luci/applications/luci-app-wechatpush
 #rm -rf feeds/luci/applications/luci-app-unblockneteasemusic
 #git clone https://github.com/jerrykuku/luci-app-vssr.git package/luci-app-vssr
@@ -80,14 +68,38 @@ git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/
 #git clone https://github.com/QiuSimons/luci-app-daed-next package/luci-app-daed-next
 git clone --depth=1 -b dev https://github.com/vernesong/openclash package/openclash
 
+# golang 1.26
+rm -rf feeds/packages/lang/golang
+git clone --depth=1 https://github.com/sbwml/packages_lang_golang -b 26.x feeds/packages/lang/golang
+
+# 预编译 node
+rm -rf feeds/packages/lang/node
+git clone --depth=1 -b packages-24.10 https://github.com/sbwml/feeds_packages_lang_node-prebuilt feeds/packages/lang/node
+
 # homeproxy
 #rm -rf feeds/luci/applications/luci-app-homeproxy
 sed -i "s/ImmortalWrt/OpenWrt/g" feeds/luci/applications/luci-app-homeproxy/po/zh_Hans/homeproxy.po
 sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" feeds/luci/applications/luci-app-homeproxy/htdocs/luci-static/resources/view/homeproxy/{client.js,server.js}
 
-# 预编译 node
-rm -rf feeds/packages/lang/node
-git clone --depth=1 -b packages-24.10 https://github.com/sbwml/feeds_packages_lang_node-prebuilt feeds/packages/lang/node
+# daed
+git clone -b kix --depth 1 https://github.com/QiuSimons/luci-app-daed package/daed
+git clone https://github.com/QiuSimons/vmlinux-btf package/vmlinux-btf
+sed -i 's/PKG_VERSION:=.*/PKG_VERSION:=2026.06.14/g' package/daed/daed/Makefile
+sed -i 's/DAED_VERSION:=.*/DAED_VERSION:=daed-4d6a433/g' package/daed/daed/Makefile
+sed -i 's/WING_VERSION:=.*/WING_VERSION:=wing-dc50308/g' package/daed/daed/Makefile
+sed -i 's/CORE_VERSION:=.*/CORE_VERSION:=core-5a51cc7/g' package/daed/daed/Makefile
+sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=4d6a43331f2f6e25961935b9e7ac09a7568bb2b4/g' package/daed/daed/Makefile
+
+# mihomo
+#git clone https://github.com/nikkinikki-org/OpenWrt-nikki  package/OpenWrt-nikki
+##git clone https://github.com/zutzo/OpenWrt-mihomo package/OpenWrt-mihomo
+
+# luci-app-filemanager
+rm -rf feeds/luci/applications/luci-app-filemanager
+git clone https://github.com/sbwml/luci-app-filemanager package/luci-app-filemanager
+
+# amlogic
+git clone https://github.com/ophub/luci-app-amlogic.git package/amlogic
 
 # 修改插件名字
 #sed -i 's/Frp 内网穿透/内网穿透/g' package/luci-app-frpc/po/zh-cn/frp.po
@@ -171,9 +183,9 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_URL:=@GHCODELOAD/PKG_SOURCE_URL:=https:\/\/codeload.github.com/g' {}
 
 # 自定义默认配置
-sed -i '/exit 0$/d' package/emortal/default-settings/files/99-default-settings
-cat ${GITHUB_WORKSPACE}/patch/default-settings >> package/emortal/default-settings/files/99-default-settings
-curl -fsSL https://raw.githubusercontent.com/0118Add/Openwrt-CI/main/patch/10_system.js > ./feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+#sed -i '/exit 0$/d' package/emortal/default-settings/files/99-default-settings
+#cat ${GITHUB_WORKSPACE}/patch/default-settings >> package/emortal/default-settings/files/99-default-settings
+#curl -fsSL https://raw.githubusercontent.com/0118Add/Openwrt-CI/main/patch/10_system.js > ./feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
 curl -fsSL https://raw.githubusercontent.com/0118Add/X86-N1-Actions/main/general/25_storage.js > ./feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/25_storage.js
 #curl -fsSL https://raw.githubusercontent.com/0118Add/Openwrt-CI/main/immortalwrt/29_ports.js > ./feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/29_ports.js
 
