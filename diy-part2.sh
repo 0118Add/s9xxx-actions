@@ -45,6 +45,7 @@ rm -rf package/custom; mkdir package/custom
 
 # Modify default IP
 sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/luci/bin/config_generate
 
 # 设置密码为空（安装固件时无需密码登陆，然后自己修改想要的密码）
 #sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
@@ -73,7 +74,7 @@ sed -i 's/net.netfilter.nf_conntrack_max=.*/net.netfilter.nf_conntrack_max=65535
 sed -i '/customized in this file/a net.netfilter.nf_conntrack_max=165535' package/base-files/files/etc/sysctl.conf
 
 # 添加旁路由防火墙
-echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> package/network/config/firewall/files/firewall.user
+#echo "iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE" >> package/network/config/firewall/files/firewall.user
 #echo "iptables -t nat -I POSTROUTING -j FULLCONENAT" >> package/network/config/firewall/files/firewall.user
 
 # node - prebuilt
@@ -95,16 +96,16 @@ rm -rf feeds/packages/net/{xray-core,sing-box}
 
 #git clone https://github.com/sirpdboy/luci-app-ddns-go package/luci-app-ddns-go
 #git clone https://github.com/jerrykuku/lua-maxminddb package/lua-maxminddb
-merge_package https://github.com/kiddin9/kwrt-packages kwrt-packages/luci-app-passwall
-#git clone https://github.com/Openwrt-Passwall/openwrt-passwall package/passwall
+#merge_package https://github.com/kiddin9/kwrt-packages kwrt-packages/luci-app-passwall
+git clone https://github.com/Openwrt-Passwall/openwrt-passwall package/passwall
 git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/passwall-packages
 #git clone https://github.com/siropboy/luci-app-bypass package/luci-app-bypass
 #git clone https://github.com/fw876/helloworld.git package/helloworld
-#merge_package https://github.com/fw876/helloworld helloworld/luci-app-ssr-plus
-#merge_package https://github.com/fw876/helloworld helloworld/lua-neturl
-#merge_package https://github.com/fw876/helloworld helloworld/mosdns
-#merge_package https://github.com/fw876/helloworld helloworld/shadow-tls
-#merge_package https://github.com/fw876/helloworld helloworld/redsocks2
+merge_package https://github.com/fw876/helloworld helloworld/luci-app-ssr-plus
+merge_package https://github.com/fw876/helloworld helloworld/lua-neturl
+merge_package https://github.com/fw876/helloworld helloworld/mosdns
+merge_package https://github.com/fw876/helloworld helloworld/dns2tcp
+merge_package https://github.com/fw876/helloworld helloworld/mihomo
 #git clone https://github.com/Openwrt-Passwall/openwrt-passwall2 package/passwall2
 git clone https://github.com/sirpdboy/luci-app-partexp package/luci-app-partexp
 #git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
@@ -133,7 +134,7 @@ sed -i 's/Turbo ACC 网络加速/网络加速/g' feeds/luci/applications/luci-ap
 
 #luci-app-amlogic 晶晨宝盒
 sed -i "s|https.*/s9xxx-openwrt|https://github.com/0118Add/s9xxx-actions|g" package/amlogic/luci-app-amlogic/root/etc/config/amlogic
-sed -i "s|opt/kernel|https://github.com/breakings/OpenWrt/opt/kernel|g" package/amlogic/luci-app-amlogic/root/etc/config/amlogic
+sed -i "s|opt/kernel|https://github.com/0118Add/kernel|g" package/amlogic/luci-app-amlogic/root/etc/config/amlogic
 sed -i "s|ARMv8|s9xxx_lede|g" package/amlogic/luci-app-amlogic/root/etc/config/amlogic
 
 # 调整 Dockerman 到 服务 菜单
