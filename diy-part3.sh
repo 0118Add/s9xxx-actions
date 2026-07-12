@@ -80,7 +80,7 @@ git clone --depth=1 -b packages-24.10 https://github.com/sbwml/feeds_packages_la
 #rm -rf feeds/luci/applications/luci-app-homeproxy
 sed -i "s/ImmortalWrt/OpenWrt/g" feeds/luci/applications/luci-app-homeproxy/po/zh_Hans/homeproxy.po
 sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" feeds/luci/applications/luci-app-homeproxy/htdocs/luci-static/resources/view/homeproxy/{client.js,server.js}
-wget -O package/luci-app-homeproxy/root/etc/init.d/homeproxy https://raw.githubusercontent.com/0118Add/X86-Actions/main/general/homeproxy
+wget -O feeds/luci/applications/luci-app-homeproxy/root/etc/init.d/homeproxy https://raw.githubusercontent.com/0118Add/X86-Actions/main/general/homeproxy
 
 # daed
 git clone -b kix --depth 1 https://github.com/QiuSimons/luci-app-daed package/daed
