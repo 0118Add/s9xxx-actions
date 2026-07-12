@@ -51,7 +51,7 @@ sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/luci/bin/config_generate
 #sed -i 's@.*CYXluq4wUazHjmCDBCqXF*@#&@g' package/lean/default-settings/files/zzz-default-settings
 
 # 替换内核
-#sed -i 's/KERNEL_PATCHVER:=5.10/KERNEL_PATCHVER:=5.15/g' target/linux/armvirt/Makefile
+sed -i 's/KERNEL_PATCHVER:=6.6/KERNEL_PATCHVER:=6.12/g' target/linux/armsr/Makefile
 
 # 修改系统文件
 curl -fsSL https://raw.githubusercontent.com/0118Add/s9xxx-actions/main/patch/flippy_index.htm > ./package/lean/autocore/files/arm/index.htm
