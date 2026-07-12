@@ -108,7 +108,7 @@ merge_package https://github.com/fw876/helloworld helloworld/dns2tcp
 merge_package https://github.com/fw876/helloworld helloworld/mihomo
 #git clone https://github.com/Openwrt-Passwall/openwrt-passwall2 package/passwall2
 git clone https://github.com/sirpdboy/luci-app-partexp package/luci-app-partexp
-#git clone https://github.com/sirpdboy/luci-theme-opentopd.git package/luci-theme-opentopd
+git clone https://github.com/sirpdboy/luci-app-lucky package/lucky
 #git clone -b openwrt-18.06 https://github.com/tty228/luci-app-wechatpush package/luci-app-wechatpush
 rm -rf feeds/luci/themes/luci-theme-argon
 #rm -rf feeds/luci/themes/luci-theme-design
