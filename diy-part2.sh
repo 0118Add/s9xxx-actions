@@ -86,6 +86,7 @@ git clone --depth=1 -b packages-24.10 https://github.com/sbwml/feeds_packages_la
 #echo "iptables -t nat -I POSTROUTING -j FULLCONENAT" >> package/network/config/firewall/files/firewall.user
 
 # 添加额外软件包
+rm -rf package/lean/automount
 rm -rf feeds/packages/net/{chinadns-ng,dns2tcp,dns2socks,msd_lite,lucky,geoview,tcping,v2ray-geodata,sing-box,xray-core}
 rm -rf feeds/luci/applications/luci-app-openclash
 rm -rf feeds/luci/applications/luci-app-dockerman
