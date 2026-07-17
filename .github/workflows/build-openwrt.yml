@@ -38,7 +38,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     steps:
     - name: Checkout
@@ -53,20 +53,19 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        sudo -E swapoff -a
-        sudo -E rm -f /swapfile
-        sudo -E snap set system refresh.retain=2
-        sudo -E rm -rf /usr/share/dotnet /etc/apt/sources.list.d /usr/local/lib/android
-        sudo -E apt-get -y purge azure-cli ghc* zulu* llvm* firefox google* dotnet* powershell openjdk* mongodb* moby* || true
-        [ -n "$AGENT_TOOLSDIRECTORY" ] && sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-        sudo -E apt-get update
-        sudo -E apt-get -y install rename $(cat $GITHUB_WORKSPACE/depends-ubuntu-2204)
-        sudo -E apt-get -y autoremove --purge
-        sudo -E apt-get clean
-        sudo sed -i '/NVM_DIR/d;/skel/d' /root/{.bashrc,.profile}
-        sudo rm -rf ~/{.cargo,.dotnet,.rustup}
-        sudo timedatectl set-timezone "$TZ"
-        df -Th
+        sudo -E apt-get -qq update
+        sudo /bin/bash -c "$(curl -sL https://git.io/vokNn)"
+        sudo -E apt-fast -y -qq install asciidoc bash bcc bin86 binutils bison bzip2 clang file flex g++ g++-multilib gawk gcc-multilib gettext git gzip help2man intltool libbpf-dev libboost-dev libelf-dev libncurses-dev libssl-dev libthread-queue-any-perl libusb-dev libxml-parser-perl linux-tools-generic llvm make patch perl-modules pkg-config python3-dev python3-pip python3-pyelftools python3-setuptools rsync sharutils swig time unzip util-linux wget xsltproc zlib1g-dev zip zstd
+        sudo -E apt-fast -y -qq install dos2unix dwarves jq npm quilt rename
+        sudo -E npm install -g pnpm
+        sudo -E npm install -g n
+        sudo -E n stable
+        pip3 install --user -U pylibfdt --break-system-packages
+        sudo -E apt-get -qq autoremove --purge
+        sudo -E apt-get -qq clean
+        sudo -E git config --global user.name 'GitHub Actions' && git config --global user.email 'noreply@github.com'
+        sudo -E git config --global core.abbrev auto
+        df -h
 
     - name: Create simulated physical disk
       run: |
@@ -174,7 +173,7 @@ jobs:
         tar -zcvf Packages.tar.gz ./*
         cp Packages.tar.gz $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
         cd $GITHUB_WORKSPACE/openwrt/bin/targets/*/*
-        rm -rf packages config.buildinfo feeds.buildinfo openwrt-armvirt-64-default.manifest openwrt-armvirt-64-Image sha256sums version.buildinfo openwrt-armvirt-64-Image-initramfs openwrt-armvirt-64-generic-initramfs-kernel.bin openwrt-armvirt-64-generic-kernel.bin openwrt-armvirt-64-generic.manifest openwrt-armsr-armv8-generic-kernel.bin openwrt-armsr-armv8-generic.manifest profiles.json
+        rm -rf packages config.buildinfo feeds.buildinfo openwrt-armvirt-64-default.manifest openwrt-armvirt-64-Image sha256sums version.buildinfo openwrt-armvirt-64-Image-initramfs immortalwrt-armsr-armv8-generic-initramfs-kernel.bin immortalwrt-armsr-armv8-generic-kernel.bin immortalwrt-armsr-armv8-generic.manifest profiles.json
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
         echo "status=success" >> ${GITHUB_OUTPUT}
     
@@ -195,7 +194,7 @@ jobs:
         commit: main
         token: ${{ secrets.RELEASES_TOKEN }}
         body: |
-          ARMv8系列设备lean源码打包用临时固件，不可直刷
-          当前使用版本:【编译前的最后一次[➦主源码](https://github.com/coolsnowwolf/lede)更新记录】
+          ARMv8系列设备immortalwrt源码打包用临时固件，不可直刷
+          当前使用版本:【编译前的最后一次[➦主源码](https://github.com/immortalwrt/immortalwrt)更新记录】
           ${{ env.useVersionInfo }}
         artifacts: ${{ env.FIRMWARE }}/*
