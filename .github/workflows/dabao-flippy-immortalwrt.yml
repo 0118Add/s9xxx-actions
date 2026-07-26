@@ -74,7 +74,7 @@ jobs:
         OPENWRT_ARMVIRT: https://github.com/0118Add/s9xxx-actions/releases/download/ARMv8_Immortalwrt/openwrt-armsr-armv8-generic-rootfs.tar.gz
         PACKAGE_SOC: vplus_s905x3_s905d_s922x_s922x-ct2000
         WHOAMI: BGG
-        #OPENWRT_VER: "R22.10.10"
+        OPENWRT_VER: "R26.5.20"
         #BUILD: $(date '+%Y-%m-%d')
         #DISTRIB_REVISION: "${OPENWRT_VER} (${BUILD} by ${WHOAMI})"
         #DISTRIB_DESCRIPTION: ""
