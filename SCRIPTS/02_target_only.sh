@@ -13,7 +13,7 @@ sed -i 's/192.168.1.1/10.0.0.1/g' package/base-files/files/bin/config_generate
 # 修改主机名
 #sed -i 's/OpenWrt/OpenWrt/g' package/base-files/files/bin/config_generate
 # 修改型号
-#sed -i 's/echo.*/echo "$vendor" > \/tmp\/sysinfo\/model/g' target/linux/x86/base-files/lib/preinit/01_sysinfo
+sed -i 's/echo.*/echo "$vendor" > \/tmp\/sysinfo\/model/g' target/linux/x86/base-files/lib/preinit/01_sysinfo
 
 # remove LRNG for 3328
 rm -f target/linux/generic/hack-${KERNEL_VERSION}/696*
