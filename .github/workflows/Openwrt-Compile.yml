@@ -50,7 +50,7 @@ jobs:
 
     - name: Prepare Mixedwrt
       run: |
-        sudo chown -R runner:runner /home/runner/work/build-openwrt
+        sudo chown -R runner:runner /home/runner/work/s9xxx-actions
         cp -r ./SCRIPTS/. ./
         /bin/bash 01_get_ready.sh
 
