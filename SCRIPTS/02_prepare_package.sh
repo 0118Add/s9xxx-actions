@@ -261,7 +261,7 @@ cp -rf immortalwrt-luci/applications/luci-app-unblockneteasemusic feeds/luci/app
 ln -sf ../../../feeds/luci/applications/luci-app-unblockneteasemusic ./package/feeds/luci/luci-app-unblockneteasemusic
 sed -i 's/解除网易云音乐播放限制/音乐解锁/g' feeds/luci/applications/luci-app-unblockneteasemusic/root/usr/share/luci/menu.d/luci-app-unblockneteasemusic.json
 
-curl -fsSL https://raw.githubusercontent.com/0118Add/s9xxx-actions/main/patch/10_system.js > ./feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/10_system.js
+wget -O package/new/autocore-arm/files/generic/10_system.js https://raw.githubusercontent.com/0118Add/s9xxx-actions/main/patch/10_system.js
 curl -fsSL https://raw.githubusercontent.com/0118Add/X86-Actions/main/general/25_storage.js > ./feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/25_storage.js
 curl -fsSL https://raw.githubusercontent.com/0118Add/build-openwrt/master/scripts/os-release > package/base-files/files/etc/os-release
 
