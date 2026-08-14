@@ -18,4 +18,4 @@ sed -i 's/192.168.1.1/10.0.0.10/g' package/base-files/files/bin/config_generate
 
 rm -rf package/emortal/automount
 rm -rf feeds/packages/admin/zabbix
-rm -rf package/feeds/luci/luci-app-radicale3
+rm -rf feeds/luci/applications/luci-app-radicale3
