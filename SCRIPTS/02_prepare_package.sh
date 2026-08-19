@@ -258,6 +258,8 @@ sed -i "s/ImmortalWrt/OpenWrt/g" package/luci-app-homeproxy/po/zh_Hans/homeproxy
 sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" package/luci-app-homeproxy/htdocs/luci-static/resources/view/homeproxy/{client.js,server.js}
 git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/openwrt-passwall
 
+git clone https://github.com/kenzok8/openwrt-clashoo package/clashoo
+
 git clone --depth=1 -b openwrt-25.12 https://github.com/immortalwrt/luci.git immortalwrt-luci
 cp -rf immortalwrt-luci/applications/luci-app-unblockneteasemusic feeds/luci/applications/luci-app-unblockneteasemusic
 ln -sf ../../../feeds/luci/applications/luci-app-unblockneteasemusic ./package/feeds/luci/luci-app-unblockneteasemusic
@@ -265,10 +267,10 @@ sed -i 's/解除网易云音乐播放限制/音乐解锁/g' feeds/luci/applicati
 
 #wget -O package/new/autocore-arm/files/generic/10_system.js https://raw.githubusercontent.com/0118Add/s9xxx-actions/main/patch/10_system.js
 #wget -O package/new/openwrt_pkgs/coremark/coremark.sh https://raw.githubusercontent.com/0118Add/build-openwrt/master/scripts/coremark.sh
-curl -fsSL https://raw.githubusercontent.com/0118Add/s9xxx-actions/main/patch/10_system.js > package/new/autocore-arm/files/generic/10_system.js
+#curl -fsSL https://raw.githubusercontent.com/0118Add/s9xxx-actions/main/patch/10_system.js > package/new/autocore-arm/files/generic/10_system.js
 curl -fsSL https://raw.githubusercontent.com/0118Add/X86-Actions/main/general/25_storage.js > ./feeds/luci/modules/luci-mod-status/htdocs/luci-static/resources/view/status/include/25_storage.js
-curl -fsSL https://raw.githubusercontent.com/0118Add/build-openwrt/master/scripts/os-release > package/base-files/files/etc/os-release
-curl -fsSL https://raw.githubusercontent.com/0118Add/build-openwrt/master/scripts/coremark.sh > package/new/openwrt_pkgs/coremark/coremark.sh
+#curl -fsSL https://raw.githubusercontent.com/0118Add/build-openwrt/master/scripts/os-release > package/base-files/files/etc/os-release
+#curl -fsSL https://raw.githubusercontent.com/0118Add/build-openwrt/master/scripts/coremark.sh > package/new/openwrt_pkgs/coremark/coremark.sh
 
 # 默认开启 Irqbalance
 #sed -i "s/enabled '0'/enabled '1'/g" feeds/packages/utils/irqbalance/files/irqbalance.config
