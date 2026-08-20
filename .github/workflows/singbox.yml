@@ -23,7 +23,7 @@ jobs:
       ref1nd_stable_skip_update: ${{ steps.compare.outputs.skip_update }}
     steps:
       - name: Checkout `reF1nd-stable`
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: reF1nd/sing-box
           ref: reF1nd-stable
@@ -92,7 +92,7 @@ jobs:
       ref1nd_stable_TAGS: ${{ needs.ref1nd_stable.outputs.ref1nd_stable_tags }}
     steps:
       - name: Checkout `reF1nd-stable`
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: reF1nd/sing-box
           ref: reF1nd-stable
@@ -122,7 +122,7 @@ jobs:
       ref1nd_test_skip_update: ${{ steps.compare.outputs.skip_update }}
     steps:
       - name: Checkout `reF1nd-testing`
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: reF1nd/sing-box
           ref: reF1nd-testing
@@ -191,7 +191,7 @@ jobs:
       ref1nd_test_TAGS: ${{ needs.ref1nd_test.outputs.ref1nd_test_tags }}
     steps:
       - name: Checkout `reF1nd-testing`
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: reF1nd/sing-box
           ref: reF1nd-testing
@@ -222,7 +222,7 @@ jobs:
       singbox_stable_skip_update: ${{ steps.compare.outputs.skip_update }}
     steps:
       - name: Checkout `stable`
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: SagerNet/sing-box
           ref: stable
@@ -291,7 +291,7 @@ jobs:
       singbox_stable_TAGS: ${{ needs.singbox_stable.outputs.singbox_stable_tags }}
     steps:
       - name: Checkout `stable`
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: SagerNet/sing-box
           ref: stable
@@ -321,7 +321,7 @@ jobs:
       singbox_test_skip_update: ${{ steps.compare.outputs.skip_update }}
     steps:
       - name: Checkout `testing`
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: SagerNet/sing-box
           ref: testing
@@ -390,7 +390,7 @@ jobs:
       singbox_test_TAGS: ${{ needs.singbox_test.outputs.singbox_test_tags }}
     steps:
       - name: Checkout `testing`
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           repository: SagerNet/sing-box
           ref: testing
@@ -433,7 +433,7 @@ jobs:
       singbox_test_TIME: ${{ needs.singbox_test.outputs.singbox_test_time }}
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Download files from workspace
         uses: actions/download-artifact@v8
