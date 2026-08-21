@@ -259,7 +259,7 @@ sed -i "s/ImmortalWrt/OpenWrt/g" package/luci-app-homeproxy/po/zh_Hans/homeproxy
 sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" package/luci-app-homeproxy/htdocs/luci-static/resources/view/homeproxy/{client.js,server.js}
 git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/openwrt-passwall
 
-git clone https://github.com/kenzok8/openwrt-clashoo package/clashoo
+git clone https://github.com/8688Add/openwrt-clashoo package/clashoo
 
 git clone --depth=1 -b openwrt-25.12 https://github.com/immortalwrt/luci.git immortalwrt-luci
 cp -rf immortalwrt-luci/applications/luci-app-unblockneteasemusic feeds/luci/applications/luci-app-unblockneteasemusic
