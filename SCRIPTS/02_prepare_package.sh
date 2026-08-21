@@ -168,6 +168,7 @@ sed -i 's/CORE_VERSION:=.*/CORE_VERSION:=core-5a51cc7/g' package/new/luci-app-da
 sed -i 's/PKG_SOURCE_VERSION:=.*/PKG_SOURCE_VERSION:=4d6a43331f2f6e25961935b9e7ac09a7568bb2b4/g' package/new/luci-app-daed/daed/Makefile
 git clone https://github.com/QiuSimons/vmlinux-btf ./package/new/vmlinux-btf
 git clone https://github.com/gtolog/openwrt-msd_lite ./package/new/openwrt-msd_lite
+git clone https://github.com/lisaac/luci-app-diskman ./package/new/diskman
 
 ### 获取额外的 LuCI 应用、主题和依赖 ###
 # RK
