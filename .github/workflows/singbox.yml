@@ -2,6 +2,9 @@ name: sing-box
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   go:
     runs-on: ubuntu-latest
