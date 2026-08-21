@@ -62,7 +62,7 @@ clone_repo $openwrt_add_repo master OpenWrt-Add &
 #clone_repo $dockerman_repo master dockerman &
 clone_repo $docker_lib_repo master docker_lib &
 clone_repo $diskman_repo master diskman &
-clone_repo $sbwfw876_repo v5 sbwfw876 &
+#clone_repo $sbwfw876_repo v5 sbwfw876 &
 # 等待所有后台任务完成
 wait
 
