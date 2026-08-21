@@ -11,7 +11,7 @@ jobs:
       - name: Get `Go` latest version
         id: go
         run: |
-          echo "version=1.24" >> "${GITHUB_OUTPUT}"
+          echo "version=1.25" >> "${GITHUB_OUTPUT}"
 
   ref1nd_stable:
     runs-on: ubuntu-latest
