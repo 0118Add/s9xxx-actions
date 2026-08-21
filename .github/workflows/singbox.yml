@@ -475,17 +475,11 @@ jobs:
       - name: Download `sing-box reF1nd-Stable` files
         if: ${{ env.ref1nd_stable_SKIP_UPDATE != 'true' }}
         run: |
-          # Linux
+          # Linux (Ready for compress cores by `UPX`)
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
-            # Compress cores by `tar`
-            chmod +x ./tmp/CrashCore
-            tar --no-same-owner -czf "./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
-
-            # Ready for compress cores by `UPX`
-            mv -f ./tmp/CrashCore ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.upx
+            mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.upx
             chmod +x ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.upx
           done
 
@@ -498,19 +492,12 @@ jobs:
       - name: Download `sing-box reF1nd-Testing` files
         if: ${{ env.ref1nd_testing_SKIP_UPDATE != 'true' }}
         run: |
-          # Linux
+          # Linux (Ready for compress cores by `UPX`)
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-ref1nd-test-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
-
-            # Compress cores by `tar`
-            chmod +x ./tmp/CrashCore
-            tar --no-same-owner -czf "./sing-box/sing-box-ref1nd-test-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
-
-            # Ready for compress cores by `UPX`
-            mv -f ./tmp/CrashCore ./sing-box/sing-box-ref1nd-test-linux-${linux_archs[i]}.upx
-            chmod +x ./sing-box/sing-box-ref1nd-test-linux-${linux_archs[i]}.upx
+            mv -f "./tmp/sing-box-ref1nd-testing-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-testing-linux-${linux_archs[i]}.upx
+            chmod +x ./sing-box/sing-box-ref1nd-testing-linux-${linux_archs[i]}.upx
           done
 
           # Windows
@@ -522,17 +509,11 @@ jobs:
       - name: Download `sing-box Stable` files
         if: ${{ env.singbox_stable_SKIP_UPDATE != 'true' }}
         run: |
-          # Linux
+          # Linux (Ready for compress cores by `UPX`)
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-stable-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
-            # Compress cores by `tar`
-            chmod +x ./tmp/CrashCore
-            tar --no-same-owner -czf "./sing-box/sing-box-stable-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
-
-            # Ready for compress cores by `UPX`
-            mv -f ./tmp/CrashCore ./sing-box/sing-box-stable-linux-${linux_archs[i]}.upx
+            mv -f "./tmp/sing-box-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-stable-linux-${linux_archs[i]}.upx
             chmod +x ./sing-box/sing-box-stable-linux-${linux_archs[i]}.upx
           done
 
@@ -545,18 +526,12 @@ jobs:
       - name: Download `sing-box Testing` files
         if: ${{ env.singbox_testing_SKIP_UPDATE != 'true' }}
         run: |
-          # Linux
+          # Linux (Ready for compress cores by `UPX`)
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-test-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
-            # Compress cores by `tar`
-            chmod +x ./tmp/CrashCore
-            tar --no-same-owner -czf "./sing-box/sing-box-test-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
-
-            # Ready for compress cores by `UPX`
-            mv -f ./tmp/CrashCore ./sing-box/sing-box-test-linux-${linux_archs[i]}.upx
-            chmod +x ./sing-box/sing-box-test-linux-${linux_archs[i]}.upx
+            mv -f "./tmp/sing-box-testing-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-testing-linux-${linux_archs[i]}.upx
+            chmod +x ./sing-box/sing-box-testing-linux-${linux_archs[i]}.upx
           done
 
           # Windows
