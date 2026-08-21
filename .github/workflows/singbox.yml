@@ -34,15 +34,6 @@ jobs:
         with:
           go-version: ${{ needs.go.outputs.go_version }}
 
-      - name: Fix and Tidy Dependencies
-        run: |
-          go get golang.org/x/net@v0.24.0
-          go mod tidy
-    
-      - name: Build `sing-box reF1nd-Stable` core
-        id: build
-        run: go build -v -trimpath -ldflags "-checklinkname=0 -X 'github.com/sagernet/sing-box/constant.Version=${ref1nd_stable_VERSION}' -s -w -buildid=" -tags "${ref1nd_stable_TAGS}" ./cmd/sing-box      
-      
       - name: Get `sing-box reF1nd-Stable` version
         id: version
         run: |
@@ -210,11 +201,6 @@ jobs:
         with:
           go-version: ${{ needs.go.outputs.go_version }}
 
-      - name: Fix and Tidy Dependencies
-        run: |
-          go get golang.org/x/net@v0.24.0
-          go mod tidy      
-      
       - name: Build `sing-box reF1nd-Test` core
         id: build
         run: go build -v -trimpath -ldflags "-checklinkname=0 -X 'github.com/sagernet/sing-box/constant.Version=${ref1nd_test_VERSION}' -s -w -buildid=" -tags "${ref1nd_test_TAGS}" ./cmd/sing-box
