@@ -11,7 +11,7 @@ jobs:
       - name: Get `Go` latest version
         id: go
         run: |
-          echo "go_version=$(curl -sSL https://raw.githubusercontent.com/reF1nd/sing-box/reF1nd-stable/.github/workflows/build.yml | grep 'go-version:' | head -n 1 | awk '{print $2}')" >> "${GITHUB_OUTPUT}"
+          echo "version=1.25" >> "${GITHUB_OUTPUT}"
 
   ref1nd_stable:
     runs-on: ubuntu-latest
@@ -32,7 +32,7 @@ jobs:
       - name: Setup `Go`
         uses: actions/setup-go@v6
         with:
-          go-version: ${{ steps.go.outputs.go_version }}
+          go-version: ${{ needs.go.outputs.go_version }}
 
       - name: Get `sing-box reF1nd-Stable` version
         id: version
@@ -100,7 +100,7 @@ jobs:
       - name: Setup `Go`
         uses: actions/setup-go@v6
         with:
-          go-version: ${{ steps.go.outputs.go_version }}
+          go-version: ${{ needs.go.outputs.go_version }}
 
       - name: Build `sing-box reF1nd-Stable` core
         id: build
@@ -131,7 +131,7 @@ jobs:
       - name: Setup `Go`
         uses: actions/setup-go@v6
         with:
-          go-version: ${{ steps.go.outputs.go_version }}
+          go-version: ${{ needs.go.outputs.go_version }}
 
       - name: Get `sing-box reF1nd-Test` version
         id: version
@@ -199,7 +199,7 @@ jobs:
       - name: Setup `Go`
         uses: actions/setup-go@v6
         with:
-          go-version: ${{ steps.go.outputs.go_version }}
+          go-version: ${{ needs.go.outputs.go_version }}
 
       - name: Build `sing-box reF1nd-Test` core
         id: build
@@ -231,7 +231,7 @@ jobs:
       - name: Setup `Go`
         uses: actions/setup-go@v6
         with:
-          go-version: ${{ steps.go.outputs.go_version }}
+          go-version: ${{ needs.go.outputs.go_version }}
 
       - name: Get `sing-box Stable` version
         id: version
@@ -299,7 +299,7 @@ jobs:
       - name: Setup `Go`
         uses: actions/setup-go@v6
         with:
-          go-version: ${{ steps.go.outputs.go_version }}
+          go-version: ${{ needs.go.outputs.go_version }}
 
       - name: Build `sing-box Stable` core
         id: build
@@ -330,7 +330,7 @@ jobs:
       - name: Setup `Go`
         uses: actions/setup-go@v6
         with:
-          go-version: ${{ steps.go.outputs.go_version }}
+          go-version: ${{ needs.go.outputs.go_version }}
 
       - name: Get `sing-box Test` version
         id: version
@@ -398,7 +398,7 @@ jobs:
       - name: Setup `Go`
         uses: actions/setup-go@v6
         with:
-          go-version: ${{ steps.go.outputs.go_version }}
+          go-version: ${{ needs.go.outputs.go_version }}
 
       - name: Build `sing-box Test` core
         id: build
