@@ -1,4 +1,4 @@
-name: Test
+name: sing-box
 on:
   workflow_dispatch:
 
@@ -482,7 +482,7 @@ jobs:
         if: ${{ env.ref1nd_stable_SKIP_UPDATE != 'true' }}
         run: |
           # Linux (Ready for compress cores by `UPX`)
-          mkdir -p ./Test/
+          mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
             mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
@@ -505,7 +505,7 @@ jobs:
         if: ${{ env.ref1nd_testing_SKIP_UPDATE != 'true' }}
         run: |
           # Linux (Ready for compress cores by `UPX`)
-          mkdir -p ./Test/
+          mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
             mv -f "./tmp/sing-box-ref1nd-test-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
@@ -529,7 +529,7 @@ jobs:
         if: ${{ env.singbox_stable_SKIP_UPDATE != 'true' }}
         run: |
           # Linux (Ready for compress cores by `UPX`)
-          mkdir -p ./Test/
+          mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
             mv -f "./tmp/sing-box-stable-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
@@ -552,7 +552,7 @@ jobs:
         if: ${{ env.singbox_testing_SKIP_UPDATE != 'true' }}
         run: |
           # Linux (Ready for compress cores by `UPX`)
-          mkdir -p ./Test/
+          mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
             mv -f "./tmp/sing-box-test-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
@@ -594,8 +594,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          release_name: Test
-          tag: Test
+          release_name: sing-box
+          tag: sing-box
           overwrite: true
           body: |
             更新 [sing-box reF1nd-Stable 版](https://github.com/reF1nd/sing-box/tree/reF1nd-stable)至 v${{ env.ref1nd_stable_VERSION }}，发布于 ${{ env.ref1nd_stable_TIME }}
