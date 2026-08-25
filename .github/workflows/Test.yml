@@ -487,8 +487,12 @@ jobs:
           for i in "${!linux_archs[@]}"; do
             mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.upx
             chmod +x ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.upx
+          
+          # Compress cores by `tar`
+            mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz
+            chmod +x ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz
+          
           done
-
           # Windows
           windows_archs=(amd64-v1 amd64-v3 arm64)
           for j in "${!windows_archs[@]}"; do
@@ -504,6 +508,11 @@ jobs:
           for i in "${!linux_archs[@]}"; do
             mv -f "./tmp/sing-box-ref1nd-testing-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-testing-linux-${linux_archs[i]}.upx
             chmod +x ./sing-box/sing-box-ref1nd-testing-linux-${linux_archs[i]}.upx
+          
+          # Compress cores by `tar`
+            mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz
+            chmod +x ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz          
+          
           done
 
           # Windows
@@ -521,6 +530,11 @@ jobs:
           for i in "${!linux_archs[@]}"; do
             mv -f "./tmp/sing-box-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-stable-linux-${linux_archs[i]}.upx
             chmod +x ./sing-box/sing-box-stable-linux-${linux_archs[i]}.upx
+          
+          # Compress cores by `tar`
+            mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz
+            chmod +x ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz          
+          
           done
 
           # Windows
@@ -538,6 +552,11 @@ jobs:
           for i in "${!linux_archs[@]}"; do
             mv -f "./tmp/sing-box-testing-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-testing-linux-${linux_archs[i]}.upx
             chmod +x ./sing-box/sing-box-testing-linux-${linux_archs[i]}.upx
+          
+          # Compress cores by `tar`
+            mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz
+            chmod +x ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz          
+          
           done
 
           # Windows
