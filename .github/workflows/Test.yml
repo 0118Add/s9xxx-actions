@@ -485,14 +485,10 @@ jobs:
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.upx
-            chmod +x ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.upx
-          
-          # Compress cores by `tar`
             mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz
             chmod +x ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz
-          
           done
+          
           # Windows
           windows_archs=(amd64-v1 amd64-v3 arm64)
           for j in "${!windows_archs[@]}"; do
@@ -506,13 +502,8 @@ jobs:
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-ref1nd-testing-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-testing-linux-${linux_archs[i]}.upx
-            chmod +x ./sing-box/sing-box-ref1nd-testing-linux-${linux_archs[i]}.upx
-          
-          # Compress cores by `tar`
-            mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz
-            chmod +x ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz          
-          
+            mv -f "./tmp/sing-box-ref1nd-testing-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-testing-linux-${linux_archs[i]}.tar.gz
+            chmod +x ./sing-box/sing-box-ref1nd-testing-linux-${linux_archs[i]}.tar.gz
           done
 
           # Windows
@@ -528,13 +519,8 @@ jobs:
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-stable-linux-${linux_archs[i]}.upx
-            chmod +x ./sing-box/sing-box-stable-linux-${linux_archs[i]}.upx
-          
-          # Compress cores by `tar`
-            mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz
-            chmod +x ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz          
-          
+            mv -f "./tmp/sing-box-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-stable-linux-${linux_archs[i]}.tar.gz
+            chmod +x ./sing-box/sing-box-stable-linux-${linux_archs[i]}.tar.gz
           done
 
           # Windows
@@ -550,13 +536,8 @@ jobs:
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-testing-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-testing-linux-${linux_archs[i]}.upx
-            chmod +x ./sing-box/sing-box-testing-linux-${linux_archs[i]}.upx
-          
-          # Compress cores by `tar`
-            mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz
-            chmod +x ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz          
-          
+            mv -f "./tmp/sing-box-testing-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-testing-linux-${linux_archs[i]}.tar.gz
+            chmod +x ./sing-box/sing-box-testing-linux-${linux_archs[i]}.tar.gz
           done
 
           # Windows
