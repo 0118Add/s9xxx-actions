@@ -482,7 +482,7 @@ jobs:
         if: ${{ env.ref1nd_stable_SKIP_UPDATE != 'true' }}
         run: |
           # Linux (Ready for compress cores by `UPX`)
-          mkdir -p ./sing-box/
+          mkdir -p ./Test/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
             mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
@@ -505,7 +505,7 @@ jobs:
         if: ${{ env.ref1nd_testing_SKIP_UPDATE != 'true' }}
         run: |
           # Linux (Ready for compress cores by `UPX`)
-          mkdir -p ./sing-box/
+          mkdir -p ./Test/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
             mv -f "./tmp/sing-box-ref1nd-test-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
@@ -529,7 +529,7 @@ jobs:
         if: ${{ env.singbox_stable_SKIP_UPDATE != 'true' }}
         run: |
           # Linux (Ready for compress cores by `UPX`)
-          mkdir -p ./sing-box/
+          mkdir -p ./Test/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
             mv -f "./tmp/sing-box-stable-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
@@ -552,7 +552,7 @@ jobs:
         if: ${{ env.singbox_testing_SKIP_UPDATE != 'true' }}
         run: |
           # Linux (Ready for compress cores by `UPX`)
-          mkdir -p ./sing-box/
+          mkdir -p ./Test/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
             mv -f "./tmp/sing-box-test-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
@@ -576,7 +576,7 @@ jobs:
         uses: crazy-max/ghaction-upx@v4
         with:
           version: latest
-          files: ./sing-box/*.upx
+          files: ./Test/*.upx
 
       - name: Check if `sing-box` files exist
         id: check
@@ -595,7 +595,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           release_name: Test
-          tag: sing-box
+          tag: Test
           overwrite: true
           body: |
             更新 [sing-box reF1nd-Stable 版](https://github.com/reF1nd/sing-box/tree/reF1nd-stable)至 v${{ env.ref1nd_stable_VERSION }}，发布于 ${{ env.ref1nd_stable_TIME }}
@@ -603,4 +603,4 @@ jobs:
             更新 [sing-box Stable 版](https://github.com/SagerNet/sing-box/tree/stable)至 v${{ env.singbox_stable_VERSION }}，发布于 ${{ env.singbox_stable_TIME }}
             更新 [sing-box Testing 版](https://github.com/SagerNet/sing-box/tree/testing)至 v${{ env.singbox_testing_VERSION }}，发布于 ${{ env.singbox_testing_TIME }}
           file_glob: true
-          file: ./sing-box/*
+          file: ./Test/*
