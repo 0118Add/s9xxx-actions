@@ -485,14 +485,7 @@ jobs:
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
-            
-            # Compress cores by `tar`
-            chmod +x ./tmp/CrashCore
-            tar --no-same-owner -czf "./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
-
-            # Ready for compress cores by `UPX`
-            mv -f ./tmp/CrashCore ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.upx
+            mv -f "./tmp/sing-box-ref1nd-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.upx
             chmod +x ./sing-box/sing-box-ref1nd-stable-linux-${linux_archs[i]}.upx
           done
 
@@ -509,15 +502,8 @@ jobs:
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-ref1nd-test-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
-
-            # Compress cores by `tar`
-            chmod +x ./tmp/CrashCore
-            tar --no-same-owner -czf "./sing-box/sing-box-ref1nd-test-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
-
-            # Ready for compress cores by `UPX`
-            mv -f ./tmp/CrashCore ./sing-box/sing-box-ref1nd-test-linux-${linux_archs[i]}.upx
-            chmod +x ./sing-box/sing-box-ref1nd-test-linux-${linux_archs[i]}.upx
+            mv -f "./tmp/sing-box-ref1nd-testing-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-ref1nd-testing-linux-${linux_archs[i]}.upx
+            chmod +x ./sing-box/sing-box-ref1nd-testing-linux-${linux_archs[i]}.upx
           done
 
           # Windows
@@ -533,14 +519,7 @@ jobs:
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-stable-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
-            
-            # Compress cores by `tar`
-            chmod +x ./tmp/CrashCore
-            tar --no-same-owner -czf "./sing-box/sing-box-stable-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
-
-            # Ready for compress cores by `UPX`
-            mv -f ./tmp/CrashCore ./sing-box/sing-box-stable-linux-${linux_archs[i]}.upx
+            mv -f "./tmp/sing-box-stable-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-stable-linux-${linux_archs[i]}.upx
             chmod +x ./sing-box/sing-box-stable-linux-${linux_archs[i]}.upx
           done
 
@@ -557,15 +536,8 @@ jobs:
           mkdir -p ./sing-box/
           linux_archs=(amd64-v1 amd64-v3 armv5 armv6 armv7 arm64 mips-softfloat mipsle-softfloat mipsle-hardfloat)
           for i in "${!linux_archs[@]}"; do
-            mv -f "./tmp/sing-box-test-linux-${linux_archs[i]}/sing-box" ./tmp/CrashCore
-            
-            # Compress cores by `tar`
-            chmod +x ./tmp/CrashCore
-            tar --no-same-owner -czf "./sing-box/sing-box-test-linux-${linux_archs[i]}.tar.gz" -C ./tmp/ CrashCore
-
-            # Ready for compress cores by `UPX`
-            mv -f ./tmp/CrashCore ./sing-box/sing-box-test-linux-${linux_archs[i]}.upx
-            chmod +x ./sing-box/sing-box-test-linux-${linux_archs[i]}.upx
+            mv -f "./tmp/sing-box-testing-linux-${linux_archs[i]}/sing-box" ./sing-box/sing-box-testing-linux-${linux_archs[i]}.upx
+            chmod +x ./sing-box/sing-box-testing-linux-${linux_archs[i]}.upx
           done
 
           # Windows
@@ -606,4 +578,4 @@ jobs:
             更新 [sing-box Stable 版](https://github.com/SagerNet/sing-box/tree/stable)至 v${{ env.singbox_stable_VERSION }}，发布于 ${{ env.singbox_stable_TIME }}
             更新 [sing-box Testing 版](https://github.com/SagerNet/sing-box/tree/testing)至 v${{ env.singbox_testing_VERSION }}，发布于 ${{ env.singbox_testing_TIME }}
           file_glob: true
-          file: ./Test/*
+          file: ./sing-box/*
