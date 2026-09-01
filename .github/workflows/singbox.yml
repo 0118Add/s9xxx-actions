@@ -11,6 +11,7 @@ jobs:
       - name: Get `Go` latest version
         id: go
         run: |
+          #echo "version=1.25" >> "${GITHUB_OUTPUT}"
           echo "go_version=$(curl -sSL https://raw.githubusercontent.com/reF1nd/sing-box/reF1nd-stable/.github/workflows/build.yml | grep 'go-version:' | head -n 1 | awk '{print $2}')" >> "${GITHUB_OUTPUT}"
 
   ref1nd_stable:
