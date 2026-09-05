@@ -117,7 +117,7 @@ git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages package/
 #git clone https://github.com/Openwrt-Passwall/openwrt-passwall2 package/passwall2
 git clone https://github.com/sirpdboy/luci-app-partexp package/luci-app-partexp
 git clone https://github.com/sirpdboy/luci-app-lucky package/lucky
-git clone https://github.com/sbwml/luci-app-filemanager package/luci-app-filemanager
+#git clone https://github.com/sbwml/luci-app-filemanager package/luci-app-filemanager
 #rm -rf feeds/luci/themes/luci-theme-argon
 #rm -rf feeds/luci/themes/luci-theme-design
 #git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git package/luci-theme-argon
@@ -133,8 +133,8 @@ sed -i "s/ImmortalWrt proxy/OpenWrt proxy/g" package/luci-app-homeproxy/htdocs/l
 git clone --depth=1 -b openwrt-25.12 https://github.com/immortalwrt/luci immortalwrt-luci
 cp -rf immortalwrt-luci/applications/luci-app-msd_lite feeds/luci/applications/luci-app-msd_lite
 ln -sf ../../../feeds/luci/applications/luci-app-msd_lite ./package/feeds/luci/luci-app-msd_lite
-#cp -rf immortalwrt-luci/applications/luci-app-unblockneteasemusic feeds/luci/applications/luci-app-unblockneteasemusic
-#ln -sf ../../../feeds/luci/applications/luci-app-unblockneteasemusic ./package/feeds/luci/luci-app-unblockneteasemusic
+cp -rf immortalwrt-luci/applications/luci-app-filemanager feeds/luci/applications/luci-app-filemanager
+ln -sf ../../../feeds/luci/applications/luci-app-filemanager ./package/feeds/luci/luci-app-filemanager
 git clone --depth=1 -b openwrt-25.12 https://github.com/immortalwrt/packages immortalwrt-packages
 cp -rf immortalwrt-packages/net/msd_lite feeds/packages/net/msd_lite
 ln -sf ../../../feeds/packages/net/msd_lite ./package/feeds/packages/msd_lite
